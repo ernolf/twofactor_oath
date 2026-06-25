@@ -1,0 +1,70 @@
+# SPDX-FileCopyrightText: 2026 [ernolf] Raphael Gradenwitz <raphael.gradenwitz@googlemail.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: Release tarball
+
+# Builds the App Store / install tarball (frontend + runtime PHP deps) and, when a
+# release is published, attaches it as a release asset. workflow_dispatch produces a
+# downloadable artifact for testing without publishing a release. No secrets, no
+# App Store upload: the store later only receives the download URL and a signature.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  tarball:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer
+
+      - name: Install runtime PHP dependencies
+        run: composer install --no-dev --no-scripts --prefer-dist --no-progress
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Assemble runtime tree
+        run: |
+          mkdir -p package/twofactor_oath
+          cp -r appinfo lib templates img js vendor l10n LICENSES CHANGELOG.md REUSE.toml package/twofactor_oath/
+          [ -d css ] && cp -r css package/twofactor_oath/ || true
+
+      - name: Create tarball
+        run: |
+          version=$(grep -oPm1 '(?<=<version>)[^<]+' appinfo/info.xml)
+          tarball="twofactor_oath-${version}.tar.gz"
+          tar -C package -czf "$tarball" twofactor_oath
+          echo "TARBALL=$tarball" >> "$GITHUB_ENV"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: twofactor_oath-tarball
+          path: ${{ env.TARBALL }}
+
+      - name: Attach to release
+        if: github.event_name == 'release'
+        run: gh release upload "${GITHUB_REF_NAME}" "${TARBALL}" --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
