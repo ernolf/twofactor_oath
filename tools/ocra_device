@@ -1,0 +1,267 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/*
+ * SPDX-FileCopyrightText: 2026 [ernolf] Raphael Gradenwitz <raphael.gradenwitz@googlemail.com>
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ *
+ * Software OCRA token (RFC 6287) for testing twofactor_oath — acts like a
+ * hardware challenge-response device. Reuses the app's own (RFC-vector-verified)
+ * OCRA implementation, so its output is identical to what the server computes.
+ *
+ * Supports the full RFC 6287 DataInput: counter (C), challenge (Q, formats
+ * N/A/H), PIN/password hash (P), session (S) and timestamp (T).
+ *
+ * Usage:
+ *   php tools/ocra_device.php [options] <secret-base32> <challenge>
+ *   php tools/ocra_device.php --selftest
+ *   php tools/ocra_device.php --list
+ *   php tools/ocra_device.php --help
+ *
+ * Options:
+ *   --suite=SUITE     OCRASuite (default: OCRA-1:HOTP-SHA1-6:QN08)
+ *   --counter=N       counter value          (suites with a C field)
+ *   --pin=PIN         PIN/password           (suites with a P field; hashed for you)
+ *   --session=HEX     session info, hex bytes (suites with an S field)
+ *   --steps=N         timestamp step count   (suites with a T field; default: now)
+ *
+ * Override the app location with OATH_APP_DIR if the class is elsewhere.
+ */
+
+use OCA\TwoFactorOath\Service\Ocra;
+
+$appDir = getenv('OATH_APP_DIR');
+$ocraClass = $appDir !== false
+	? rtrim($appDir, '/') . '/lib/Service/Ocra.php'
+	: __DIR__ . '/../lib/Service/Ocra.php';
+if (!is_file($ocraClass)) {
+	fwrite(STDERR, "Ocra class not found at: $ocraClass\nSet OATH_APP_DIR to the app directory.\n");
+	exit(1);
+}
+require $ocraClass;
+
+/** Decode an (unpadded) RFC 4648 Base32 string to raw bytes. */
+function base32_decode_raw(string $b32): string {
+	$alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+	$b32 = strtoupper((string)preg_replace('/[^A-Za-z2-7]/', '', $b32));
+	$bits = '';
+	$len = strlen($b32);
+	for ($i = 0; $i < $len; $i++) {
+		$bits .= str_pad(decbin((int)strpos($alphabet, $b32[$i])), 5, '0', STR_PAD_LEFT);
+	}
+	$bytes = '';
+	foreach (str_split($bits, 8) as $chunk) {
+		if (strlen($chunk) === 8) {
+			$bytes .= chr(bindec($chunk));
+		}
+	}
+	return $bytes;
+}
+
+/** Expand a shorthand suite like "256-8" to the full OCRASuite; full suites pass through. */
+function expand_suite(string $suite): string {
+	if (preg_match('/^(\d+)-(\d+)$/', $suite, $m) === 1) {
+		return "OCRA-1:HOTP-SHA{$m[1]}-{$m[2]}:QN08";
+	}
+	return $suite;
+}
+
+/** Path of the saved-credentials file (next to this script; git-ignored, plaintext). */
+function store_path(): string {
+	return __DIR__ . '/.ocra_rc';
+}
+
+/** @return array<string, array{secret: string, suite: string}> */
+function load_store(): array {
+	$path = store_path();
+	if (!is_file($path)) {
+		return [];
+	}
+	$data = json_decode((string)file_get_contents($path), true);
+
+	return is_array($data) ? $data : [];
+}
+
+function save_store(array $store): void {
+	file_put_contents(store_path(), json_encode($store, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+}
+
+/** Interactively pick one of the stored names from STDIN. */
+function prompt_select(array $names): string {
+	$values = array_values($names);
+	fwrite(STDERR, "Stored entries:\n");
+	foreach ($values as $i => $n) {
+		fwrite(STDERR, '  ' . ($i + 1) . ') ' . $n . "\n");
+	}
+	fwrite(STDERR, 'Select [1-' . count($values) . ' or name]: ');
+	$line = trim((string)fgets(STDIN));
+	if (ctype_digit($line) && isset($values[(int)$line - 1])) {
+		return (string)$values[(int)$line - 1];
+	}
+	if (in_array($line, $values, true)) {
+		return $line;
+	}
+	fwrite(STDERR, "Invalid selection.\n");
+	exit(1);
+}
+
+function usage(): void {
+	fwrite(STDERR, "Usage: php tools/ocra_device.php [options] <secret-base32> <challenge> [suite]\n");
+	fwrite(STDERR, "       php tools/ocra_device.php --save=NAME <secret-base32> [suite]\n");
+	fwrite(STDERR, "       php tools/ocra_device.php [--name=NAME] <challenge>   (uses saved entries)\n");
+	fwrite(STDERR, "       php tools/ocra_device.php --selftest | --list | --help\n");
+	fwrite(STDERR, "Options: --suite= --counter= --pin= --session= --steps=\n");
+	fwrite(STDERR, "Suite shorthand: --suite=1-6|1-8|256-6|256-8|512-6|512-8\n");
+	fwrite(STDERR, "Default suite: OCRA-1:HOTP-SHA1-6:QN08\n");
+}
+
+// Parse --key=value options and positional arguments.
+$opts = [];
+$pos = [];
+foreach (array_slice($argv, 1) as $arg) {
+	if (str_starts_with($arg, '--')) {
+		$eq = strpos($arg, '=');
+		if ($eq !== false) {
+			$opts[substr($arg, 2, $eq - 2)] = substr($arg, $eq + 1);
+		} else {
+			$opts[substr($arg, 2)] = true;
+		}
+	} else {
+		$pos[] = $arg;
+	}
+}
+
+$ocra = new Ocra();
+
+if (isset($opts['help'])) {
+	usage();
+	echo "\nOCRASuite = OCRA-1 : HOTP-<SHA1|SHA256|SHA512>-<digits> : <DataInput>\n";
+	echo "DataInput fields (in order): [C] Q<A|N|H><04-64> [P<SHA1|SHA256|SHA512>] [S<001-512>] [T<n><S|M|H>]\n";
+	exit(0);
+}
+
+if (isset($opts['list'])) {
+	echo "Example OCRASuites:\n";
+	echo "  OCRA-1:HOTP-SHA1-6:QN08              numeric 8-digit challenge -> 6-digit code (default)\n";
+	echo "  OCRA-1:HOTP-SHA256-8:QN08            same, SHA-256, 8-digit code\n";
+	echo "  OCRA-1:HOTP-SHA1-6:QA10              alphanumeric 10-char challenge\n";
+	echo "  OCRA-1:HOTP-SHA1-6:QH40              hex 40-char challenge\n";
+	echo "  OCRA-1:HOTP-SHA256-8:C-QN08          with counter   (--counter=N)\n";
+	echo "  OCRA-1:HOTP-SHA256-8:C-QN08-PSHA1    with counter + PIN   (--pin=...)\n";
+	echo "  OCRA-1:HOTP-SHA512-8:QA10-T1M        with 1-minute timestamp\n";
+	echo "\nShorthand for the common suites (--suite=…): 1-6 1-8 256-6 256-8 512-6 512-8\n";
+	echo "  e.g. --suite=256-8  ==  OCRA-1:HOTP-SHA256-8:QN08\n";
+	exit(0);
+}
+
+if (isset($opts['selftest'])) {
+	$key = '12345678901234567890';
+	$vectors = [
+		['00000000', '237653'], ['11111111', '243178'], ['22222222', '653583'],
+		['33333333', '740991'], ['44444444', '608993'], ['55555555', '388898'],
+		['66666666', '816933'], ['77777777', '224598'], ['88888888', '750600'],
+		['99999999', '294470'],
+	];
+	$ok = true;
+	foreach ($vectors as [$q, $exp]) {
+		$got = $ocra->generate('OCRA-1:HOTP-SHA1-6:QN08', $key, $q);
+		$pass = $got === $exp;
+		$ok = $ok && $pass;
+		printf("Q=%s  expected=%s  got=%s  %s\n", $q, $exp, $got, $pass ? 'OK' : 'FAIL');
+	}
+	echo $ok ? "\nAll RFC 6287 vectors pass.\n" : "\nSELF-TEST FAILED.\n";
+	exit($ok ? 0 : 1);
+}
+
+// A suite may be given via --suite= or as a positional (full "OCRA-..." or
+// shorthand "256-8"), in any position; the other positionals are secret + challenge
+// (a Base32 secret and a numeric challenge never contain a dash, so it is unambiguous).
+$suiteArg = null;
+$rest = [];
+foreach ($pos as $p) {
+	if ($suiteArg === null && (str_contains($p, ':') || preg_match('/^\d+-\d+$/', $p) === 1)) {
+		$suiteArg = $p;
+	} else {
+		$rest[] = $p;
+	}
+}
+$suite = expand_suite(is_string($opts['suite'] ?? null) ? $opts['suite'] : ($suiteArg ?? 'OCRA-1:HOTP-SHA1-6:QN08'));
+
+// --save=NAME <secret> [suite]: store credentials (no challenge), then exit.
+if (isset($opts['save'])) {
+	if (!is_string($opts['save']) || $opts['save'] === '' || count($rest) < 1) {
+		fwrite(STDERR, "Usage: php tools/ocra_device.php --save=NAME <secret-base32> [suite]\n");
+		exit(1);
+	}
+	$store = load_store();
+	$store[$opts['save']] = ['secret' => $rest[0], 'suite' => $suite];
+	save_store($store);
+	fwrite(STDERR, "Saved '" . $opts['save'] . "' (suite: $suite) to " . store_path() . "\n");
+	exit(0);
+}
+
+// Resolve secret + challenge: directly, by --name=, or by picking a stored name.
+if (isset($opts['name']) && is_string($opts['name'])) {
+	$store = load_store();
+	if (!isset($store[$opts['name']])) {
+		fwrite(STDERR, 'Unknown stored name: ' . $opts['name'] . "\n");
+		exit(1);
+	}
+	$secret = (string)$store[$opts['name']]['secret'];
+	$suite = expand_suite((string)$store[$opts['name']]['suite']);
+	$challenge = $rest[0] ?? '';
+} elseif (count($rest) >= 2) {
+	$secret = $rest[0];
+	$challenge = $rest[1];
+} elseif (count($rest) === 1) {
+	// Only a challenge given -> use a stored entry (prompt if several).
+	$challenge = $rest[0];
+	$store = load_store();
+	$names = array_keys($store);
+	if (count($names) === 0) {
+		fwrite(STDERR, "No stored entries. Use: <secret> <challenge> [suite], or save one with --save=NAME.\n");
+		exit(1);
+	}
+	$name = count($names) === 1 ? (string)$names[0] : prompt_select($names);
+	$secret = (string)$store[$name]['secret'];
+	$suite = expand_suite((string)$store[$name]['suite']);
+} else {
+	usage();
+	exit(1);
+}
+
+if ($challenge === '') {
+	fwrite(STDERR, "Missing challenge.\n");
+	exit(1);
+}
+
+try {
+	$parsed = $ocra->parseSuite($suite);
+} catch (\InvalidArgumentException $e) {
+	fwrite(STDERR, 'Invalid suite: ' . $e->getMessage() . "\n");
+	exit(1);
+}
+// Echo the resolved suite to STDERR (stdout stays just the response code).
+fwrite(STDERR, 'suite: ' . $suite . "\n");
+
+$key = base32_decode_raw($secret);
+$counter = (int)($opts['counter'] ?? 0);
+
+$pinHash = '';
+if ($parsed['pinHash'] !== null && isset($opts['pin']) && is_string($opts['pin'])) {
+	$pinHash = hash($parsed['pinHash'], $opts['pin'], true);
+}
+
+$sessionInfo = '';
+if ($parsed['session'] > 0 && isset($opts['session']) && is_string($opts['session'])) {
+	$sessionInfo = (string)hex2bin($opts['session']);
+}
+
+$timestamp = null;
+if ($parsed['timeStep'] !== null) {
+	$timestamp = isset($opts['steps']) ? (int)$opts['steps'] : intdiv(time(), $parsed['timeStep']);
+}
+
+echo $ocra->generate($suite, $key, $challenge, $counter, $pinHash, $sessionInfo, $timestamp) . "\n";

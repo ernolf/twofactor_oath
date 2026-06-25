@@ -1,0 +1,55 @@
+{
+	"name": "ernolf/twofactor_oath",
+	"description": "Advanced OATH second-factor provider for Nextcloud: TOTP and HOTP with configurable algorithm, digits, period, custom secrets, admin-managed locking and bulk provisioning.",
+	"type": "nextcloud-app",
+	"version": "0.1.0",
+	"license": "AGPL-3.0-or-later",
+	"authors": [
+		{
+			"name": "[ernolf] Raphael Gradenwitz",
+			"email": "raphael.gradenwitz@googlemail.com"
+		}
+	],
+	"config": {
+		"platform": {
+			"php": "8.1"
+		},
+		"sort-packages": true,
+		"allow-plugins": {
+			"bamarni/composer-bin-plugin": true
+		},
+		"optimize-autoloader": true,
+		"autoloader-suffix": "TwoFactorOath"
+	},
+	"autoload": {
+		"psr-4": {
+			"OCA\\TwoFactorOath\\": "lib/"
+		}
+	},
+	"scripts": {
+		"post-install-cmd": [
+			"@composer bin all install --ansi"
+		],
+		"post-update-cmd": [
+			"@composer bin all install --ansi"
+		],
+		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './vendor-bin/*' -not -path './node_modules/*' -print0 | xargs -0 -n1 php -l",
+		"cs:check": "php-cs-fixer fix --dry-run --diff",
+		"cs:fix": "php-cs-fixer fix",
+		"psalm": "psalm --no-cache --threads=$(nproc)",
+		"psalm:update-baseline": "psalm --threads=1 --update-baseline",
+		"test:unit": "phpunit -c phpunit.xml --colors=always --fail-on-warning --fail-on-risky",
+		"rector": "rector && composer cs:fix"
+	},
+	"require": {
+		"php": ">=8.1",
+		"bamarni/composer-bin-plugin": "^1.9",
+		"spomky-labs/otphp": "^11.3"
+	},
+	"extra": {
+		"bamarni-bin": {
+			"bin-links": true,
+			"forward-command": false
+		}
+	}
+}

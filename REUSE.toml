@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: 2026 [ernolf] Raphael Gradenwitz <raphael.gradenwitz@googlemail.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+version = 1
+SPDX-PackageName = "twofactor_oath"
+SPDX-PackageSupplier = "[ernolf] Raphael Gradenwitz <raphael.gradenwitz@googlemail.com>"
+SPDX-PackageDownloadLocation = "https://github.com/ernolf/twofactor_oath"
+
+[[annotations]]
+path = ["composer.json", "composer.lock", "vendor-bin/*/composer.json", "vendor-bin/*/composer.lock"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 [ernolf] Raphael Gradenwitz"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
+path = ["package.json", "package-lock.json"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 [ernolf] Raphael Gradenwitz"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
+path = ["l10n/**.js", "l10n/**.json"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Nextcloud translators"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
+path = [".tx/config", "l10n/.gitkeep", ".github/FUNDING.yml"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 [ernolf] Raphael Gradenwitz"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
+path = ["doc/screenshots/**"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 [ernolf] Raphael Gradenwitz"
+SPDX-License-Identifier = "AGPL-3.0-or-later"

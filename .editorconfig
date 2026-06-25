@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2026 [ernolf] Raphael Gradenwitz <raphael.gradenwitz@googlemail.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = tab
+indent_size = 4
+
+[*.{yml,yaml,json,xml,md}]
+indent_style = space
+indent_size = 2
+
+[*.php]
+indent_style = tab
