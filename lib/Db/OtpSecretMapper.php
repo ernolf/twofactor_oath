@@ -13,11 +13,12 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
+use Override;
 
 /**
  * @extends QBMapper<OtpSecret>
  */
-final class OtpSecretMapper extends QBMapper {
+final class OtpSecretMapper extends QBMapper implements IOtpSecretMapper {
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, 'twofactor_oath_secrets', OtpSecret::class);
 	}
@@ -25,6 +26,7 @@ final class OtpSecretMapper extends QBMapper {
 	/**
 	 * @throws DoesNotExistException
 	 */
+	#[Override]
 	public function getByUserId(string $userId): OtpSecret {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
@@ -34,6 +36,7 @@ final class OtpSecretMapper extends QBMapper {
 		return $this->findEntity($qb);
 	}
 
+	#[Override]
 	public function hasSecret(string $userId): bool {
 		try {
 			$this->getByUserId($userId);
@@ -43,6 +46,7 @@ final class OtpSecretMapper extends QBMapper {
 		}
 	}
 
+	#[Override]
 	public function deleteByUserId(string $userId): void {
 		try {
 			$this->delete($this->getByUserId($userId));
