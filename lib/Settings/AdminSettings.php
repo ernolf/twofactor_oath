@@ -51,7 +51,7 @@ class AdminSettings implements ISettings {
 			static fn (IGroup $group): array => ['id' => $group->getGID(), 'label' => $group->getDisplayName()],
 			$this->groupManager->search(''),
 		);
-		$this->initialState->provideInitialState('all_groups', array_values($groups));
+		$this->initialState->provideInitialState('all_groups', $groups);
 
 		// Import is only offered while twofactor_totp is enabled. "importable" =
 		// enabled twofactor_totp accounts whose user has no OATH token yet (these
