@@ -1,7 +1,7 @@
 {
   "name": "twofactor_oath",
   "description": "Advanced OATH second-factor provider (TOTP and HOTP) for Nextcloud",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "[ernolf] Raphael Gradenwitz <raphael.gradenwitz@googlemail.com>",
   "license": "AGPL-3.0-or-later",
   "private": true,

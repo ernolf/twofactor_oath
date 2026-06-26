@@ -2,7 +2,7 @@
 	"name": "ernolf/twofactor_oath",
 	"description": "Advanced OATH second-factor provider for Nextcloud: TOTP and HOTP with configurable algorithm, digits, period, custom secrets, admin-managed locking and bulk provisioning.",
 	"type": "nextcloud-app",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"license": "AGPL-3.0-or-later",
 	"authors": [
 		{
