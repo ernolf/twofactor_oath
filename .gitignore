@@ -4,6 +4,7 @@
 # Composer / PHP dependencies (vendored on the server via `composer install`)
 /vendor/
 /vendor-bin/*/vendor/
+/vendor-bin/*/composer.lock
 
 # Built frontend assets — this app is not shipped, so built JS is not committed
 /js/
