@@ -21,16 +21,22 @@ exclude_flags = $(shell python3 -c 'c=open("krankerl.toml").read();s=c[c.index("
         register publish list-releases list-releases-full list-for-author delete-release ratings \
         clean help
 
+# `make` with no target shows the help instead of building anything.
+.DEFAULT_GOAL := help
+
 all: appstore
 
 # ── Release versioning ────────────────────────────────────────────────────────
 
-# Open the next version: prompt, validate (must be greater than the latest tag),
+# Open the next version (must run on main): prompt, validate (> latest tag, empty = abort),
 # set it in info.xml/composer.json/package.json and commit. Then fill the CHANGELOG.
 version:
-	@latest=$$(git tag --list 'v*' --sort=-v:refname | head -1 | sed 's/^v//'); \
+	@cur=$$(git rev-parse --abbrev-ref HEAD 2>/dev/null); \
+	if [ "$$cur" != "main" ]; then echo "make version must run on 'main' (you are on '$$cur')." >&2; exit 1; fi; \
+	latest=$$(git tag --list 'v*' --sort=-v:refname | head -1 | sed 's/^v//'); \
 	latest=$${latest:-0.0.0}; \
-	printf 'New version (latest tag: %s): ' "$$latest"; read new; \
+	printf 'New version (latest tag: %s, empty = abort): ' "$$latest"; read new; \
+	[ -z "$$new" ] && { echo "Aborted."; exit 0; }; \
 	echo "$$new" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$$' || { echo "Not a X.Y.Z version: $$new" >&2; exit 1; }; \
 	high=$$(printf '%s\n%s\n' "$$latest" "$$new" | sort -V | tail -1); \
 	if [ "$$new" = "$$latest" ] || [ "$$high" != "$$new" ]; then echo "Version $$new must be greater than the latest tag $$latest" >&2; exit 1; fi; \
@@ -75,13 +81,13 @@ build:
 	@python3 -c 'c=open("krankerl.toml").read();s=c[c.index("[",c.index("before_cmds"))+1:c.index("]",c.index("before_cmds"))];[print(x.split(chr(34))[1]) for x in s.split(chr(10)) if chr(34) in x]' \
 		| while read -r cmd; do echo "+ $$cmd"; sh -c "$$cmd" || exit 1; done
 
-# Warn (do not fail) when the build outputs look missing before packaging
+# Abort (do not build a broken tarball) when the build outputs are missing
 check-build:
 	@if [ -f package.json ] && { [ ! -d js ] || [ -z "$$(ls -A js 2>/dev/null)" ]; }; then \
-		echo "WARNING: js/ is missing or empty - did you run 'make build'?" >&2; \
+		echo "ERROR: js/ is missing or empty - run 'make build' first." >&2; exit 1; \
 	fi
 	@if grep -q '"require"' composer.json 2>/dev/null && [ ! -f vendor/autoload.php ]; then \
-		echo "WARNING: vendor/autoload.php is missing - did you run 'make build'?" >&2; \
+		echo "ERROR: vendor/autoload.php is missing - run 'make build' first." >&2; exit 1; \
 	fi
 
 # Build the App Store tarball (warns via check-build if js/ or vendor/ look unbuilt)
@@ -246,10 +252,15 @@ clean:
 
 # Show available targets and required files
 help:
-	@echo "Usage: make <target>"
+	@echo "Usage: make <target>    (no target = this help)"
+	@echo ""
+	@echo "Release versioning (run on main):"
+	@echo "  version              Bump the version (prompts; must be > latest tag) and commit"
+	@echo "  tag                  Freeze the current HEAD as a signed release tag (+ push)"
 	@echo ""
 	@echo "Build:"
-	@echo "  appstore             Build the App Store tarball"
+	@echo "  build                Build frontend + PHP deps (composer/npm from krankerl.toml)"
+	@echo "  appstore             Build the App Store tarball (run 'make build' first)"
 	@echo "                       → $(tarball)"
 	@echo "  sign                 Sign the tarball (stdout = base64 signature,"
 	@echo "                       needed for 'make publish' / App Store)"
@@ -278,3 +289,4 @@ help:
 	@echo "  help                 Show this help"
 	@echo ""
 	@echo "Current: $(app_name) v$(version)"
+
