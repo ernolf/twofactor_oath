@@ -14,6 +14,11 @@ if (file_exists($ncBase)) {
 	// Running inside a Nextcloud server: boot it so tests may use OCP/OC.
 	require_once $ncBase;
 
+	// The app's vendored dependencies (otphp, …) are normally loaded by
+	// Application::register(), which only runs when the app is enabled. In a
+	// CI test instance the app is not enabled, so load them explicitly here.
+	require_once __DIR__ . '/../vendor/autoload.php';
+
 	\OC::$composerAutoloader->addPsr4('Test\\', \OC::$SERVERROOT . '/tests/lib/', true);
 	\OC::$composerAutoloader->addPsr4('Tests\\', \OC::$SERVERROOT . '/tests/', true);
 

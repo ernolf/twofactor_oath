@@ -12,8 +12,8 @@ namespace OCA\TwoFactorOath\Service;
 use InvalidArgumentException;
 use OCA\TwoFactorOath\AppInfo\Application;
 use OCA\TwoFactorOath\Constants;
+use OCA\TwoFactorOath\Db\IOtpSecretMapper;
 use OCA\TwoFactorOath\Db\OtpSecret;
-use OCA\TwoFactorOath\Db\OtpSecretMapper;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\IAppConfig;
 use OCP\IURLGenerator;
@@ -30,7 +30,7 @@ use ParagonIE\ConstantTime\Base32;
  */
 final class OtpService {
 	public function __construct(
-		private readonly OtpSecretMapper $mapper,
+		private readonly IOtpSecretMapper $mapper,
 		private readonly IAppConfig $appConfig,
 		private readonly IURLGenerator $urlGenerator,
 		private readonly ICrypto $crypto,

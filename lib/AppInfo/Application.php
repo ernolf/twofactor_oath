@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace OCA\TwoFactorOath\AppInfo;
 
+use OCA\TwoFactorOath\Db\IOtpSecretMapper;
+use OCA\TwoFactorOath\Db\OtpSecretMapper;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -29,6 +31,9 @@ final class Application extends App implements IBootstrap {
 		if (is_file($autoload)) {
 			require_once $autoload;
 		}
+
+		// OtpService depends on the IOtpSecretMapper abstraction (mockable in tests).
+		$context->registerServiceAlias(IOtpSecretMapper::class, OtpSecretMapper::class);
 
 		// The 2FA provider is registered declaratively via appinfo/info.xml
 		// (<two-factor-providers>); no programmatic registration is needed here.
