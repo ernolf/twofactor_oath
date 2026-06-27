@@ -16,15 +16,26 @@ api_token     = $(shell cat $(cert_dir)/appstore_api-token 2>/dev/null | tr -d '
 # Parse exclude list from krankerl.toml and generate --exclude flags for tar
 exclude_flags = $(shell python3 -c 'c=open("krankerl.toml").read();s=c[c.index("[",c.index("exclude"))+1:c.index("]",c.index("exclude"))];items=[x.split(chr(34))[1] for x in s.split(chr(10)) if chr(34) in x];[print("--exclude=../$(app_name)/"+i) for i in items]')
 
-# == Container runtime (used by 'make version' to sync the lock files) ==
-# composer.lock and package-lock.json are re-synced in throwaway containers, so the
-# host needs no PHP/Node toolchain (mirrors befehle_twofactor_oath.txt and
-# doc/development.md). Override on the command line, e.g. 'make version RUNTIME=docker':
-#   podman-rootless  rootless podman   (default)
+# == Container runtime (used by 'make version' and 'make build') ==
+# composer/npm run in throwaway containers, so the host needs no PHP/Node toolchain
+# (mirrors befehle_twofactor_oath.txt and doc/development.md). The runtime is auto-detected
+# (podman preferred, then docker); if neither is installed, the container targets abort with
+# a hint to install podman. Override on the command line, e.g. 'make build RUNTIME=docker':
+#   podman-rootless  rootless podman
 #   docker           standard rootful docker (maps your uid to avoid root-owned files)
 #   docker-rootless  rootless docker
 #   bare             no container; composer and npm must be on PATH
-RUNTIME     ?= podman-rootless
+have_podman := $(shell command -v podman 2>/dev/null)
+have_docker := $(shell command -v docker 2>/dev/null)
+ifneq ($(have_podman),)
+  default_runtime := podman-rootless
+else ifneq ($(have_docker),)
+  default_runtime := docker
+else
+  default_runtime := none
+endif
+RUNTIME     ?= $(default_runtime)
+no_runtime   = sh -c 'echo "ERROR: no container runtime found (podman/docker). Install podman: apt-get install podman, or use RUNTIME=bare to build on the host." >&2; exit 1'
 # Image tags are derived from the declared support range, never hardcoded: the PHP CI
 # image from info.xml's min-version, the Node image from package.json's engines.node.
 php_min     = $(shell xmllint --xpath 'string(//dependencies/php/@min-version)' appinfo/info.xml 2>/dev/null)
@@ -35,6 +46,9 @@ node_image  ?= node:$(node_major)
 ifeq ($(RUNTIME),bare)
   php_run  = sh -lc
   node_run = sh -lc
+else ifeq ($(RUNTIME),none)
+  php_run  = $(no_runtime)
+  node_run = $(no_runtime)
 else ifeq ($(RUNTIME),podman-rootless)
   container = podman run --rm -v "$(CURDIR)":/app -w /app
 else ifeq ($(RUNTIME),docker-rootless)
@@ -45,7 +59,7 @@ else
   $(error Unknown RUNTIME '$(RUNTIME)'. Use: podman-rootless | docker | docker-rootless | bare)
 endif
 
-ifneq ($(RUNTIME),bare)
+ifeq ($(filter $(RUNTIME),bare none),)
   php_run  = $(container) -e COMPOSER_HOME=/tmp/composer -e COMPOSER_ALLOW_SUPERUSER=1 $(php_image) sh -lc
   node_run = $(container) $(node_image) sh -lc
 endif
@@ -53,7 +67,7 @@ endif
 .PHONY: all version tag build check-build appstore sign release \
         fetch-apps \
         register publish list-releases list-releases-full list-for-author delete-release ratings \
-        clean help
+        clean dist-clean help
 
 # `make` with no target shows the help instead of building anything.
 .DEFAULT_GOAL := help
@@ -116,10 +130,19 @@ tag:
 
 # == Build ==
 
-# Run the per-app build commands (before_cmds in krankerl.toml: composer, npm, etc.)
+# Run the per-app build commands (before_cmds in krankerl.toml: composer, npm, etc.),
+# each routed to its container via RUNTIME (see top of file) so the host needs no toolchain.
 build:
+	@echo "==> Building via RUNTIME=$(RUNTIME)"
 	@python3 -c 'c=open("krankerl.toml").read();s=c[c.index("[",c.index("before_cmds"))+1:c.index("]",c.index("before_cmds"))];[print(x.split(chr(34))[1]) for x in s.split(chr(10)) if chr(34) in x]' \
-		| while read -r cmd; do echo "+ $$cmd"; sh -c "$$cmd" || exit 1; done
+		| while read -r cmd; do \
+			echo "+ $$cmd"; \
+			case "$$cmd" in \
+				composer*) $(php_run) "$$cmd" ;; \
+				npm*)      $(node_run) "$$cmd" ;; \
+				*)         sh -lc "$$cmd" ;; \
+			esac || exit 1; \
+		done
 
 # Abort (do not build a broken tarball) when the build outputs are missing
 check-build:
@@ -290,6 +313,13 @@ ratings:
 clean:
 	rm -rf build
 
+# Remove every git-ignored build output for a true from-scratch rebuild: runs 'clean' first
+# (build/), then vendor/, node_modules/, js/, caches and the nested dependency repos composer
+# leaves behind, via 'git clean -dffX' (-X = ignored files only, so untracked source stays;
+# the second -f also clears those nested git repos). git clean lists each removed path.
+dist-clean: clean
+	git clean -dffX
+
 # Show available targets and required files
 help:
 	@echo "Usage: make <target>    (no target = this help)"
@@ -298,8 +328,8 @@ help:
 	@echo "  version              Bump the version (prompts; > latest tag), sync lockfiles, commit"
 	@echo "  tag                  Freeze the current HEAD as a signed release tag (+ push)"
 	@echo ""
-	@echo "  Lockfiles are synced in a container; pick it with RUNTIME=... (now: $(RUNTIME))"
-	@echo "    podman-rootless (default) | docker | docker-rootless | bare"
+	@echo "  Container runtime for 'version' (lockfile sync) and 'build': RUNTIME=... (now: $(RUNTIME))"
+	@echo "    podman-rootless | docker | docker-rootless | bare   (auto-detected, podman preferred)"
 	@echo ""
 	@echo "Build:"
 	@echo "  build                Build frontend + PHP deps (composer/npm from krankerl.toml)"
@@ -329,6 +359,7 @@ help:
 	@echo ""
 	@echo "Utility:"
 	@echo "  clean                Remove build/ directory (incl. cache)"
+	@echo "  dist-clean           Remove ALL git-ignored build outputs (vendor, node_modules, js, …)"
 	@echo "  help                 Show this help"
 	@echo ""
 	@echo "Current: $(app_name) v$(version)"
