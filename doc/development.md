@@ -9,6 +9,8 @@ How to set up the development environment and run the quality gates for `twofact
 
 ## Requirements
 
+For the container-based workflow (recommended), only **podman** or **Docker** is required — the toolchain below runs inside the images. For native, on-host work you need:
+
 - PHP 8.1 or newer (the app supports Nextcloud 32 to 35, PHP 8.1 to 8.5)
 - Composer
 - Node.js and npm (for the frontend build)
@@ -56,6 +58,8 @@ npm run test           # vitest unit tests (npm run test:watch to watch)
 ## Container-based development
 
 Run every gate in a throwaway container, so the host stays untouched and you can test against any PHP version (for example 8.1) even if it is not installed on the host. This mirrors the Nextcloud CI, which ships ready-made images per PHP version with all required extensions.
+
+The `Makefile` automates exactly these invocations: `make build` and `make version` run the package managers in a container chosen by `RUNTIME` (see [Makefile targets](#makefile-targets)).
 
 ### Choosing a runtime
 
@@ -117,31 +121,38 @@ composer test:unit
 
 The same symlink lets Nextcloud load and enable the app for manual testing.
 
-## Install from source
+## Makefile targets
 
-A clean install from a Git checkout, end to end.
+The `Makefile` drives building, packaging and releasing without any host toolchain — the package managers run in throwaway containers (see [Container-based development](#container-based-development)). `make help` is the authoritative list; in summary:
 
-```sh
-# 1. get the source
-git clone https://github.com/ernolf/twofactor_oath.git
-cd twofactor_oath
+| Target | Purpose |
+| --- | --- |
+| `build` | run the build commands from `krankerl.toml` (composer install, npm ci, npm run build) |
+| `dist` | build the distribution tarball into `build/artifacts/dist/` |
+| `sign` | print the base64 signature of the tarball |
+| `release` | `dist` + `sign` |
+| `clean` | remove `build/` |
+| `dist-clean` | remove every git-ignored build output (vendor, node_modules, js, …) for a clean rebuild |
+| `version` | open a release branch with the version bump for a PR (maintainer) |
+| `tag` | tag the merged release commit on main, signed and pushed (maintainer) |
+| `register` | register the app and its signing certificate, one-time (maintainer) |
+| `publish` | submit a release for publication on the App Store (maintainer) |
 
-# 2. PHP runtime dependency (otphp) into vendor/, without the dev tools
-composer install --no-dev --no-scripts
+Choose the container runtime with `RUNTIME=` — auto-detected (`podman-rootless` preferred, then `docker`), or `bare` to use host tools, for example `make build RUNTIME=docker`. Targets marked maintainer need repo write access and/or the App Store signing key; `make help` flags them with `[m]`.
 
-# 3. build the frontend into js/
-npm ci
-npm run build
-```
+### Releasing
 
-Only a subset of the tree is needed at runtime: `appinfo/`, `lib/`, `templates/`, `img/`, `js/` and `vendor/`. The simplest path is to clone directly into the instance `apps/` directory, run the steps above there, then set ownership and enable:
+`main` is protected (required checks and signed commits), so a version bump cannot be pushed to it directly. The flow:
 
-```sh
-chown -R www-data:www-data /path/to/nextcloud/apps/twofactor_oath
-occ app:enable twofactor_oath
-```
+1. `make version` — branches off `main` into `release/X.Y.Z`, bumps the version in `info.xml`/`composer.json`/`package.json`, re-syncs the lockfiles and commits there.
+2. Add a `## [X.Y.Z]` entry to `CHANGELOG.md` on that branch, commit, push, open a PR and merge.
+3. On `main`: `git pull && make tag` — creates and pushes the signed `vX.Y.Z` tag.
 
-If you build the app elsewhere and copy it in, sync only the runtime files and leave out the development and build files:
+From the tag you cut a GitHub release; the release workflow builds the tarball and attaches it as an asset. `make register` registers the app and its signing certificate (one-time); `make publish` then submits the release for publication on the App Store.
+
+## Deploying to a test instance
+
+Only a subset of the tree is needed at runtime: `appinfo/`, `lib/`, `templates/`, `img/`, `js/` and `vendor/`. For a quick iteration loop, sync just the runtime files into your instance and leave out the development and build files:
 
 ```sh
 rsync -a --delete \
@@ -160,10 +171,6 @@ occ app:enable twofactor_oath
 
 > [!IMPORTANT]
 > Anchor every exclude with a leading slash. A bare `src` or `tests` would also match `vendor/spomky-labs/otphp/src` and similar, which would break the runtime dependency.
-
-### Building a release tarball
-
-Run steps 1 to 3 above, then archive only the runtime files (same exclude set as the rsync), so the tarball extracts to a ready-to-enable `twofactor_oath/`.
 
 ### Schema changes
 
@@ -186,3 +193,4 @@ reuse lint
 
 - The package version lives in `appinfo/info.xml`. `composer.json` mirrors it in `version` only to silence composer's version notice; once the repository is tagged (`vX.Y.Z`), composer infers it from the tag. Keep both in sync.
 - The built frontend (`js/`) and `vendor/` are git-ignored; run `composer install` and the npm build after cloning.
+

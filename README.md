@@ -118,7 +118,9 @@ Secrets are encrypted at rest, revealing a secret or disabling the provider alwa
 ## Installation
 
 > [!NOTE]
-> This app is not in the Nextcloud App Store yet. Until it is, install it from a release tarball or from source.
+> This app is not in the Nextcloud App Store yet. Until it is, install it from a release tarball or build it from source.
+
+### From a release tarball
 
 Download the latest release tarball from the [releases page](https://github.com/ernolf/twofactor_oath/releases) and extract it into your Nextcloud `apps/` directory, so the app lives at `apps/twofactor_oath/`. Then set ownership to your web server user and enable it:
 
@@ -128,7 +130,19 @@ chown -R www-data:www-data /path/to/nextcloud/apps/twofactor_oath
 occ app:enable twofactor_oath
 ```
 
-To install from a Git checkout instead, see [Install from source](doc/development.md#install-from-source).
+### From source
+
+The build runs entirely in throwaway containers, so the only requirement is **[podman](https://podman.io/)** (or Docker) — no PHP or Node toolchain on the host. Clone and build the tarball:
+
+```sh
+git clone https://github.com/ernolf/twofactor_oath.git
+cd twofactor_oath
+make build && make dist
+```
+
+This writes `build/artifacts/dist/twofactor_oath-x.y.z.tar.gz`. Install it exactly like a release tarball above (extract into `apps/`, set ownership, then `occ app:enable twofactor_oath`).
+
+Working on the app itself? See [doc/development.md](doc/development.md) for the quality gates and all `make` targets.
 
 ## Documentation
 
@@ -143,3 +157,4 @@ To install from a Git checkout instead, see [Install from source](doc/developmen
 ## License
 
 [AGPL-3.0-or-later](LICENSES/AGPL-3.0-or-later.txt). Author: [ernolf] Raphael Gradenwitz.
+
