@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-const { defineConfig } = require('vitest/config')
+import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vitest/config'
 
-module.exports = defineConfig({
+export default defineConfig({
+	plugins: [vue()],
 	test: {
-		environment: 'node',
+		environment: 'jsdom',
 		include: ['src/**/*.spec.js'],
 	},
 })

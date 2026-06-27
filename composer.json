@@ -38,7 +38,7 @@
 		"cs:fix": "php-cs-fixer fix",
 		"psalm": "psalm --no-cache --threads=$(nproc)",
 		"psalm:update-baseline": "psalm --threads=1 --update-baseline",
-		"test:unit": "phpunit -c phpunit.xml --colors=always --fail-on-warning --fail-on-risky",
+		"test:unit": "phpunit -c phpunit.xml --colors=always --testdox --fail-on-warning --fail-on-risky",
 		"rector": "rector && composer cs:fix"
 	},
 	"require": {
