@@ -16,6 +16,40 @@ api_token     = $(shell cat $(cert_dir)/appstore_api-token 2>/dev/null | tr -d '
 # Parse exclude list from krankerl.toml and generate --exclude flags for tar
 exclude_flags = $(shell python3 -c 'c=open("krankerl.toml").read();s=c[c.index("[",c.index("exclude"))+1:c.index("]",c.index("exclude"))];items=[x.split(chr(34))[1] for x in s.split(chr(10)) if chr(34) in x];[print("--exclude=../$(app_name)/"+i) for i in items]')
 
+# == Container runtime (used by 'make version' to sync the lock files) ==
+# composer.lock and package-lock.json are re-synced in throwaway containers, so the
+# host needs no PHP/Node toolchain (mirrors befehle_twofactor_oath.txt and
+# doc/development.md). Override on the command line, e.g. 'make version RUNTIME=docker':
+#   podman-rootless  rootless podman   (default)
+#   docker           standard rootful docker (maps your uid to avoid root-owned files)
+#   docker-rootless  rootless docker
+#   bare             no container; composer and npm must be on PATH
+RUNTIME     ?= podman-rootless
+# Image tags are derived from the declared support range, never hardcoded: the PHP CI
+# image from info.xml's min-version, the Node image from package.json's engines.node.
+php_min     = $(shell xmllint --xpath 'string(//dependencies/php/@min-version)' appinfo/info.xml 2>/dev/null)
+node_major  = $(shell python3 -c 'import json,re;print(re.search(r"[0-9]+", json.load(open("package.json"))["engines"]["node"]).group())' 2>/dev/null)
+php_image   ?= ghcr.io/nextcloud/continuous-integration-php$(php_min):latest
+node_image  ?= node:$(node_major)
+
+ifeq ($(RUNTIME),bare)
+  php_run  = sh -lc
+  node_run = sh -lc
+else ifeq ($(RUNTIME),podman-rootless)
+  container = podman run --rm -v "$(CURDIR)":/app -w /app
+else ifeq ($(RUNTIME),docker-rootless)
+  container = docker run --rm -v "$(CURDIR)":/app -w /app
+else ifeq ($(RUNTIME),docker)
+  container = docker run --rm --user $(shell id -u):$(shell id -g) -v "$(CURDIR)":/app -w /app
+else
+  $(error Unknown RUNTIME '$(RUNTIME)'. Use: podman-rootless | docker | docker-rootless | bare)
+endif
+
+ifneq ($(RUNTIME),bare)
+  php_run  = $(container) -e COMPOSER_HOME=/tmp/composer -e COMPOSER_ALLOW_SUPERUSER=1 $(php_image) sh -lc
+  node_run = $(container) $(node_image) sh -lc
+endif
+
 .PHONY: all version tag build check-build appstore sign release \
         fetch-apps \
         register publish list-releases list-releases-full list-for-author delete-release ratings \
@@ -26,10 +60,12 @@ exclude_flags = $(shell python3 -c 'c=open("krankerl.toml").read();s=c[c.index("
 
 all: appstore
 
-# ── Release versioning ────────────────────────────────────────────────────────
+# == Release versioning ==
 
 # Open the next version (must run on main): prompt, validate (> latest tag, empty = abort),
-# set it in info.xml/composer.json/package.json and commit. Then fill the CHANGELOG.
+# set it in info.xml/composer.json/package.json, re-sync the lockfiles (composer.lock,
+# package-lock.json) and commit it all in one go. Then fill the CHANGELOG. The lockfile
+# sync runs the package managers via RUNTIME (see top of file).
 version:
 	@cur=$$(git rev-parse --abbrev-ref HEAD 2>/dev/null); \
 	if [ "$$cur" != "main" ]; then echo "make version must run on 'main' (you are on '$$cur')." >&2; exit 1; fi; \
@@ -43,7 +79,11 @@ version:
 	sed -i -E "s|<version>[0-9.]+</version>|<version>$$new</version>|" appinfo/info.xml; \
 	[ -f composer.json ] && sed -i -E "s|(\"version\"[[:space:]]*:[[:space:]]*)\"[0-9.]+\"|\1\"$$new\"|" composer.json || true; \
 	[ -f package.json ] && sed -i -E "s|(\"version\"[[:space:]]*:[[:space:]]*)\"[0-9.]+\"|\1\"$$new\"|" package.json || true; \
-	git add appinfo/info.xml; [ -f composer.json ] && git add composer.json; [ -f package.json ] && git add package.json; \
+	if [ -f composer.json ] && [ -f composer.lock ]; then echo "==> Syncing composer.lock ($(RUNTIME))..."; $(php_run) 'composer update --lock' || { echo "composer.lock sync failed" >&2; exit 1; }; fi; \
+	if [ -f package.json ] && [ -f package-lock.json ]; then echo "==> Syncing package-lock.json ($(RUNTIME))..."; $(node_run) 'npm install --package-lock-only' || { echo "package-lock.json sync failed" >&2; exit 1; }; fi; \
+	git add appinfo/info.xml; \
+	[ -f composer.json ] && git add composer.json; [ -f composer.lock ] && git add composer.lock; \
+	[ -f package.json ] && git add package.json; [ -f package-lock.json ] && git add package-lock.json; \
 	git commit -s -m "build(release): bump version to $$new"; \
 	echo; \
 	echo "==> Bumped to $$new and committed."; \
@@ -74,7 +114,7 @@ tag:
 		echo "  git tag -s v$$ver -m \"Release $$ver\" && git push origin v$$ver"; \
 	fi
 
-# ── Build ─────────────────────────────────────────────────────────────────────
+# == Build ==
 
 # Run the per-app build commands (before_cmds in krankerl.toml: composer, npm, etc.)
 build:
@@ -108,7 +148,7 @@ sign: $(tarball)
 # Build tarball and sign in one step
 release: appstore sign
 
-# ── App Store cache ───────────────────────────────────────────────────────────
+# == App Store cache ==
 
 # Fetch apps.json with ETag caching (always runs as prerequisite).
 # 304 Not Modified → use cached file.
@@ -142,7 +182,7 @@ fetch-apps:
 			fi;; \
 	esac
 
-# ── App Store ─────────────────────────────────────────────────────────────────
+# == App Store ==
 
 # Register the app on the App Store (one-time setup).
 # Requires: $(cert_dir)/$(app_name).cert  $(cert_dir)/$(app_name).key
@@ -244,7 +284,7 @@ ratings:
 	| python3 -c "import sys,json;d=json.load(sys.stdin);own=[r for r in d if r.get('app')=='$(app_name)'];avg=round(sum(r['rating'] for r in own)/len(own)*5,2) if own else None;print(json.dumps({'app':'$(app_name)','count':len(own),'avgRating':avg,'ratings':[{'rating':round(r['rating']*5,1),'ratedAt':r['ratedAt'],'comment':next(iter(r.get('translations',{}).values()),{}).get('comment','')} for r in sorted(own,key=lambda r:r['ratedAt'],reverse=True)]},indent=2))" 2>/dev/null \
 	|| echo "Failed to fetch ratings."
 
-# ── Utility ───────────────────────────────────────────────────────────────────
+# == Utility ==
 
 # Remove all build artifacts (including cache)
 clean:
@@ -255,8 +295,11 @@ help:
 	@echo "Usage: make <target>    (no target = this help)"
 	@echo ""
 	@echo "Release versioning (run on main):"
-	@echo "  version              Bump the version (prompts; must be > latest tag) and commit"
+	@echo "  version              Bump the version (prompts; > latest tag), sync lockfiles, commit"
 	@echo "  tag                  Freeze the current HEAD as a signed release tag (+ push)"
+	@echo ""
+	@echo "  Lockfiles are synced in a container; pick it with RUNTIME=... (now: $(RUNTIME))"
+	@echo "    podman-rootless (default) | docker | docker-rootless | bare"
 	@echo ""
 	@echo "Build:"
 	@echo "  build                Build frontend + PHP deps (composer/npm from krankerl.toml)"
