@@ -4,13 +4,17 @@
 # Makefile for Nextcloud app build and App Store management
 
 app_name      = $(notdir $(CURDIR))
-appstore_dir  = $(CURDIR)/build/artifacts/appstore
+dist_dir      = $(CURDIR)/build/artifacts/dist
 cache_dir     = $(CURDIR)/build/cache
 apps_cache    = $(cache_dir)/apps.json
 apps_etag     = $(cache_dir)/apps.etag
 cert_dir      = $(HOME)/.nextcloud/certificates
+# Make a missing cert dir obvious: cert_dir_note is appended wherever cert_dir is shown,
+# require_cert_dir aborts the maintainer targets that need it with a clear message.
+cert_dir_note = $(if $(wildcard $(cert_dir)),, [NOT FOUND])
+require_cert_dir = @test -d "$(cert_dir)" || { echo "cert dir not found: $(cert_dir) - create it and add the App Store cert/key/token." >&2; exit 1; }
 version       = $(shell xmllint --xpath 'string(//version)' appinfo/info.xml)
-tarball       = $(appstore_dir)/$(app_name)-$(version).tar.gz
+tarball       = $(dist_dir)/$(app_name)-$(version).tar.gz
 appstore_api  = https://apps.nextcloud.com/api/v1
 api_token     = $(shell cat $(cert_dir)/appstore_api-token 2>/dev/null | tr -d '[:space:]')
 # Parse exclude list from krankerl.toml and generate --exclude flags for tar
@@ -64,7 +68,7 @@ ifeq ($(filter $(RUNTIME),bare none),)
   node_run = $(container) $(node_image) sh -lc
 endif
 
-.PHONY: all version tag build check-build appstore sign release \
+.PHONY: all version tag build check-build dist sign release \
         fetch-apps \
         register publish list-releases list-releases-full list-for-author delete-release ratings \
         clean dist-clean help
@@ -72,17 +76,21 @@ endif
 # `make` with no target shows the help instead of building anything.
 .DEFAULT_GOAL := help
 
-all: appstore
+all: dist
 
-# == Release versioning ==
+# == Release versioning (maintainer only) ==
 
-# Open the next version (must run on main): prompt, validate (> latest tag, empty = abort),
-# set it in info.xml/composer.json/package.json, re-sync the lockfiles (composer.lock,
-# package-lock.json) and commit it all in one go. Then fill the CHANGELOG. The lockfile
-# sync runs the package managers via RUNTIME (see top of file).
+# Open the next release (maintainer only - needs repo write access). Runs from main, explains
+# itself, prompts + validates the version (> latest tag, empty = abort), then branches off into
+# release/X.Y.Z and commits the bump there: info.xml/composer.json/package.json plus the
+# re-synced lockfiles (via RUNTIME). 'main' is protected, so the bump lands through that branch
+# and a PR, not a direct push. Fill the CHANGELOG on the branch; after the PR is merged, run
+# 'make tag' on main.
 version:
 	@cur=$$(git rev-parse --abbrev-ref HEAD 2>/dev/null); \
 	if [ "$$cur" != "main" ]; then echo "make version must run on 'main' (you are on '$$cur')." >&2; exit 1; fi; \
+	echo "Maintainer target: opens a release branch with the version bump for a PR"; \
+	echo "(main is protected, no direct push); after the merge you tag it with 'make tag'."; \
 	latest=$$(git tag --list 'v*' --sort=-v:refname | head -1 | sed 's/^v//'); \
 	latest=$${latest:-0.0.0}; \
 	printf 'New version (latest tag: %s, empty = abort): ' "$$latest"; read new; \
@@ -90,6 +98,9 @@ version:
 	echo "$$new" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$$' || { echo "Not a X.Y.Z version: $$new" >&2; exit 1; }; \
 	high=$$(printf '%s\n%s\n' "$$latest" "$$new" | sort -V | tail -1); \
 	if [ "$$new" = "$$latest" ] || [ "$$high" != "$$new" ]; then echo "Version $$new must be greater than the latest tag $$latest" >&2; exit 1; fi; \
+	branch="release/$$new"; \
+	git rev-parse --verify --quiet "refs/heads/$$branch" >/dev/null && { echo "Branch $$branch already exists - delete it or pick another version." >&2; exit 1; }; \
+	git checkout -b "$$branch" || exit 1; \
 	sed -i -E "s|<version>[0-9.]+</version>|<version>$$new</version>|" appinfo/info.xml; \
 	[ -f composer.json ] && sed -i -E "s|(\"version\"[[:space:]]*:[[:space:]]*)\"[0-9.]+\"|\1\"$$new\"|" composer.json || true; \
 	[ -f package.json ] && sed -i -E "s|(\"version\"[[:space:]]*:[[:space:]]*)\"[0-9.]+\"|\1\"$$new\"|" package.json || true; \
@@ -100,9 +111,9 @@ version:
 	[ -f package.json ] && git add package.json; [ -f package-lock.json ] && git add package-lock.json; \
 	git commit -s -m "build(release): bump version to $$new"; \
 	echo; \
-	echo "==> Bumped to $$new and committed."; \
-	echo "==> Now add a '## [$$new]' section to CHANGELOG.md and commit EVERYTHING that"; \
-	echo "    must go into tag v$$new. When ready: make tag"
+	echo "==> Bumped to $$new on branch $$branch and committed."; \
+	echo "==> Next: add a '## [$$new]' section to CHANGELOG.md, commit it on this branch,"; \
+	echo "    push the branch, open a PR and merge. Then on main: git pull && make tag"
 
 # Freeze the current HEAD as a signed release tag. Everything that belongs in the
 # release must already be committed (CHANGELOG and all content). Refuses to re-tag.
@@ -153,10 +164,10 @@ check-build:
 		echo "ERROR: vendor/autoload.php is missing - run 'make build' first." >&2; exit 1; \
 	fi
 
-# Build the App Store tarball (warns via check-build if js/ or vendor/ look unbuilt)
-appstore: check-build appinfo/info.xml
-	rm -rf $(appstore_dir)
-	mkdir -p $(appstore_dir)
+# Build the distribution tarball (warns via check-build if js/ or vendor/ look unbuilt)
+dist: check-build appinfo/info.xml
+	rm -rf $(dist_dir)
+	mkdir -p $(dist_dir)
 	tar czf $(tarball) \
 		--exclude-vcs \
 		$(exclude_flags) \
@@ -165,11 +176,12 @@ appstore: check-build appinfo/info.xml
 
 # Sign the tarball — output is the base64 signature to paste into GitHub Release
 sign: $(tarball)
+	$(require_cert_dir)
 	@echo "Signing $(tarball)..."
 	openssl dgst -sha512 -sign $(cert_dir)/$(app_name).key $(tarball) | openssl base64
 
 # Build tarball and sign in one step
-release: appstore sign
+release: dist sign
 
 # == App Store cache ==
 
@@ -210,6 +222,7 @@ fetch-apps:
 # Register the app on the App Store (one-time setup).
 # Requires: $(cert_dir)/$(app_name).cert  $(cert_dir)/$(app_name).key
 register:
+	$(require_cert_dir)
 	@set -e; \
 	test -f "$(cert_dir)/$(app_name).cert" || { echo "Certificate not found: $(cert_dir)/$(app_name).cert"; exit 1; }; \
 	test -f "$(cert_dir)/$(app_name).key"  || { echo "Key not found: $(cert_dir)/$(app_name).key"; exit 1; }; \
@@ -233,10 +246,11 @@ register:
 	esac
 
 # Publish a new release to the App Store.
-# Run 'make appstore' first, upload the tarball to GitHub, then run this.
+# Run 'make dist' first, upload the tarball to GitHub, then run this.
 # Prompts for the GitHub release download URL.
 publish:
-	@test -f "$(tarball)" || { echo "ERROR: $(tarball) not found — run 'make appstore' first."; exit 1; }
+	$(require_cert_dir)
+	@test -f "$(tarball)" || { echo "ERROR: $(tarball) not found — run 'make dist' first."; exit 1; }
 	@read -p "GitHub release download URL (https://...): " url; \
 	test -n "$$url" || { echo "Aborted."; exit 0; }; \
 	echo "Computing signature..."; \
@@ -277,6 +291,7 @@ list-for-author: fetch-apps
 
 # Delete a specific release from the App Store (interactive)
 delete-release: fetch-apps
+	$(require_cert_dir)
 	@set -e; \
 	releases=$$(python3 -c "import sys,json;apps=json.load(open('$(apps_cache)'));app=next((a for a in apps if a['id']=='$(app_name)'),None);[print(r['version']) for r in (app or {}).get('releases',[])]" 2>/dev/null || true); \
 	if [ -n "$$releases" ]; then \
@@ -324,34 +339,34 @@ dist-clean: clean
 help:
 	@echo "Usage: make <target>    (no target = this help)"
 	@echo ""
-	@echo "Release versioning (run on main):"
-	@echo "  version              Bump the version (prompts; > latest tag), sync lockfiles, commit"
-	@echo "  tag                  Freeze the current HEAD as a signed release tag (+ push)"
+	@echo "Release versioning (maintainer only):"
+	@echo "  version              Open a release branch with the version bump for a PR (prompts)  [m]"
+	@echo "  tag                  Tag the release commit on main, signed, and push it  [m]"
 	@echo ""
 	@echo "  Container runtime for 'version' (lockfile sync) and 'build': RUNTIME=... (now: $(RUNTIME))"
 	@echo "    podman-rootless | docker | docker-rootless | bare   (auto-detected, podman preferred)"
 	@echo ""
 	@echo "Build:"
 	@echo "  build                Build frontend + PHP deps (composer/npm from krankerl.toml)"
-	@echo "  appstore             Build the App Store tarball (run 'make build' first)"
+	@echo "  dist                 Build the distribution tarball (run 'make build' first)"
 	@echo "                       → $(tarball)"
-	@echo "  sign                 Sign the tarball (stdout = base64 signature,"
-	@echo "                       needed for 'make publish' / App Store)"
-	@echo "  release              appstore + sign in one step"
+	@echo "  sign                 Sign the tarball (base64 signature for publish / App Store)  [m]"
+	@echo "  release              dist + sign in one step  [m]"
 	@echo ""
-	@echo "App Store  (token: $(cert_dir)/appstore_api-token)"
-	@echo "           (cert:  $(cert_dir)/$(app_name).cert)"
-	@echo "           (key:   $(cert_dir)/$(app_name).key)"
+	@echo "App Store  (cert dir: $(cert_dir)$(cert_dir_note))"
+	@echo "           token: $(cert_dir)/appstore_api-token"
+	@echo "           cert:  $(cert_dir)/$(app_name).cert"
+	@echo "           key:   $(cert_dir)/$(app_name).key"
 	@echo ""
-	@echo "  register             Register app on the App Store (one-time)."
+	@echo "  register             Register app on the App Store (one-time).  [m]"
 	@echo "                       Needs .cert and .key."
-	@echo "  publish              Publish a new release."
-	@echo "                       Needs: tarball from 'make appstore'."
+	@echo "  publish              Publish a new release.  [m]"
+	@echo "                       Needs: tarball from 'make dist'."
 	@echo "                       Prompts for: GitHub release download URL."
 	@echo "  list-releases        List published releases (compact JSON)."
 	@echo "  list-releases-full   Full App Store entry as JSON."
 	@echo "  list-for-author      Find all apps by author (prompts for name)."
-	@echo "  delete-release       Delete a release (shows list, prompts for version)."
+	@echo "  delete-release       Delete a release (shows list, prompts for version).  [m]"
 	@echo "  ratings              Show app ratings from the App Store."
 	@echo ""
 	@echo "  apps.json cache: $(apps_cache)"
@@ -361,6 +376,8 @@ help:
 	@echo "  clean                Remove build/ directory (incl. cache)"
 	@echo "  dist-clean           Remove ALL git-ignored build outputs (vendor, node_modules, js, …)"
 	@echo "  help                 Show this help"
+	@echo ""
+	@echo "  [m] = maintainer only (needs repo write access and/or the signing key/cert)"
 	@echo ""
 	@echo "Current: $(app_name) v$(version)"
 
