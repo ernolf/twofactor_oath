@@ -13,7 +13,7 @@
 
   By default the control auto-sizes its width to the wider of its floating label
   and its widest option (plus the input padding), down to a configurable minimum
-  — so the notched label is never clipped, in any language. Set :auto-width="false"
+  — so the notched label is never clipped, in any language. Set static-width
   to size it via CSS instead.
 
   Props:
@@ -21,7 +21,7 @@
     options      array of { value, label } objects, or of plain primitives
     label        the floating label text
     disabled     disable the control
-    auto-width   measure + fit the width to label/options (default true)
+    static-width size via CSS instead of measuring label/options (default false)
     min-width    minimum width in px when auto-sizing (default 56)
 -->
 
@@ -101,9 +101,9 @@ export default {
 			default: false,
 		},
 
-		autoWidth: {
+		staticWidth: {
 			type: Boolean,
-			default: true,
+			default: false,
 		},
 
 		minWidth: {
@@ -133,7 +133,7 @@ export default {
 		},
 
 		widthStyle() {
-			if (!this.autoWidth) {
+			if (this.staticWidth) {
 				return null
 			}
 			return `${this.measuredWidth ?? this.minWidth}px`
@@ -167,7 +167,7 @@ export default {
 		// Fit the width to the wider of the floating label and the widest option,
 		// plus the input's horizontal padding (which reserves the chevron space).
 		measure() {
-			if (!this.autoWidth) {
+			if (this.staticWidth) {
 				return
 			}
 			const select = this.$refs.select

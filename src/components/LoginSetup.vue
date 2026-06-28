@@ -18,7 +18,7 @@
 					:challenge="ocraChallenge"
 					:loading="confirmationLoading"
 					:stale="dirty"
-					:cancelable="false"
+					mandatory
 					:centered="true"
 					@confirm="confirm" />
 
