@@ -7,13 +7,13 @@ import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import SelectField from './SelectField.vue'
 
-// autoWidth is off in tests: the width measurement uses a canvas, which jsdom
+// staticWidth is on in tests: the width measurement uses a canvas, which jsdom
 // does not implement.
 const options = [
 	{ value: 30, label: '30s' },
 	{ value: 60, label: '1m' },
 ]
-const mountOptions = { props: { options, modelValue: 30, autoWidth: false } }
+const mountOptions = { props: { options, modelValue: 30, staticWidth: true } }
 
 describe('SelectField', () => {
 	it('renders one option per entry', () => {
@@ -30,7 +30,7 @@ describe('SelectField', () => {
 	})
 
 	it('accepts plain primitive options', () => {
-		const wrapper = mount(SelectField, { props: { options: ['a', 'b', 'c'], modelValue: 'a', autoWidth: false } })
+		const wrapper = mount(SelectField, { props: { options: ['a', 'b', 'c'], modelValue: 'a', staticWidth: true } })
 		expect(wrapper.findAll('option')).toHaveLength(3)
 	})
 })

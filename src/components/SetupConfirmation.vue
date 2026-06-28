@@ -75,7 +75,7 @@
 				{{ t('twofactor_oath', 'Verify') }}
 			</NcButton>
 			<NcButton
-				v-if="cancelable"
+				v-if="!mandatory"
 				variant="tertiary"
 				:disabled="loading"
 				@click="$emit('cancel')">
@@ -119,9 +119,9 @@ export default {
 			default: false,
 		},
 
-		cancelable: {
+		mandatory: {
 			type: Boolean,
-			default: true,
+			default: false,
 		},
 
 		centered: {
