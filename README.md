@@ -142,6 +142,16 @@ make build && make dist
 
 This writes `build/artifacts/dist/twofactor_oath-x.y.z.tar.gz`. Install it exactly like a release tarball above (extract into `apps/`, set ownership, then `occ app:enable twofactor_oath`).
 
+If your Nextcloud is on the same machine (or reachable over SSH), you can skip the tarball and rsync the runtime files straight into its `apps/` directory:
+
+```sh
+make build && make rsync TARGET=/path/to/nextcloud/apps/
+chown -R www-data:www-data /path/to/nextcloud/apps/twofactor_oath
+occ app:enable twofactor_oath
+```
+
+`TARGET` is the `apps/` parent directory and may be a local path or a remote `user@host:` path.
+
 Working on the app itself? See [doc/development.md](doc/development.md) for the quality gates and all `make` targets.
 
 ## Documentation

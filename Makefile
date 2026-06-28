@@ -19,6 +19,8 @@ appstore_api  = https://apps.nextcloud.com/api/v1
 api_token     = $(shell cat $(cert_dir)/appstore_api-token 2>/dev/null | tr -d '[:space:]')
 # Parse exclude list from krankerl.toml and generate --exclude flags for tar
 exclude_flags = $(shell python3 -c 'c=open("krankerl.toml").read();s=c[c.index("[",c.index("exclude"))+1:c.index("]",c.index("exclude"))];items=[x.split(chr(34))[1] for x in s.split(chr(10)) if chr(34) in x];[print("--exclude=../$(app_name)/"+i) for i in items]')
+# Same exclude list, root-anchored as rsync --exclude flags (used by 'make rsync')
+rsync_excludes = $(shell python3 -c 'c=open("krankerl.toml").read();s=c[c.index("[",c.index("exclude"))+1:c.index("]",c.index("exclude"))];items=[x.split(chr(34))[1] for x in s.split(chr(10)) if chr(34) in x];[print("--exclude=/"+i) for i in items]')
 
 # == Container runtime (used by 'make version' and 'make build') ==
 # composer/npm run in throwaway containers, so the host needs no PHP/Node toolchain
@@ -68,7 +70,7 @@ ifeq ($(filter $(RUNTIME),bare none),)
   node_run = $(container) $(node_image) sh -lc
 endif
 
-.PHONY: all version tag build check-build dist sign release \
+.PHONY: all version tag build check-build dist sign release rsync \
         fetch-apps \
         register publish list-releases list-releases-full list-for-author delete-release ratings \
         clean dist-clean help
@@ -182,6 +184,21 @@ sign: $(tarball)
 
 # Build tarball and sign in one step
 release: dist sign
+
+# == Local deploy ==
+
+# Deploy the runtime file set straight into an apps/ directory via rsync — the same
+# files as the dist tarball (krankerl.toml exclude list), but without packing and
+# unpacking. Works locally and over SSH. TARGET is the apps/ PARENT directory; the
+# app subdir is appended automatically. Run 'make build' first so vendor/ (no dev)
+# and js/ are production-ready. The occ disable/enable + chown around it is the
+# caller's job (same-host only), e.g.:
+#   occ app:disable APP && make build && make rsync TARGET=/var/www/nextcloud/apps/ && chown -R www-data:www-data /var/www/nextcloud/apps/APP && occ app:enable APP
+rsync: check-build
+	@test -n "$(TARGET)" || { echo "Usage: make rsync TARGET=<apps-dir | user@host:apps-dir>" >&2; exit 1; }
+	@t="$(TARGET)"; dest="$${t%/}/$(app_name)/"; \
+	echo "rsync -> $$dest"; \
+	rsync -a --delete --delete-excluded $(rsync_excludes) "$(CURDIR)/" "$$dest"
 
 # == App Store cache ==
 
@@ -352,6 +369,10 @@ help:
 	@echo "                       → $(tarball)"
 	@echo "  sign                 Sign the tarball (base64 signature for publish / App Store)  [m]"
 	@echo "  release              dist + sign in one step  [m]"
+	@echo ""
+	@echo "Local deploy:"
+	@echo "  rsync                Deploy the runtime set into an apps/ dir via rsync (no tarball)."
+	@echo "                       Needs TARGET=<apps-dir|user@host:apps-dir>; run 'make build' first."
 	@echo ""
 	@echo "App Store  (cert dir: $(cert_dir)$(cert_dir_note))"
 	@echo "           token: $(cert_dir)/appstore_api-token"

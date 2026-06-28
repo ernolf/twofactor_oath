@@ -131,6 +131,7 @@ The `Makefile` drives building, packaging and releasing without any host toolcha
 | `dist` | build the distribution tarball into `build/artifacts/dist/` |
 | `sign` | print the base64 signature of the tarball |
 | `release` | `dist` + `sign` |
+| `rsync` | deploy the runtime files into an `apps/` dir via rsync, the same set as the tarball (`TARGET=<apps-dir \| user@host:dir>`) |
 | `clean` | remove `build/` |
 | `dist-clean` | remove every git-ignored build output (vendor, node_modules, js, …) for a clean rebuild |
 | `version` | open a release branch with the version bump for a PR (maintainer) |
@@ -152,25 +153,19 @@ From the tag you cut a GitHub release; the release workflow builds the tarball a
 
 ## Deploying to a test instance
 
-Only a subset of the tree is needed at runtime: `appinfo/`, `lib/`, `templates/`, `img/`, `js/` and `vendor/`. For a quick iteration loop, sync just the runtime files into your instance and leave out the development and build files:
+For a quick iteration loop, sync the runtime files straight into an instance:
 
 ```sh
-rsync -a --delete \
-  --exclude='/.git' --exclude='/.github' --exclude='/node_modules' \
-  --exclude='/src' --exclude='/tests' --exclude='/tools' --exclude='/vendor-bin' \
-  --exclude='/doc' --exclude='/build' \
-  --exclude='/package.json' --exclude='/package-lock.json' \
-  --exclude='/webpack.config.js' --exclude='/babel.config.js' --exclude='/.eslintrc.cjs' --exclude='/.stylelintrc.cjs' --exclude='/vitest.config.js' \
-  --exclude='/.php-cs-fixer.dist.php' --exclude='/psalm.xml' --exclude='/phpunit.xml' --exclude='/rector.php' \
-  --exclude='/.gitignore' --exclude='/.editorconfig' --exclude='/REUSE.toml' \
-  --exclude='*.md' \
-  ./ /path/to/nextcloud/apps/twofactor_oath/
+make build && make rsync TARGET=/path/to/nextcloud/apps/
 chown -R www-data:www-data /path/to/nextcloud/apps/twofactor_oath
 occ app:enable twofactor_oath
 ```
 
-> [!IMPORTANT]
-> Anchor every exclude with a leading slash. A bare `src` or `tests` would also match `vendor/spomky-labs/otphp/src` and similar, which would break the runtime dependency.
+When updating an existing install on the same host, run:
+
+```sh
+make build && occ app:disable twofactor_oath && make rsync TARGET=/path/to/nextcloud/apps/ && chown -R www-data:www-data /path/to/nextcloud/apps/twofactor_oath && occ app:enable twofactor_oath
+```
 
 ### Schema changes
 
