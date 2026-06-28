@@ -3,11 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { loadState } from '@nextcloud/initial-state'
 import { shallowMount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-
-import { loadState } from '@nextcloud/initial-state'
-
 import AdminSettings from './AdminSettings.vue'
 
 vi.mock('@nextcloud/initial-state', () => ({ loadState: vi.fn() }))

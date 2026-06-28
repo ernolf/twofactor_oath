@@ -8,13 +8,15 @@
 		<div class="otp-setup__note">
 			<div class="otp-setup__secret-head">
 				<span>{{ t('twofactor_oath', 'Your new secret is:') }}</span>
-				<NcButton variant="tertiary"
+				<NcButton
+					variant="tertiary"
 					class="otp-setup__copy"
 					:title="t('twofactor_oath', 'Copy secret')"
 					:aria-label="t('twofactor_oath', 'Copy secret')"
 					@click="copySecret">
 					<template #icon>
-						<svg width="20"
+						<svg
+							width="20"
 							height="20"
 							viewBox="0 0 24 24"
 							fill="currentColor">
@@ -32,11 +34,13 @@
 			<p>{{ t('twofactor_oath', 'For quick setup, scan this QR code with your authenticator app:') }}</p>
 			<div class="otp-setup__qr-row">
 				<div class="otp-setup__qr" :class="{ 'otp-setup__qr--stale': stale }">
-					<Qrcode :value="qrUrl"
+					<Qrcode
+						:value="qrUrl"
 						:options="{ width: 200, errorCorrectionLevel: 'H' }"
 						class="otp-setup__qr-canvas" />
 					<!-- Cosmetic centered logo: the same icon the QR carries in image=, app icon as fallback. -->
-					<img class="otp-setup__qr-logo"
+					<img
+						class="otp-setup__qr-logo"
 						:src="iconUrl"
 						alt=""
 						@error="iconFailed = true">
@@ -56,7 +60,7 @@
 		</div>
 		<div class="otp-setup__confirm">
 			<div class="otp-setup__code">
-				<NcTextField ref="codeField"
+				<NcTextField
 					v-model="code"
 					:label="ocra ? t('twofactor_oath', 'Response') : t('twofactor_oath', 'Authentication code')"
 					:disabled="loading"
@@ -64,12 +68,14 @@
 					inputmode="numeric"
 					@keydown.enter="confirm" />
 			</div>
-			<NcButton variant="primary"
+			<NcButton
+				variant="primary"
 				:disabled="loading || code === ''"
 				@click="confirm">
 				{{ t('twofactor_oath', 'Verify') }}
 			</NcButton>
-			<NcButton v-if="cancelable"
+			<NcButton
+				v-if="cancelable"
 				variant="tertiary"
 				:disabled="loading"
 				@click="$emit('cancel')">
@@ -91,40 +97,49 @@ export default {
 		NcButton,
 		NcTextField,
 	},
+
 	props: {
 		secret: {
 			type: String,
 			required: true,
 		},
+
 		qrUrl: {
 			type: String,
 			required: true,
 		},
+
 		loading: {
 			type: Boolean,
 			default: false,
 		},
+
 		stale: {
 			type: Boolean,
 			default: false,
 		},
+
 		cancelable: {
 			type: Boolean,
 			default: true,
 		},
+
 		centered: {
 			type: Boolean,
 			default: false,
 		},
+
 		ocra: {
 			type: Boolean,
 			default: false,
 		},
+
 		challenge: {
 			type: String,
 			default: '',
 		},
 	},
+
 	emits: ['confirm', 'cancel'],
 	data() {
 		return {
@@ -132,6 +147,7 @@ export default {
 			iconFailed: false,
 		}
 	},
+
 	computed: {
 		// Centered QR logo: the icon carried in the otpauth image= parameter, with
 		// the (dark, visible on white) app icon as fallback if it is absent or fails.
@@ -144,12 +160,13 @@ export default {
 				if (image !== null && image !== '') {
 					return image
 				}
-			} catch (e) {
+			} catch {
 				// Fall through to the app icon below.
 			}
 			return imagePath('twofactor_oath', 'app-dark.svg')
 		},
 	},
+
 	watch: {
 		// Clear the entered code once it no longer matches what is shown: when the
 		// settings change (QR/challenge goes stale) or a fresh secret is generated.
@@ -158,20 +175,24 @@ export default {
 				this.code = ''
 			}
 		},
+
 		qrUrl() {
 			this.code = ''
 			// Retry the embedded icon for the freshly generated QR.
 			this.iconFailed = false
 			this.focusCode()
 		},
+
 		challenge() {
 			this.code = ''
 			this.focusCode()
 		},
 	},
+
 	mounted() {
 		this.focusCode()
 	},
+
 	methods: {
 		// Focus the code/response field after the DOM updates. Called on first mount
 		// and whenever a new QR or challenge is generated, so the user can type the
@@ -196,7 +217,7 @@ export default {
 			try {
 				await navigator.clipboard.writeText(this.secret)
 				OC.Notification.showTemporary(t('twofactor_oath', 'Secret copied to clipboard'))
-			} catch (e) {
+			} catch {
 				OC.Notification.showTemporary(t('twofactor_oath', 'Could not copy the secret'))
 			}
 		},

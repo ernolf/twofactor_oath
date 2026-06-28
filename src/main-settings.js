@@ -3,16 +3,15 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
 import { loadState } from '@nextcloud/initial-state'
-import { translate as t, translatePlural as n } from '@nextcloud/l10n'
-
-import '@nextcloud/password-confirmation/style.css'
-
+import { translatePlural as n, translate as t } from '@nextcloud/l10n'
+import { createPinia } from 'pinia'
+import { createApp } from 'vue'
+import PersonalOtpSettings from './components/PersonalOtpSettings.vue'
 import logger from './logger.js'
 import { useOtpStore } from './store.js'
-import PersonalOtpSettings from './components/PersonalOtpSettings.vue'
+
+import '@nextcloud/password-confirmation/style.css'
 
 const pinia = createPinia()
 const app = createApp(PersonalOtpSettings)

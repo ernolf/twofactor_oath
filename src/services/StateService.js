@@ -4,8 +4,8 @@
  */
 
 import Axios from '@nextcloud/axios'
+import { addPasswordConfirmationInterceptors, PwdConfirmationMode } from '@nextcloud/password-confirmation'
 import { generateUrl } from '@nextcloud/router'
-import { PwdConfirmationMode, addPasswordConfirmationInterceptors } from '@nextcloud/password-confirmation'
 
 // Enable the official password-confirmation flow on our axios instance, so a
 // request can force a fresh password with { confirmPassword: PwdConfirmationMode.Strict }.
@@ -13,21 +13,35 @@ import { PwdConfirmationMode, addPasswordConfirmationInterceptors } from '@nextc
 // which the server-side PasswordConfirmationRequired(strict) attribute validates.
 addPasswordConfirmationInterceptors(Axios)
 
-export const saveState = async (data) => {
+/**
+ * Persist the OTP enrollment state on the server.
+ *
+ * @param {object} data the OTP settings to enable and store
+ */
+export async function saveState(data) {
 	const url = generateUrl('/apps/twofactor_oath/settings/enable')
 
 	const resp = await Axios.post(url, data)
 	return resp.data
 }
 
-export const resyncOtp = async (code1, code2) => {
+/**
+ * Resynchronise a drifted HOTP counter from two consecutive codes.
+ *
+ * @param {string} code1 the first generated code
+ * @param {string} code2 the next consecutive code
+ */
+export async function resyncOtp(code1, code2) {
 	const url = generateUrl('/apps/twofactor_oath/settings/resync')
 
 	const resp = await Axios.post(url, { code1, code2 })
 	return resp.data
 }
 
-export const getOtpConfig = async () => {
+/**
+ *
+ */
+export async function getOtpConfig() {
 	const url = generateUrl('/apps/twofactor_oath/settings/config')
 
 	const resp = await Axios.get(url)
@@ -36,7 +50,10 @@ export const getOtpConfig = async () => {
 
 // Reveal the current secret/QR. The password is forced on every call by the
 // strict password-confirmation interceptor (no body password needed).
-export const showOtp = async () => {
+/**
+ *
+ */
+export async function showOtp() {
 	const url = generateUrl('/apps/twofactor_oath/settings/show')
 
 	const resp = await Axios.post(url, {}, { confirmPassword: PwdConfirmationMode.Strict })
@@ -44,7 +61,10 @@ export const showOtp = async () => {
 }
 
 // Disable OTP. Password forced on every call by the strict interceptor.
-export const deactivateOtp = async () => {
+/**
+ *
+ */
+export async function deactivateOtp() {
 	const url = generateUrl('/apps/twofactor_oath/settings/deactivate')
 
 	const resp = await Axios.post(url, {}, { confirmPassword: PwdConfirmationMode.Strict })

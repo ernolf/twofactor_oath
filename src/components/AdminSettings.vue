@@ -4,7 +4,8 @@
 -->
 
 <template>
-	<NcSettingsSection class="otp-admin-section"
+	<NcSettingsSection
+		class="otp-admin-section"
 		:name="t('twofactor_oath', 'OATH (TOTP/HOTP/OCRA)')"
 		:description="t('twofactor_oath', 'Settings for the advanced OATH second-factor provider.')">
 		<NcNoteCard v-if="totpEnabled && totpImportCount > 0" type="info" class="otp-admin__banner">
@@ -29,13 +30,14 @@
 		</NcNoteCard>
 
 		<div class="otp-admin__field otp-admin__length">
-			<NcSelect :model-value="length"
+			<NcSelect
+				:modelValue="length"
 				:options="secretPresetOptions"
 				:reduce="(o) => o.value"
 				label="label"
 				:clearable="false"
-				:input-label="t('twofactor_oath', 'Default length of generated secrets')"
-				@update:model-value="onLengthChange" />
+				:inputLabel="t('twofactor_oath', 'Default length of generated secrets')"
+				@update:modelValue="onLengthChange" />
 		</div>
 
 		<h3 class="otp-admin__subhead">
@@ -46,27 +48,29 @@
 		</p>
 
 		<div class="otp-admin__field">
-			<NcSelect :model-value="managedGroups"
+			<NcSelect
+				:modelValue="managedGroups"
 				:options="allGroups"
 				:multiple="true"
 				:reduce="(group) => group.id"
 				:disabled="excludedGroups.length > 0"
 				label="label"
-				:input-label="t('twofactor_oath', 'Managed groups')"
+				:inputLabel="t('twofactor_oath', 'Managed groups')"
 				:placeholder="t('twofactor_oath', 'No managed groups')"
-				@update:model-value="onManagedChange" />
+				@update:modelValue="onManagedChange" />
 		</div>
 
 		<div class="otp-admin__field">
-			<NcSelect :model-value="excludedGroups"
+			<NcSelect
+				:modelValue="excludedGroups"
 				:options="allGroups"
 				:multiple="true"
 				:reduce="(group) => group.id"
 				:disabled="managedGroups.length > 0"
 				label="label"
-				:input-label="t('twofactor_oath', 'Excluded groups')"
+				:inputLabel="t('twofactor_oath', 'Excluded groups')"
 				:placeholder="t('twofactor_oath', 'No excluded groups')"
-				@update:model-value="onExcludedChange" />
+				@update:modelValue="onExcludedChange" />
 		</div>
 
 		<h3 class="otp-admin__subhead">
@@ -94,7 +98,8 @@
 			<p class="otp-admin__hint">
 				{{ t('twofactor_oath', 'Paste rows in the export format. Rows with status “none” or “renew” get checked and their values applied; “enabled”/“disabled” rows are left untouched, and users not listed are unchecked. Then review and provision.') }}
 			</p>
-			<textarea v-model="importText"
+			<textarea
+				v-model="importText"
 				class="otp-admin__import-text"
 				rows="6"
 				placeholder="username,status,type,algorithm,digits,period,counter,challenge,suite,secret" />
@@ -103,10 +108,11 @@
 			</NcButton>
 		</details>
 
-		<NcCheckboxRadioSwitch v-if="rows.length"
-			:model-value="strict"
+		<NcCheckboxRadioSwitch
+			v-if="rows.length"
+			:modelValue="strict"
 			type="switch"
-			@update:model-value="setStrict">
+			@update:modelValue="setStrict">
 			{{ t('twofactor_oath', 'Strict RFC compliance (grey out options the relevant RFC does not cover)') }}
 		</NcCheckboxRadioSwitch>
 
@@ -208,7 +214,8 @@
 					</td>
 					<td>
 						<template v-if="row.type === 'hotp'">
-							<input v-if="row.selected"
+							<input
+								v-if="row.selected"
 								v-model.number="row.counter"
 								type="number"
 								:min="0"
@@ -234,7 +241,8 @@
 					</td>
 					<td>
 						<template v-if="row.selected">
-							<input v-model="row.input"
+							<input
+								v-model="row.input"
 								type="text"
 								:placeholder="t('twofactor_oath', 'random')"
 								class="otp-admin__secret"
@@ -255,12 +263,14 @@
 							<Qrcode v-if="row.uri" :value="row.uri" :options="{ width: 120 }" />
 							<div class="otp-admin__secret-line">
 								<code class="otp-admin__shown-secret">{{ row.secret }}</code>
-								<NcButton variant="tertiary"
+								<NcButton
+									variant="tertiary"
 									:title="t('twofactor_oath', 'Copy secret')"
 									:aria-label="t('twofactor_oath', 'Copy secret')"
 									@click="copySecret(row.secret)">
 									<template #icon>
-										<svg width="20"
+										<svg
+											width="20"
 											height="20"
 											viewBox="0 0 24 24"
 											fill="currentColor">
@@ -287,7 +297,8 @@
 			</NcButton>
 		</div>
 
-		<NcDialog v-if="exportDialogOpen"
+		<NcDialog
+			v-if="exportDialogOpen"
 			:open="exportDialogOpen"
 			:name="t('twofactor_oath', 'Export as CSV')"
 			@update:open="exportDialogOpen = $event">
@@ -306,11 +317,11 @@
 
 <script>
 import Qrcode from '@chenfengyuan/vue-qrcode'
-import { NcButton, NcCheckboxRadioSwitch, NcDialog, NcNoteCard, NcSelect, NcSettingsSection } from '@nextcloud/vue'
+import axios from '@nextcloud/axios'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
-import axios from '@nextcloud/axios'
-import { customSecretIssue, ALGORITHM_NAME_OPTIONS, PERIOD_VALUES, periodLabel, DIGITS_MIN, DIGITS_MAX, TYPE, strictAllowedAlgorithms, strictMinDigits, SECRET_PRESETS, base32Length, ocraChallengeLength } from '../constants.js'
+import { NcButton, NcCheckboxRadioSwitch, NcDialog, NcNoteCard, NcSelect, NcSettingsSection } from '@nextcloud/vue'
+import { ALGORITHM_NAME_OPTIONS, base32Length, customSecretIssue, DIGITS_MAX, DIGITS_MIN, ocraChallengeLength, PERIOD_VALUES, periodLabel, SECRET_PRESETS, strictAllowedAlgorithms, strictMinDigits, TYPE } from '../constants.js'
 
 // Algorithm code -> CSV/name representation (matches Constants::ALGORITHM_DIGESTS).
 const CODE_NAME = { 1: 'sha1', 2: 'sha224', 3: 'sha256', 4: 'sha384', 5: 'sha512' }
@@ -326,9 +337,11 @@ export default {
 		NcSelect,
 		NcSettingsSection,
 	},
+
 	setup() {
 		return { ALGORITHM_NAME_OPTIONS, PERIOD_VALUES, periodLabel }
 	},
+
 	data() {
 		return {
 			length: loadState('twofactor_oath', 'secret_length'),
@@ -353,17 +366,20 @@ export default {
 			cleaningTotp: false,
 		}
 	},
+
 	computed: {
 		// occ commands an admin can run manually to deregister twofactor_totp for
 		// the users registered with both apps (one per user).
 		totpDisableCommands() {
 			return this.totpDuplicateUsers.map((uid) => `occ twofactorauth:disable ${uid} totp`).join('\n')
 		},
+
 		// Commands to fully retire twofactor_totp once everyone has moved to OATH:
 		// disable the app, then remove the stale provider associations.
 		retireCommands() {
 			return 'occ app:disable twofactor_totp\nocc twofactorauth:cleanup totp'
 		},
+
 		secretPresetOptions() {
 			const names = {
 				minimal: t('twofactor_oath', 'Minimal'),
@@ -377,6 +393,7 @@ export default {
 				label: t('twofactor_oath', '{name} — {bytes} byte ({bits} bit, {chars} characters)', { name: names[p.key] || p.key, bytes: p.bytes, bits: p.bytes * 8, chars: base32Length(p.bytes) }),
 			}))
 		},
+
 		challengeRange() {
 			const range = []
 			for (let n = DIGITS_MIN; n <= DIGITS_MAX; n++) {
@@ -384,13 +401,16 @@ export default {
 			}
 			return range
 		},
+
 		selectedCount() {
 			return this.rows.filter((row) => row.selected).length
 		},
+
 		// Distinct statuses present, ordered, for the status filter dropdown.
 		statusValues() {
 			return [...new Set(this.rows.map((row) => row.status))].sort((a, b) => this.statusRank(a) - this.statusRank(b))
 		},
+
 		// Rows after the active filter + sort; the table renders these.
 		visibleRows() {
 			let list = this.rows
@@ -413,10 +433,12 @@ export default {
 				return byName(a, b)
 			})
 		},
+
 		allSelected() {
 			return this.visibleRows.length > 0 && this.visibleRows.every((row) => row.selected)
 		},
 	},
+
 	methods: {
 		hasToken(row) {
 			// 'provisioned' is the transient status of a token just created this
@@ -625,7 +647,7 @@ export default {
 				} else {
 					this.refreshTotpStatus()
 				}
-			} catch (e) {
+			} catch {
 				OC.Notification.showTemporary(t('twofactor_oath', 'Could not import from twofactor_totp'))
 			} finally {
 				this.importingTotp = false
@@ -656,7 +678,7 @@ export default {
 				} else {
 					this.refreshTotpStatus()
 				}
-			} catch (e) {
+			} catch {
 				OC.Notification.showTemporary(t('twofactor_oath', 'Could not remove twofactor_totp registrations'))
 			} finally {
 				this.cleaningTotp = false
@@ -667,7 +689,7 @@ export default {
 			try {
 				await navigator.clipboard.writeText(secret)
 				OC.Notification.showTemporary(t('twofactor_oath', 'Secret copied to clipboard'))
-			} catch (e) {
+			} catch {
 				OC.Notification.showTemporary(t('twofactor_oath', 'Could not copy the secret'))
 			}
 		},
@@ -694,7 +716,7 @@ export default {
 				this.rows = resp.data.users.map((user) => ({ ...user, challenge: ocraChallengeLength(user.suite), input: '', secret: '', uri: null, message: '', selected: user.status === 'none' }))
 				this.loaded = true
 				this.refreshTotpStatus()
-			} catch (e) {
+			} catch {
 				OC.Notification.showTemporary(t('twofactor_oath', 'Could not load the managed users'))
 			} finally {
 				this.loading = false
@@ -716,7 +738,7 @@ export default {
 				const resp = await axios.get(generateUrl('/apps/twofactor_oath/admin/show-token'), { params: { username: row.username } })
 				row.secret = resp.data.secret
 				row.uri = resp.data.uri
-			} catch (e) {
+			} catch {
 				OC.Notification.showTemporary(t('twofactor_oath', 'Could not load the token'))
 			}
 		},
@@ -747,7 +769,7 @@ export default {
 				this.totpEnabled = resp.data.enabled
 				this.totpImportCount = resp.data.importCount
 				this.totpDuplicateUsers = resp.data.duplicateUsers
-			} catch (e) {
+			} catch {
 				// Keep the current values on error.
 			}
 		},
@@ -786,7 +808,7 @@ export default {
 					}
 				}
 				this.refreshTotpStatus()
-			} catch (e) {
+			} catch {
 				OC.Notification.showTemporary(t('twofactor_oath', 'Provisioning failed'))
 			} finally {
 				this.provisioning = false
@@ -835,7 +857,7 @@ export default {
 				}
 				OC.Notification.showTemporary(t('twofactor_oath', 'Selected tokens disabled.'))
 				this.refreshTotpStatus()
-			} catch (e) {
+			} catch {
 				OC.Notification.showTemporary(t('twofactor_oath', 'Could not disable the selected tokens'))
 			} finally {
 				this.provisioning = false
@@ -845,7 +867,7 @@ export default {
 		async post(url, data, errorMessage) {
 			try {
 				await axios.post(generateUrl(url), data)
-			} catch (e) {
+			} catch {
 				OC.Notification.showTemporary(errorMessage)
 			}
 		},

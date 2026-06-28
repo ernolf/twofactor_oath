@@ -5,7 +5,6 @@
 
 import { shallowMount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-
 import SetupConfirmation from './SetupConfirmation.vue'
 
 vi.mock('@nextcloud/router', () => ({ imagePath: () => '/img/app-dark.svg' }))

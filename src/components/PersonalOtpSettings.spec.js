@@ -3,12 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { shallowMount, flushPromises } from '@vue/test-utils'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-
 import { loadState } from '@nextcloud/initial-state'
 import { confirmPassword } from '@nextcloud/password-confirmation'
-
+import { flushPromises, shallowMount } from '@vue/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import PersonalOtpSettings from './PersonalOtpSettings.vue'
 import { STATE, TYPE } from '../constants.js'
 
@@ -41,12 +39,14 @@ const tMock = (app, text) => text
 const nMock = (app, singular, plural, count) => (count === 1 ? singular : plural)
 const mountOptions = { global: { mocks: { t: tMock, n: nMock } } }
 
-const makeStore = (overrides = {}) => ({
-	otpState: STATE.DISABLED,
-	enable: vi.fn().mockResolvedValue({ secret: 'JBSWY3DPEHPK3PXP', qrUrl: 'otpauth://totp/x', challenge: '' }),
-	confirm: vi.fn(),
-	...overrides,
-})
+function makeStore(overrides = {}) {
+	return {
+		otpState: STATE.DISABLED,
+		enable: vi.fn().mockResolvedValue({ secret: 'JBSWY3DPEHPK3PXP', qrUrl: 'otpauth://totp/x', challenge: '' }),
+		confirm: vi.fn(),
+		...overrides,
+	}
+}
 
 beforeEach(() => {
 	vi.clearAllMocks()

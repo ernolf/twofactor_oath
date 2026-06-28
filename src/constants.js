@@ -68,6 +68,7 @@ export const OCRA_CHALLENGE_DEFAULT = 8
 
 /**
  * Compose an OCRA suite (RFC 6287) from algorithm code, digit count and challenge length.
+ *
  * @param {number} algorithm algorithm code (see ALGORITHM)
  * @param {number} digits response length
  * @param {number} [challengeLength] numeric challenge length (RFC 6287: 4 to 64)
@@ -80,6 +81,7 @@ export function ocraSuite(algorithm, digits, challengeLength = OCRA_CHALLENGE_DE
 
 /**
  * Extract the numeric challenge length from an OCRA suite (default 8).
+ *
  * @param {string} suite the OCRA suite string
  * @return {number} the numeric challenge length
  */
@@ -96,6 +98,7 @@ export const DIGITS_MAX = 10
 // digits. OCRA (RFC 6287): SHA-1/256/512, >= 4 digits.
 /**
  * Algorithms permitted under the "Strict RFC" UI guard for a token type.
+ *
  * @param {number} type token type (see TYPE)
  * @return {number[]} the allowed algorithm codes
  */
@@ -108,6 +111,7 @@ export function strictAllowedAlgorithms(type) {
 
 /**
  * Minimum digit count permitted under the "Strict RFC" UI guard for a token type.
+ *
  * @param {number} type token type (see TYPE)
  * @return {number} the minimum number of digits
  */
@@ -120,6 +124,7 @@ export const PERIOD_VALUES = [15, 20, 25, 30, 45, 60, 90, 120, 180, 240, 300, 60
 
 /**
  * Compact label for a TOTP period in seconds (e.g. 90 -> "1m30s").
+ *
  * @param {number} seconds the period in seconds
  * @return {string} the compact label
  */
@@ -141,6 +146,7 @@ export const SECRET_BYTES_MIN = 16
 
 /**
  * Base32 (unpadded) character count for a given number of bytes.
+ *
  * @param {number} bytes the number of bytes
  * @return {number} the Base32 character count
  */
@@ -161,6 +167,7 @@ export const BASE32_RE = /^[A-Z2-7]+$/
 
 /**
  * A Base32 length decodes to whole bytes unless (length mod 8) is 1, 3 or 6.
+ *
  * @param {number} length the Base32 character count
  * @return {boolean} true if the length decodes to whole bytes
  */
@@ -170,6 +177,7 @@ export function isValidBase32Length(length) {
 
 /**
  * Validate a custom Base32 secret as the user types.
+ *
  * @param {string} secret the raw input
  * @return {?string} null if empty/valid, else an issue code: 'chars' | 'length' | 'short'
  */

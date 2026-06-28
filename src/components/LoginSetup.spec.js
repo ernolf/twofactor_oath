@@ -3,11 +3,9 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { shallowMount, flushPromises } from '@vue/test-utils'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-
 import { loadState } from '@nextcloud/initial-state'
-
+import { flushPromises, shallowMount } from '@vue/test-utils'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import LoginSetup from './LoginSetup.vue'
 import { STATE } from '../constants.js'
 import { saveState } from '../services/StateService.js'

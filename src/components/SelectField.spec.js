@@ -5,7 +5,6 @@
 
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-
 import SelectField from './SelectField.vue'
 
 // autoWidth is off in tests: the width measurement uses a canvas, which jsdom

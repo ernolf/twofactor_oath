@@ -9,17 +9,19 @@
 			{{ t('twofactor_oath', 'Your OTP token is managed by your administrator and cannot be changed here.') }}
 		</NcNoteCard>
 
-		<NcCheckboxRadioSwitch v-if="!managed"
-			:model-value="enabled"
+		<NcCheckboxRadioSwitch
+			v-if="!managed"
+			:modelValue="enabled"
 			type="switch"
 			:disabled="loading"
-			@update:model-value="toggle">
+			@update:modelValue="toggle">
 			{{ t('twofactor_oath', 'Enable OTP two-factor authentication') }}
 		</NcCheckboxRadioSwitch>
 
 		<div v-if="!managed && secret" class="otp-setup">
-			<SetupConfirmation :secret="secret"
-				:qr-url="qrUrl"
+			<SetupConfirmation
+				:secret="secret"
+				:qrUrl="qrUrl"
 				:ocra="settings.type === TYPE.OCRA"
 				:challenge="ocraChallenge"
 				:loading="loadingConfirmation"
@@ -28,12 +30,14 @@
 				@cancel="cancelSetup" />
 
 			<div class="otp-setup__advanced-bar">
-				<NcCheckboxRadioSwitch :model-value="showAdvanced"
+				<NcCheckboxRadioSwitch
+					:modelValue="showAdvanced"
 					type="switch"
-					@update:model-value="showAdvanced = $event">
+					@update:modelValue="showAdvanced = $event">
 					{{ t('twofactor_oath', 'Advanced settings') }}
 				</NcCheckboxRadioSwitch>
-				<NcButton v-if="showAdvanced && dirty"
+				<NcButton
+					v-if="showAdvanced && dirty"
 					variant="primary"
 					:disabled="loading || secretInvalid"
 					@click="recreate">
@@ -72,12 +76,14 @@
 				<div v-if="secretShown" class="otp-current__reveal" @click="resetCountdown">
 					<div class="otp-current__secret-line">
 						<code class="otp-current__secret">{{ secretData.secret }}</code>
-						<NcButton variant="tertiary"
+						<NcButton
+							variant="tertiary"
 							:title="t('twofactor_oath', 'Copy secret')"
 							:aria-label="t('twofactor_oath', 'Copy secret')"
 							@click="copyCurrentSecret">
 							<template #icon>
-								<svg width="20"
+								<svg
+									width="20"
 									height="20"
 									viewBox="0 0 24 24"
 									fill="currentColor">
@@ -90,7 +96,8 @@
 						<div class="otp-current__qr">
 							<Qrcode :value="secretData.uri" :options="{ width: 120, errorCorrectionLevel: 'H' }" class="otp-current__qr-canvas" />
 							<!-- Cosmetic centered logo: the same icon the QR carries in image=, app icon as fallback. -->
-							<img class="otp-current__qr-logo"
+							<img
+								class="otp-current__qr-logo"
 								:src="currentIconUrl"
 								alt=""
 								@error="currentIconFailed = true">
@@ -113,17 +120,20 @@
 						{{ t('twofactor_oath', 'If your counter-based (HOTP) token no longer works, enter two consecutive codes from it to re-synchronize the counter.') }}
 					</p>
 					<div class="otp-resync__fields">
-						<NcTextField v-model="resyncCode1"
+						<NcTextField
+							v-model="resyncCode1"
 							:label="t('twofactor_oath', 'Current code')"
 							:disabled="resyncLoading"
 							inputmode="numeric"
 							autocomplete="off" />
-						<NcTextField v-model="resyncCode2"
+						<NcTextField
+							v-model="resyncCode2"
 							:label="t('twofactor_oath', 'Next code')"
 							:disabled="resyncLoading"
 							inputmode="numeric"
 							autocomplete="off" />
-						<NcButton variant="primary"
+						<NcButton
+							variant="primary"
 							:disabled="resyncLoading || resyncCode1.trim() === '' || resyncCode2.trim() === ''"
 							@click="resync">
 							{{ t('twofactor_oath', 'Re-synchronize') }}
@@ -141,17 +151,16 @@
 
 <script>
 import Qrcode from '@chenfengyuan/vue-qrcode'
-import { NcButton, NcCheckboxRadioSwitch, NcNoteCard, NcTextField } from '@nextcloud/vue'
-import { confirmPassword } from '@nextcloud/password-confirmation'
 import { loadState } from '@nextcloud/initial-state'
+import { confirmPassword } from '@nextcloud/password-confirmation'
 import { imagePath } from '@nextcloud/router'
-
-import logger from '../logger.js'
-import { STATE, TYPE, DEFAULTS, ALGORITHM_NAME_OPTIONS, periodLabel, ocraSuite, customSecretIssue } from '../constants.js'
-import { getOtpConfig, resyncOtp, showOtp, deactivateOtp } from '../services/StateService.js'
-import { useOtpStore } from '../store.js'
+import { NcButton, NcCheckboxRadioSwitch, NcNoteCard, NcTextField } from '@nextcloud/vue'
 import AdvancedSettings from './AdvancedSettings.vue'
 import SetupConfirmation from './SetupConfirmation.vue'
+import { ALGORITHM_NAME_OPTIONS, customSecretIssue, DEFAULTS, ocraSuite, periodLabel, STATE, TYPE } from '../constants.js'
+import logger from '../logger.js'
+import { deactivateOtp, getOtpConfig, resyncOtp, showOtp } from '../services/StateService.js'
+import { useOtpStore } from '../store.js'
 
 // Auto-hide the revealed secret/QR after this many seconds (online-banking style).
 const AUTO_HIDE_SECONDS = 60
@@ -167,9 +176,11 @@ export default {
 		AdvancedSettings,
 		SetupConfirmation,
 	},
+
 	setup() {
 		return { otpStore: useOtpStore(), periodLabel, TYPE }
 	},
+
 	data() {
 		return {
 			managed: loadState('twofactor_oath', 'managed', false),
@@ -197,6 +208,7 @@ export default {
 			appliedSettings: null,
 		}
 	},
+
 	computed: {
 		// Centered logo for the revealed QR: the icon carried in the otpauth image=
 		// parameter, with the (dark, visible on white) app icon as fallback.
@@ -207,22 +219,25 @@ export default {
 					if (image !== null && image !== '') {
 						return image
 					}
-				} catch (e) {
+				} catch {
 					// Fall through to the app icon below.
 				}
 			}
 			return imagePath('twofactor_oath', 'app-dark.svg')
 		},
+
 		secretInvalid() {
 			return customSecretIssue(this.settings.secret) !== null
 		},
+
 		dirty() {
 			return this.appliedSettings !== null
 				&& JSON.stringify(this.settings) !== JSON.stringify(this.appliedSettings)
 		},
 	},
+
 	watch: {
-		'settings.type'() {
+		'settings.type': function() {
 			// During an active setup, regenerate the preview when the type changes
 			// so the shown QR (TOTP/HOTP) or challenge (OCRA) matches the settings.
 			if (this.secret !== undefined) {
@@ -230,9 +245,11 @@ export default {
 			}
 		},
 	},
+
 	beforeUnmount() {
 		this.stopCountdown()
 	},
+
 	methods: {
 		toggle(checked) {
 			if (checked) {
@@ -433,7 +450,7 @@ export default {
 			try {
 				await navigator.clipboard.writeText(this.secretData.secret)
 				OC.Notification.showTemporary(t('twofactor_oath', 'Secret copied to clipboard'))
-			} catch (e) {
+			} catch {
 				OC.Notification.showTemporary(t('twofactor_oath', 'Could not copy the secret'))
 			}
 		},
