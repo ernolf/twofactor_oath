@@ -11,10 +11,18 @@ namespace OCA\TwoFactorOath\AppInfo;
 
 use OCA\TwoFactorOath\Db\IOtpSecretMapper;
 use OCA\TwoFactorOath\Db\OtpSecretMapper;
+use OCA\TwoFactorOath\Provider\OtpProvider;
+use OCA\TwoFactorOath\Service\IOtpService;
+use OCA\TwoFactorOath\Service\IPolicyService;
+use OCA\TwoFactorOath\Service\ITotpImporter;
+use OCA\TwoFactorOath\Service\OtpService;
+use OCA\TwoFactorOath\Service\PolicyService;
+use OCA\TwoFactorOath\Service\TotpImporter;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
+use OCP\Authentication\TwoFactorAuth\IProvider;
 use Override;
 
 final class Application extends App implements IBootstrap {
@@ -34,6 +42,10 @@ final class Application extends App implements IBootstrap {
 
 		// OtpService depends on the IOtpSecretMapper abstraction (mockable in tests).
 		$context->registerServiceAlias(IOtpSecretMapper::class, OtpSecretMapper::class);
+		$context->registerServiceAlias(IOtpService::class, OtpService::class);
+		$context->registerServiceAlias(IPolicyService::class, PolicyService::class);
+		$context->registerServiceAlias(ITotpImporter::class, TotpImporter::class);
+		$context->registerServiceAlias(IProvider::class, OtpProvider::class);
 
 		// The 2FA provider is registered declaratively via appinfo/info.xml
 		// (<two-factor-providers>); no programmatic registration is needed here.

@@ -12,11 +12,10 @@ namespace OCA\TwoFactorOath\Controller;
 use InvalidArgumentException;
 use OCA\TwoFactorOath\AppInfo\Application;
 use OCA\TwoFactorOath\Constants;
-use OCA\TwoFactorOath\Db\OtpSecretMapper;
-use OCA\TwoFactorOath\Provider\OtpProvider;
-use OCA\TwoFactorOath\Service\OtpService;
-use OCA\TwoFactorOath\Service\PolicyService;
-use OCA\TwoFactorOath\Service\TotpImporter;
+use OCA\TwoFactorOath\Db\IOtpSecretMapper;
+use OCA\TwoFactorOath\Service\IOtpService;
+use OCA\TwoFactorOath\Service\IPolicyService;
+use OCA\TwoFactorOath\Service\ITotpImporter;
 use OCP\App\IAppManager;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -24,6 +23,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\DataDownloadResponse;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\Authentication\TwoFactorAuth\IProvider;
 use OCP\Authentication\TwoFactorAuth\IRegistry;
 use OCP\Defaults;
 use OCP\IAppConfig;
@@ -40,14 +40,14 @@ class AdminController extends Controller {
 		string $appName,
 		IRequest $request,
 		private readonly IAppConfig $appConfig,
-		private readonly PolicyService $policyService,
-		private readonly OtpService $otpService,
-		private readonly OtpSecretMapper $mapper,
+		private readonly IPolicyService $policyService,
+		private readonly IOtpService $otpService,
+		private readonly IOtpSecretMapper $mapper,
 		private readonly IUserManager $userManager,
 		private readonly IRegistry $registry,
-		private readonly OtpProvider $provider,
+		private readonly IProvider $provider,
 		private readonly Defaults $defaults,
-		private readonly TotpImporter $totpImporter,
+		private readonly ITotpImporter $totpImporter,
 		private readonly IAppManager $appManager,
 	) {
 		parent::__construct($appName, $request);

@@ -10,13 +10,14 @@ declare(strict_types=1);
 namespace OCA\TwoFactorOath\Service;
 
 use OCA\TwoFactorOath\Constants;
-use OCA\TwoFactorOath\Provider\OtpProvider;
+use OCP\Authentication\TwoFactorAuth\IProvider;
 use OCP\Authentication\TwoFactorAuth\IRegistry;
 use OCP\IDBConnection;
 use OCP\IServerContainer;
 use OCP\IUser;
 use OCP\IUserManager;
 use OCP\Security\ICrypto;
+use Override;
 use Throwable;
 
 /**
@@ -27,7 +28,7 @@ use Throwable;
  * and period are not per-token there (always 6 and 30). We read 'algorithm' when
  * the column exists and use the OATH defaults for the rest.
  */
-final class TotpImporter {
+final class TotpImporter implements ITotpImporter {
 	/** twofactor_totp enrollment state for an active token. */
 	private const TOTP_STATE_ENABLED = 2;
 
@@ -43,10 +44,10 @@ final class TotpImporter {
 
 	public function __construct(
 		private readonly IDBConnection $db,
-		private readonly OtpService $otpService,
+		private readonly IOtpService $otpService,
 		private readonly IUserManager $userManager,
 		private readonly IRegistry $registry,
-		private readonly OtpProvider $provider,
+		private readonly IProvider $provider,
 		private readonly ICrypto $crypto,
 		private readonly IServerContainer $serverContainer,
 	) {
@@ -57,6 +58,7 @@ final class TotpImporter {
 	 * whose user does not already have an OATH token. Returns 0 if the table is
 	 * absent.
 	 */
+	#[Override]
 	public function available(): int {
 		try {
 			$qb = $this->db->getQueryBuilder();
@@ -84,6 +86,7 @@ final class TotpImporter {
 	 *
 	 * @return string[]
 	 */
+	#[Override]
 	public function duplicateUserIds(): array {
 		try {
 			$qb = $this->db->getQueryBuilder();
@@ -108,6 +111,7 @@ final class TotpImporter {
 	 *
 	 * @return array{cleaned: int}
 	 */
+	#[Override]
 	public function cleanUpDuplicates(): array {
 		$cleaned = 0;
 		foreach ($this->duplicateUserIds() as $uid) {
@@ -128,6 +132,7 @@ final class TotpImporter {
 	 *
 	 * @return array{imported: int, skipped: int}
 	 */
+	#[Override]
 	public function import(): array {
 		try {
 			$qb = $this->db->getQueryBuilder();

@@ -21,6 +21,7 @@ use OCP\Security\ICrypto;
 use OTPHP\HOTP;
 use OTPHP\OTPInterface;
 use OTPHP\TOTP;
+use Override;
 use ParagonIE\ConstantTime\Base32;
 
 /**
@@ -28,7 +29,7 @@ use ParagonIE\ConstantTime\Base32;
  * generates provisioning URIs and verifies codes (with HOTP counter resync and
  * basic TOTP replay protection).
  */
-final class OtpService {
+final class OtpService implements IOtpService {
 	public function __construct(
 		private readonly IOtpSecretMapper $mapper,
 		private readonly IAppConfig $appConfig,
@@ -57,6 +58,7 @@ final class OtpService {
 	}
 
 	/** Map a CSV type name (totp/hotp) to its integer code, or null if unknown. */
+	#[Override]
 	public function typeFromName(string $name): ?int {
 		$code = array_search(strtolower($name), Constants::TYPE_NAMES, true);
 
@@ -64,6 +66,7 @@ final class OtpService {
 	}
 
 	/** Map a CSV algorithm name (sha1/sha256/sha512) to its code, or null if unknown. */
+	#[Override]
 	public function algorithmFromName(string $name): ?int {
 		$code = array_search(strtolower($name), Constants::ALGORITHM_DIGESTS, true);
 
@@ -103,6 +106,7 @@ final class OtpService {
 	}
 
 	/** The user's stored secret, or null if none exists. */
+	#[Override]
 	public function findByUserId(string $userId): ?OtpSecret {
 		try {
 			return $this->mapper->getByUserId($userId);
@@ -112,6 +116,7 @@ final class OtpService {
 	}
 
 	/** Whether the user has a fully enabled secret. */
+	#[Override]
 	public function hasEnabledSecret(string $userId): bool {
 		try {
 			return $this->mapper->getByUserId($userId)->isEnabled();
@@ -127,6 +132,7 @@ final class OtpService {
 	 *
 	 * @throws InvalidArgumentException on invalid parameters
 	 */
+	#[Override]
 	public function createSecret(
 		string $userId,
 		int $type = Constants::DEFAULT_TYPE,
@@ -218,6 +224,7 @@ final class OtpService {
 	}
 
 	/** Confirm a created secret by verifying a code, then enable it. */
+	#[Override]
 	public function enable(string $userId, string $code): bool {
 		try {
 			$entity = $this->mapper->getByUserId($userId);
@@ -234,11 +241,13 @@ final class OtpService {
 	}
 
 	/** Remove the user's secret (disable the provider for the user). */
+	#[Override]
 	public function disable(string $userId): void {
 		$this->mapper->deleteByUserId($userId);
 	}
 
 	/** The plaintext Base32 secret of a stored token (decrypted from storage). */
+	#[Override]
 	public function decryptSecret(OtpSecret $config): string {
 		return $this->crypto->decrypt($config->getSecret());
 	}
@@ -261,6 +270,7 @@ final class OtpService {
 	}
 
 	/** Build the otpauth:// URI for the QR code, optionally embedding a favicon. */
+	#[Override]
 	public function getProvisioningUri(OtpSecret $config, string $label, string $issuer, ?string $imageUrl = null): string {
 		$otp = $this->build($config);
 		$otp->setLabel($label);
@@ -290,6 +300,7 @@ final class OtpService {
 	 * persisted (look-ahead resync); for TOTP the used time slice is recorded to
 	 * prevent immediate replay.
 	 */
+	#[Override]
 	public function verify(OtpSecret $config, string $code): bool {
 		$code = trim($code);
 		if ($code === '') {
@@ -346,6 +357,7 @@ final class OtpService {
 	 * and at(i + 1) == code2, then advance the counter past both. Requiring two
 	 * consecutive matches keeps the wide window safe against guessing.
 	 */
+	#[Override]
 	public function resyncHotp(OtpSecret $config, string $code1, string $code2): bool {
 		if (!$config->isHotp()) {
 			return false;
@@ -372,6 +384,7 @@ final class OtpService {
 	}
 
 	/** Resync the enabled HOTP token of a user from two consecutive codes. */
+	#[Override]
 	public function resyncHotpForUser(string $userId, string $code1, string $code2): bool {
 		try {
 			$entity = $this->mapper->getByUserId($userId);
@@ -386,6 +399,7 @@ final class OtpService {
 	}
 
 	/** Generate a fresh random numeric challenge for an OCRA token (QN suites). */
+	#[Override]
 	public function generateOcraChallenge(OtpSecret $config): string {
 		$parsed = $this->ocra->parseSuite((string)$config->getSuite());
 		$challenge = '';
@@ -397,6 +411,7 @@ final class OtpService {
 	}
 
 	/** Verify an OCRA challenge-response against the stored suite + secret. */
+	#[Override]
 	public function verifyOcra(OtpSecret $config, string $challenge, string $response): bool {
 		if (!$config->isOcra() || $config->getSuite() === null) {
 			return false;
@@ -413,6 +428,7 @@ final class OtpService {
 	}
 
 	/** Confirm a created OCRA secret by verifying a challenge-response, then enable it. */
+	#[Override]
 	public function enableOcra(string $userId, string $challenge, string $response): bool {
 		try {
 			$entity = $this->mapper->getByUserId($userId);
