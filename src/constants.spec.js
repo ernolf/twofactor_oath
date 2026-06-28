@@ -3,19 +3,18 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { describe, it, expect } from 'vitest'
-
+import { describe, expect, it } from 'vitest'
 import {
 	ALGORITHM,
-	TYPE,
-	ocraSuite,
-	ocraChallengeLength,
 	base32Length,
+	customSecretIssue,
 	isValidBase32Length,
+	ocraChallengeLength,
+	ocraSuite,
 	periodLabel,
 	strictAllowedAlgorithms,
 	strictMinDigits,
-	customSecretIssue,
+	TYPE,
 } from './constants.js'
 
 describe('ocraSuite', () => {

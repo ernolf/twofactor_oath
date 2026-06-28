@@ -11,8 +11,9 @@
 		<template v-else>
 			<div v-if="loading" class="icon-loading otp-login-setup__loading" />
 			<template v-else>
-				<SetupConfirmation :secret="secret"
-					:qr-url="qrUrl"
+				<SetupConfirmation
+					:secret="secret"
+					:qrUrl="qrUrl"
 					:ocra="settings.type === TYPE.OCRA"
 					:challenge="ocraChallenge"
 					:loading="confirmationLoading"
@@ -22,12 +23,14 @@
 					@confirm="confirm" />
 
 				<div class="otp-login-setup__advanced-bar">
-					<NcCheckboxRadioSwitch :model-value="showAdvanced"
+					<NcCheckboxRadioSwitch
+						:modelValue="showAdvanced"
 						type="switch"
-						@update:model-value="showAdvanced = $event">
+						@update:modelValue="showAdvanced = $event">
 						{{ t('twofactor_oath', 'Advanced settings') }}
 					</NcCheckboxRadioSwitch>
-					<NcButton v-if="showAdvanced && dirty"
+					<NcButton
+						v-if="showAdvanced && dirty"
 						variant="primary"
 						:disabled="confirmationLoading || secretInvalid"
 						@click="recreate">
@@ -48,14 +51,13 @@
 </template>
 
 <script>
-import { NcButton, NcCheckboxRadioSwitch, NcNoteCard } from '@nextcloud/vue'
 import { loadState } from '@nextcloud/initial-state'
-
-import logger from '../logger.js'
-import { saveState } from '../services/StateService.js'
-import { STATE, TYPE, DEFAULTS, ocraSuite, customSecretIssue } from '../constants.js'
+import { NcButton, NcCheckboxRadioSwitch, NcNoteCard } from '@nextcloud/vue'
 import AdvancedSettings from './AdvancedSettings.vue'
 import SetupConfirmation from './SetupConfirmation.vue'
+import { customSecretIssue, DEFAULTS, ocraSuite, STATE, TYPE } from '../constants.js'
+import logger from '../logger.js'
+import { saveState } from '../services/StateService.js'
 
 export default {
 	name: 'LoginSetup',
@@ -66,9 +68,11 @@ export default {
 		AdvancedSettings,
 		SetupConfirmation,
 	},
+
 	setup() {
 		return { TYPE }
 	},
+
 	data() {
 		return {
 			managed: loadState('twofactor_oath', 'managed', false),
@@ -82,28 +86,33 @@ export default {
 			appliedSettings: null,
 		}
 	},
+
 	computed: {
 		secretInvalid() {
 			return customSecretIssue(this.settings.secret) !== null
 		},
+
 		dirty() {
 			return this.appliedSettings !== null
 				&& JSON.stringify(this.settings) !== JSON.stringify(this.appliedSettings)
 		},
 	},
+
 	watch: {
-		'settings.type'() {
+		'settings.type': function() {
 			// Regenerate the preview (QR or OCRA challenge) when the type changes.
 			if (this.secret) {
 				this.recreate()
 			}
 		},
 	},
+
 	mounted() {
 		if (!this.managed) {
 			this.generate()
 		}
 	},
+
 	methods: {
 		buildSettings() {
 			const s = this.settings

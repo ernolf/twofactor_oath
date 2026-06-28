@@ -26,18 +26,20 @@
 -->
 
 <template>
-	<div ref="field"
+	<div
 		class="input-field input-field--trailing-icon"
 		:class="{ 'input-field--disabled': disabled }"
 		:style="{ width: widthStyle }">
 		<div class="input-field__main-wrapper">
-			<select :id="inputId"
+			<select
+				:id="inputId"
 				ref="select"
 				class="input-field__input"
 				:value="String(modelValue)"
 				:disabled="disabled"
 				@change="onChange">
-				<option v-for="opt in normalizedOptions"
+				<option
+					v-for="opt in normalizedOptions"
 					:key="opt.key"
 					:value="opt.key">
 					{{ opt.label }}
@@ -62,6 +64,7 @@ let uid = 0
 let measureCanvas = null
 /**
  * Measure the rendered width of a text string in a given CSS font.
+ *
  * @param {string} text the text to measure
  * @param {string} font a CSS font shorthand value
  * @return {number} the measured width in pixels
@@ -82,27 +85,33 @@ export default {
 			type: [String, Number],
 			default: '',
 		},
+
 		options: {
 			type: Array,
 			required: true,
 		},
+
 		label: {
 			type: String,
 			default: '',
 		},
+
 		disabled: {
 			type: Boolean,
 			default: false,
 		},
+
 		autoWidth: {
 			type: Boolean,
 			default: true,
 		},
+
 		minWidth: {
 			type: Number,
 			default: 56,
 		},
 	},
+
 	emits: ['update:modelValue'],
 	data() {
 		return {
@@ -110,6 +119,7 @@ export default {
 			measuredWidth: null,
 		}
 	},
+
 	computed: {
 		// Accept both [{ value, label }] and plain primitives; the <option> value
 		// is always the stringified value, so the original type is restored on change.
@@ -121,6 +131,7 @@ export default {
 				return { value, label, key: String(value) }
 			})
 		},
+
 		widthStyle() {
 			if (!this.autoWidth) {
 				return null
@@ -128,14 +139,17 @@ export default {
 			return `${this.measuredWidth ?? this.minWidth}px`
 		},
 	},
+
 	watch: {
 		options() {
 			this.$nextTick(() => this.measure())
 		},
+
 		label() {
 			this.$nextTick(() => this.measure())
 		},
 	},
+
 	mounted() {
 		this.$nextTick(() => this.measure())
 		// Re-measure once webfonts are ready (their metrics differ from fallbacks).
@@ -143,6 +157,7 @@ export default {
 			window.document.fonts.ready.then(() => this.measure())
 		}
 	},
+
 	methods: {
 		onChange(event) {
 			const selected = this.normalizedOptions.find((opt) => opt.key === event.target.value)

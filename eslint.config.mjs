@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-module.exports = {
-	extends: ['@nextcloud'],
-}
+import { recommendedJavascript } from '@nextcloud/eslint-config'
+
+export default [
+	...recommendedJavascript,
+]

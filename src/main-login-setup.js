@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { translatePlural as n, translate as t } from '@nextcloud/l10n'
 import { createApp } from 'vue'
-import { translate as t, translatePlural as n } from '@nextcloud/l10n'
-
 import LoginSetup from './components/LoginSetup.vue'
 
 const app = createApp(LoginSetup)

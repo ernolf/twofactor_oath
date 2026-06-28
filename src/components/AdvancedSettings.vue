@@ -5,34 +5,38 @@
 
 <template>
 	<div class="otp-advanced-form">
-		<NcCheckboxRadioSwitch :model-value="strict"
+		<NcCheckboxRadioSwitch
+			:modelValue="strict"
 			type="switch"
-			@update:model-value="setStrict">
+			@update:modelValue="setStrict">
 			{{ t('twofactor_oath', 'Strict RFC compliance (grey out options the relevant RFC does not cover)') }}
 		</NcCheckboxRadioSwitch>
 
 		<fieldset class="otp-advanced-form__group">
 			<legend>{{ t('twofactor_oath', 'Type') }}</legend>
 			<div class="otp-advanced-form__radios">
-				<NcCheckboxRadioSwitch :model-value="String(type)"
+				<NcCheckboxRadioSwitch
+					:modelValue="String(type)"
 					value="1"
 					name="otp-type"
 					type="radio"
-					@update:model-value="type = Number($event)">
+					@update:modelValue="type = Number($event)">
 					{{ t('twofactor_oath', 'TOTP (time-based)') }}
 				</NcCheckboxRadioSwitch>
-				<NcCheckboxRadioSwitch :model-value="String(type)"
+				<NcCheckboxRadioSwitch
+					:modelValue="String(type)"
 					value="2"
 					name="otp-type"
 					type="radio"
-					@update:model-value="type = Number($event)">
+					@update:modelValue="type = Number($event)">
 					{{ t('twofactor_oath', 'HOTP (counter-based)') }}
 				</NcCheckboxRadioSwitch>
-				<NcCheckboxRadioSwitch :model-value="String(type)"
+				<NcCheckboxRadioSwitch
+					:modelValue="String(type)"
 					value="3"
 					name="otp-type"
 					type="radio"
-					@update:model-value="type = Number($event)">
+					@update:modelValue="type = Number($event)">
 					{{ t('twofactor_oath', 'OCRA (challenge-response)') }}
 				</NcCheckboxRadioSwitch>
 			</div>
@@ -41,60 +45,65 @@
 		<fieldset class="otp-advanced-form__group">
 			<legend>{{ t('twofactor_oath', 'Algorithm') }}</legend>
 			<div class="otp-advanced-form__radios">
-				<NcCheckboxRadioSwitch v-for="opt in ALGORITHM_OPTIONS"
+				<NcCheckboxRadioSwitch
+					v-for="opt in ALGORITHM_OPTIONS"
 					:key="opt.value"
-					:model-value="String(algorithm)"
+					:modelValue="String(algorithm)"
 					:value="String(opt.value)"
 					:disabled="algorithmDisabled(opt.value)"
 					name="otp-algorithm"
 					type="radio"
-					@update:model-value="algorithm = Number($event)">
+					@update:modelValue="algorithm = Number($event)">
 					{{ opt.label }}
 				</NcCheckboxRadioSwitch>
 			</div>
 		</fieldset>
 
 		<div class="otp-advanced-form__row">
-			<SelectField :model-value="digits"
+			<SelectField
+				:modelValue="digits"
 				:options="digitsOptions"
 				:label="t('twofactor_oath', 'Digits')"
-				@update:model-value="digits = $event" />
-			<SelectField v-if="type === TYPE.TOTP"
-				:model-value="period"
+				@update:modelValue="digits = $event" />
+			<SelectField
+				v-if="type === TYPE.TOTP"
+				:modelValue="period"
 				:options="periodOptions"
 				:label="t('twofactor_oath', 'Period')"
-				@update:model-value="period = $event" />
+				@update:modelValue="period = $event" />
 			<div v-if="type === TYPE.HOTP" class="otp-advanced-form__field">
-				<NcTextField type="number"
+				<NcTextField
+					type="number"
 					:label="t('twofactor_oath', 'Start counter')"
-					:model-value="String(counter)"
+					:modelValue="String(counter)"
 					:min="0"
-					@update:model-value="counter = Number($event)" />
+					@update:modelValue="counter = Number($event)" />
 			</div>
-			<SelectField v-if="type === TYPE.OCRA"
-				:model-value="challengeLength"
+			<SelectField
+				v-if="type === TYPE.OCRA"
+				:modelValue="challengeLength"
 				:options="challengeOptions"
 				:label="t('twofactor_oath', 'Challenge length')"
-				@update:model-value="challengeLength = $event" />
+				@update:modelValue="challengeLength = $event" />
 		</div>
 
 		<p v-if="type === TYPE.OCRA" class="otp-advanced-form__suite">
 			{{ t('twofactor_oath', 'Resulting OCRA suite:') }} <code>{{ suite }}</code>
 		</p>
 
-		<NcTextField :model-value="secret"
+		<NcTextField
+			:modelValue="secret"
 			:label="t('twofactor_oath', 'Custom secret (Base32, optional)')"
 			:error="secretError !== ''"
-			:helper-text="secretError !== '' ? secretError : t('twofactor_oath', 'Leave empty for a random secret. Allowed characters: A–Z and 2–7.')"
-			@update:model-value="secret = $event" />
+			:helperText="secretError !== '' ? secretError : t('twofactor_oath', 'Leave empty for a random secret. Allowed characters: A–Z and 2–7.')"
+			@update:modelValue="secret = $event" />
 	</div>
 </template>
 
 <script>
 import { NcCheckboxRadioSwitch, NcTextField } from '@nextcloud/vue'
-
-import { TYPE, DIGITS_MIN, DIGITS_MAX, ALGORITHM_OPTIONS, PERIOD_VALUES, periodLabel, ocraSuite, strictAllowedAlgorithms, strictMinDigits, customSecretIssue } from '../constants.js'
 import SelectField from './SelectField.vue'
+import { ALGORITHM_OPTIONS, customSecretIssue, DIGITS_MAX, DIGITS_MIN, ocraSuite, PERIOD_VALUES, periodLabel, strictAllowedAlgorithms, strictMinDigits, TYPE } from '../constants.js'
 
 const ALL_ALGORITHMS = ALGORITHM_OPTIONS.map((o) => o.value)
 
@@ -105,26 +114,31 @@ export default {
 		NcTextField,
 		SelectField,
 	},
+
 	props: {
 		modelValue: {
 			type: Object,
 			required: true,
 		},
 	},
+
 	emits: ['update:modelValue'],
 	setup() {
 		return { TYPE, ALGORITHM_OPTIONS }
 	},
+
 	data() {
 		return {
 			// UI-only guard rail; the backend always accepts the full range.
 			strict: true,
 		}
 	},
+
 	computed: {
 		periodOptions() {
 			return PERIOD_VALUES.map((seconds) => ({ value: seconds, label: periodLabel(seconds) }))
 		},
+
 		digitsOptions() {
 			const min = this.strict ? strictMinDigits(this.type) : DIGITS_MIN
 			const options = []
@@ -133,6 +147,7 @@ export default {
 			}
 			return options
 		},
+
 		challengeOptions() {
 			// RFC 6287 allows a challenge length of 04-64; capped at 10 like the digits.
 			const options = []
@@ -141,66 +156,82 @@ export default {
 			}
 			return options
 		},
+
 		type: {
 			get() {
 				return this.modelValue.type
 			},
+
 			set(value) {
 				this.update('type', value)
 				this.$nextTick(() => this.normalize())
 			},
 		},
+
 		algorithm: {
 			get() {
 				return this.modelValue.algorithm
 			},
+
 			set(value) {
 				this.update('algorithm', value)
 			},
 		},
+
 		digits: {
 			get() {
 				return this.modelValue.digits
 			},
+
 			set(value) {
 				this.update('digits', value)
 			},
 		},
+
 		period: {
 			get() {
 				return this.modelValue.period
 			},
+
 			set(value) {
 				this.update('period', value)
 			},
 		},
+
 		counter: {
 			get() {
 				return this.modelValue.counter
 			},
+
 			set(value) {
 				this.update('counter', value)
 			},
 		},
+
 		secret: {
 			get() {
 				return this.modelValue.secret
 			},
+
 			set(value) {
 				this.update('secret', value)
 			},
 		},
+
 		challengeLength: {
 			get() {
 				return this.modelValue.challengeLength
 			},
+
 			set(value) {
 				this.update('challengeLength', value)
 			},
 		},
+
 		suite() {
 			return ocraSuite(this.algorithm, this.digits, this.challengeLength)
 		},
+
 		secretError() {
 			const issue = customSecretIssue(this.secret)
 			if (issue === 'chars') {
@@ -215,6 +246,7 @@ export default {
 			return ''
 		},
 	},
+
 	methods: {
 		update(key, value) {
 			this.$emit('update:modelValue', { ...this.modelValue, [key]: value })

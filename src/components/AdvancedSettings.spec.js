@@ -5,7 +5,6 @@
 
 import { shallowMount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-
 import AdvancedSettings from './AdvancedSettings.vue'
 import { ALGORITHM, DEFAULTS, TYPE } from '../constants.js'
 
@@ -17,10 +16,12 @@ vi.mock('@nextcloud/vue', () => ({
 const tMock = (app, text) => text
 const globalMocks = { mocks: { t: tMock } }
 
-const mountWith = (settings = {}) => shallowMount(AdvancedSettings, {
-	props: { modelValue: { ...DEFAULTS, ...settings } },
-	global: globalMocks,
-})
+function mountWith(settings = {}) {
+	return shallowMount(AdvancedSettings, {
+		props: { modelValue: { ...DEFAULTS, ...settings } },
+		global: globalMocks,
+	})
+}
 
 beforeEach(() => {
 	globalThis.t = tMock

@@ -4,9 +4,8 @@
  */
 
 import { defineStore } from 'pinia'
-
-import { saveState } from './services/StateService.js'
 import { STATE } from './constants.js'
+import { saveState } from './services/StateService.js'
 
 export const useOtpStore = defineStore('otp', {
 	state: () => ({
