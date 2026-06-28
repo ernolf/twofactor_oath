@@ -44,7 +44,7 @@ beforeEach(() => {
 	loadState.mockImplementation((app, key, def) => (key in stateValues ? stateValues[key] : def))
 	globalThis.t = tMock
 	globalThis.n = nMock
-	globalThis.OC = { Notification: { showTemporary: vi.fn() }, dialogs: { confirm: vi.fn() } }
+	globalThis.OC = { Notification: { showTemporary: vi.fn() } }
 })
 
 describe('AdminSettings', () => {

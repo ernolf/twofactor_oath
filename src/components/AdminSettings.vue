@@ -312,6 +312,22 @@
 				</NcButton>
 			</template>
 		</NcDialog>
+
+		<NcDialog
+			v-if="confirmDialog.open"
+			:open="confirmDialog.open"
+			:name="confirmDialog.title"
+			@update:open="resolveConfirm(false)">
+			{{ confirmDialog.message }}
+			<template #actions>
+				<NcButton @click="resolveConfirm(false)">
+					{{ t('twofactor_oath', 'Cancel') }}
+				</NcButton>
+				<NcButton :variant="confirmDialog.destructive ? 'error' : 'primary'" @click="resolveConfirm(true)">
+					{{ t('twofactor_oath', 'Confirm') }}
+				</NcButton>
+			</template>
+		</NcDialog>
 	</NcSettingsSection>
 </template>
 
@@ -358,6 +374,7 @@ export default {
 			filterType: 'all',
 			importText: '',
 			exportDialogOpen: false,
+			confirmDialog: { open: false, title: '', message: '', destructive: false, resolve: null },
 			lastSelectedUsername: null,
 			totpImportCount: loadState('twofactor_oath', 'totp_import_count', 0),
 			totpEnabled: loadState('twofactor_oath', 'totp_enabled', false),
@@ -658,13 +675,10 @@ export default {
 		// users registered with both apps (the default, manual path).
 		// (The list is rendered in the cleanup banner; see totpDisableCommands.)
 		async cleanupTotp() {
-			const confirmed = await new Promise((resolve) => {
-				OC.dialogs.confirm(
-					n('twofactor_oath', 'This removes the twofactor_totp registration and secret of %n user who already has an OATH token. This cannot be undone.', 'This removes the twofactor_totp registration and secret of %n users who already have an OATH token. This cannot be undone.', this.totpDuplicateUsers.length),
-					t('twofactor_oath', 'Remove twofactor_totp registrations?'),
-					(decision) => resolve(decision),
-					true,
-				)
+			const confirmed = await this.confirm({
+				title: t('twofactor_oath', 'Remove twofactor_totp registrations?'),
+				message: n('twofactor_oath', 'This removes the twofactor_totp registration and secret of %n user who already has an OATH token. This cannot be undone.', 'This removes the twofactor_totp registration and secret of %n users who already have an OATH token. This cannot be undone.', this.totpDuplicateUsers.length),
+				destructive: true,
 			})
 			if (!confirmed) {
 				return
@@ -755,6 +769,21 @@ export default {
 			window.location.href = withSecrets ? `${url}?secrets=1` : url
 		},
 
+		// Promise-based confirmation backed by NcDialog (replaces the deprecated
+		// OC.dialogs.confirm). Resolves true on confirm, false on cancel or dismiss.
+		confirm({ title, message, destructive = false }) {
+			return new Promise((resolve) => {
+				this.confirmDialog = { open: true, title, message, destructive, resolve }
+			})
+		},
+
+		resolveConfirm(decision) {
+			const { resolve } = this.confirmDialog
+			this.confirmDialog.open = false
+			this.confirmDialog.resolve = null
+			resolve?.(decision)
+		},
+
 		// Close the whole list; the top button reverts to "Load managed users".
 		hideUsers() {
 			this.rows = []
@@ -816,12 +845,10 @@ export default {
 		},
 
 		confirmReplace(count) {
-			return new Promise((resolve) => {
-				OC.dialogs.confirm(
-					n('twofactor_oath', '%n user already has a token. Provisioning replaces and INVALIDATES their current secret — they will be locked out until they set up the new one. Use “Show” instead to view a current secret without changing it. Continue?', '%n users already have a token. Provisioning replaces and INVALIDATES their current secret — they will be locked out until they set up the new one. Use “Show” instead to view a current secret without changing it. Continue?', count),
-					t('twofactor_oath', 'Replace existing tokens?'),
-					resolve,
-				)
+			return this.confirm({
+				title: t('twofactor_oath', 'Replace existing tokens?'),
+				message: n('twofactor_oath', '%n user already has a token. Provisioning replaces and INVALIDATES their current secret — they will be locked out until they set up the new one. Use “Show” instead to view a current secret without changing it. Continue?', '%n users already have a token. Provisioning replaces and INVALIDATES their current secret — they will be locked out until they set up the new one. Use “Show” instead to view a current secret without changing it. Continue?', count),
+				destructive: true,
 			})
 		},
 
@@ -832,13 +859,10 @@ export default {
 			if (chosen.length === 0) {
 				return
 			}
-			const confirmed = await new Promise((resolve) => {
-				OC.dialogs.confirm(
-					n('twofactor_oath', 'Disable OATH for %n selected user? If you continue, their secret will be deleted and the registration removed. This cannot be undone.', 'Disable OATH for %n selected users? If you continue, their secret will be deleted and the registration removed. This cannot be undone.', chosen.length),
-					t('twofactor_oath', 'Disable selected tokens?'),
-					resolve,
-					true,
-				)
+			const confirmed = await this.confirm({
+				title: t('twofactor_oath', 'Disable selected tokens?'),
+				message: n('twofactor_oath', 'Disable OATH for %n selected user? If you continue, their secret will be deleted and the registration removed. This cannot be undone.', 'Disable OATH for %n selected users? If you continue, their secret will be deleted and the registration removed. This cannot be undone.', chosen.length),
+				destructive: true,
 			})
 			if (!confirmed) {
 				return
