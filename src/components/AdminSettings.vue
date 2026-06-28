@@ -26,7 +26,7 @@
 			<p>{{ t('twofactor_oath', 'twofactor_totp and twofactor_oath can run side by side, but OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended since your users have moved to OATH.') }}</p>
 			<p>{{ t('twofactor_oath', 'To retire it cleanly, disable the app and remove its leftover associations:') }}</p>
 			<pre class="otp-admin__occ">{{ retireCommands }}</pre>
-			<p>{{ t('twofactor_oath', 'The second command belongs with the first: after disabling, the stale associations would otherwise cause a “could not load” error at login.') }}</p>
+			<p>{{ t('twofactor_oath', 'The second command belongs with the first: after disabling, the stale associations would otherwise cause a "could not load" error at login.') }}</p>
 		</NcNoteCard>
 
 		<div class="otp-admin__field otp-admin__length">
@@ -77,7 +77,7 @@
 			{{ t('twofactor_oath', 'Bulk provisioning') }}
 		</h3>
 		<p class="otp-admin__hint">
-			{{ t('twofactor_oath', 'Load the managed users. Use “Show” to reveal a user’s current secret and QR code without changing it. Enter a custom secret (empty = random) and adjust the settings, then provision to create, enable and lock the tokens. Provisioning a user who already has a token replaces and invalidates the old secret.') }}
+			{{ t('twofactor_oath', 'Load the managed users. Use "Show" to reveal a user\'s current secret and QR code without changing it. Enter a custom secret (empty = random) and adjust the settings, then provision to create, enable and lock the tokens. Provisioning a user who already has a token replaces and invalidates the old secret.') }}
 		</p>
 
 		<div class="otp-admin__actions">
@@ -96,7 +96,7 @@
 		<details v-if="rows.length" class="otp-admin__import">
 			<summary>{{ t('twofactor_oath', 'Import from CSV (paste)') }}</summary>
 			<p class="otp-admin__hint">
-				{{ t('twofactor_oath', 'Paste rows in the export format. Rows with status “none” or “renew” get checked and their values applied; “enabled”/“disabled” rows are left untouched, and users not listed are unchecked. Then review and provision.') }}
+				{{ t('twofactor_oath', 'Paste rows in the export format. Rows with status "none" or "renew" get checked and their values applied; "enabled"/"disabled" rows are left untouched, and users not listed are unchecked. Then review and provision.') }}
 			</p>
 			<textarea
 				v-model="importText"
@@ -847,7 +847,7 @@ export default {
 		confirmReplace(count) {
 			return this.confirm({
 				title: t('twofactor_oath', 'Replace existing tokens?'),
-				message: n('twofactor_oath', '%n user already has a token. Provisioning replaces and INVALIDATES their current secret — they will be locked out until they set up the new one. Use “Show” instead to view a current secret without changing it. Continue?', '%n users already have a token. Provisioning replaces and INVALIDATES their current secret — they will be locked out until they set up the new one. Use “Show” instead to view a current secret without changing it. Continue?', count),
+				message: n('twofactor_oath', '%n user already has a token. Provisioning replaces and INVALIDATES their current secret — they will be locked out until they set up the new one. Use "Show" instead to view a current secret without changing it. Continue?', '%n users already have a token. Provisioning replaces and INVALIDATES their current secret — they will be locked out until they set up the new one. Use "Show" instead to view a current secret without changing it. Continue?', count),
 				destructive: true,
 			})
 		},
