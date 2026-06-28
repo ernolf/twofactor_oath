@@ -15,6 +15,7 @@ use OCP\IAppConfig;
 use OCP\IGroupManager;
 use OCP\IUser;
 use OCP\IUserManager;
+use Override;
 
 /**
  * Decides whether a user's OTP is admin-managed (no self-service):
@@ -22,7 +23,7 @@ use OCP\IUserManager;
  *  - else if "excluded groups" are set, everyone EXCEPT their members is managed;
  *  - if neither is set, nobody is managed (everyone may self-service).
  */
-final class PolicyService {
+final class PolicyService implements IPolicyService {
 	public function __construct(
 		private readonly IAppConfig $appConfig,
 		private readonly IGroupManager $groupManager,
@@ -30,6 +31,7 @@ final class PolicyService {
 	) {
 	}
 
+	#[Override]
 	public function isManaged(IUser $user): bool {
 		$managed = $this->getManagedGroups();
 		$excluded = $this->getExcludedGroups();
@@ -50,6 +52,7 @@ final class PolicyService {
 	 *
 	 * @return IUser[]
 	 */
+	#[Override]
 	public function listManagedUsers(): array {
 		$managed = $this->getManagedGroups();
 		$excluded = $this->getExcludedGroups();
@@ -83,11 +86,13 @@ final class PolicyService {
 	}
 
 	/** @return string[] */
+	#[Override]
 	public function getManagedGroups(): array {
 		return $this->appConfig->getValueArray(Application::APP_ID, Constants::CONFIG_MANAGED_GROUPS);
 	}
 
 	/** @return string[] */
+	#[Override]
 	public function getExcludedGroups(): array {
 		return $this->appConfig->getValueArray(Application::APP_ID, Constants::CONFIG_EXCLUDED_GROUPS);
 	}

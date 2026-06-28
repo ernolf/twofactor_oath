@@ -11,9 +11,9 @@ namespace OCA\TwoFactorOath\Provider;
 
 use OCA\TwoFactorOath\AppInfo\Application;
 use OCA\TwoFactorOath\Constants;
-use OCA\TwoFactorOath\Db\OtpSecretMapper;
-use OCA\TwoFactorOath\Service\OtpService;
-use OCA\TwoFactorOath\Service\PolicyService;
+use OCA\TwoFactorOath\Db\IOtpSecretMapper;
+use OCA\TwoFactorOath\Service\IOtpService;
+use OCA\TwoFactorOath\Service\IPolicyService;
 use OCA\TwoFactorOath\Settings\PersonalSettings;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Services\IInitialState;
@@ -35,9 +35,9 @@ use Override;
 
 final class OtpProvider implements IProvider, IProvidesIcons, IProvidesPersonalSettings, IActivatableAtLogin, IDeactivatableByAdmin {
 	public function __construct(
-		private readonly OtpSecretMapper $mapper,
-		private readonly OtpService $otpService,
-		private readonly PolicyService $policyService,
+		private readonly IOtpSecretMapper $mapper,
+		private readonly IOtpService $otpService,
+		private readonly IPolicyService $policyService,
 		private readonly ITemplateManager $templateManager,
 		private readonly IInitialState $initialState,
 		private readonly IL10N $l10n,

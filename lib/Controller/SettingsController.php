@@ -11,15 +11,15 @@ namespace OCA\TwoFactorOath\Controller;
 
 use InvalidArgumentException;
 use OCA\TwoFactorOath\Constants;
-use OCA\TwoFactorOath\Provider\OtpProvider;
-use OCA\TwoFactorOath\Service\OtpService;
-use OCA\TwoFactorOath\Service\PolicyService;
+use OCA\TwoFactorOath\Service\IOtpService;
+use OCA\TwoFactorOath\Service\IPolicyService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\BruteForceProtection;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\PasswordConfirmationRequired;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\Authentication\TwoFactorAuth\ALoginSetupController;
+use OCP\Authentication\TwoFactorAuth\IProvider;
 use OCP\Authentication\TwoFactorAuth\IRegistry;
 use OCP\Defaults;
 use OCP\IRequest;
@@ -34,10 +34,10 @@ class SettingsController extends ALoginSetupController {
 		IRequest $request,
 		private readonly IUserSession $userSession,
 		private readonly ISession $session,
-		private readonly OtpService $otpService,
-		private readonly PolicyService $policyService,
+		private readonly IOtpService $otpService,
+		private readonly IPolicyService $policyService,
 		private readonly IRegistry $registry,
-		private readonly OtpProvider $provider,
+		private readonly IProvider $provider,
 		private readonly Defaults $defaults,
 	) {
 		parent::__construct($appName, $request);

@@ -7,7 +7,7 @@ declare(strict_types=1);
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-namespace OCA\TwoFactorOath\Tests\Unit;
+namespace OCA\TwoFactorOath\Tests\Unit\Db;
 
 use OCA\TwoFactorOath\Constants;
 use OCA\TwoFactorOath\Db\OtpSecret;
