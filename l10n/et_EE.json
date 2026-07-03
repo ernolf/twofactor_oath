@@ -1,0 +1,9 @@
+{ "translations": {
+    "Pending" : "Ootel",
+    "Renew" : "Uuenda",
+    "Disabled" : "Väljalülitatud",
+    "Digits" : "Numbrid",
+    "Period" : "Tühik",
+    "Wrong password." : "Vale salasõna."
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

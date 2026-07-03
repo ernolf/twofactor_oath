@@ -1,0 +1,9 @@
+{ "translations": {
+    "Pending" : "Pending",
+    "Disabled" : "Disabled",
+    "All" : "All",
+    "Digits" : "Digits",
+    "Period" : "Period",
+    "Wrong password." : "Wrong password."
+},"pluralForm" :"nplurals=2; plural=(n!=1);"
+}

@@ -1,0 +1,9 @@
+{ "translations": {
+    "Pending" : "Folyamatban",
+    "Disabled" : "Letiltva",
+    "Digits" : "Számjegyek",
+    "Period" : "Pont",
+    "Show" : "Megjelenítés",
+    "Wrong password." : "Hibás jelszó."
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

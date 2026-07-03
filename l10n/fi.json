@@ -1,0 +1,8 @@
+{ "translations": {
+    "Pending" : "Odottaa",
+    "Renew" : "Uudista",
+    "Disabled" : "Pois käytöstä",
+    "Show" : "Näytä",
+    "Wrong password." : "Väärä salasana."
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

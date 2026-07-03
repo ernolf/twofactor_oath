@@ -1,0 +1,21 @@
+OC.L10N.register(
+    "twofactor_oath",
+    {
+    "Minimal" : "最小化",
+    "Recommended" : "建議",
+    "Pending" : "待處理",
+    "Enabled" : "已啟用",
+    "Renew" : "更新",
+    "Disabled" : "已停用",
+    "Error" : "錯誤",
+    "Excluded groups" : "排除的群組",
+    "Sort by" : "排序依照",
+    "All" : "全部",
+    "Algorithm" : "演算法",
+    "Digits" : "數字",
+    "Period" : "時段",
+    "Show" : "顯示",
+    "Wrong password." : "密碼錯誤。",
+    "Authentication code" : "驗證碼"
+},
+"nplurals=1; plural=0;");

@@ -1,0 +1,12 @@
+OC.L10N.register(
+    "twofactor_oath",
+    {
+    "Pending" : "보류 중",
+    "Disabled" : "비활성화됨",
+    "All" : "모두",
+    "Digits" : "자리 수",
+    "Period" : "기간",
+    "Wrong password." : "암호가 잘못되었습니다.",
+    "Authentication code" : "인증 코드"
+},
+"nplurals=1; plural=0;");

@@ -1,0 +1,11 @@
+OC.L10N.register(
+    "twofactor_oath",
+    {
+    "Pending" : "Gaida",
+    "Disabled" : "Atspējots",
+    "Sort by" : "Kārtot pēc",
+    "All" : "Visi",
+    "Wrong password." : "Nepareiza parole.",
+    "Authentication code" : "Autentificēšanās kods"
+},
+"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

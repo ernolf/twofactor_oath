@@ -1,0 +1,8 @@
+{ "translations": {
+    "Pending" : "Ventar",
+    "Disabled" : "Deaktivert",
+    "Sort by" : "Sorter på",
+    "All" : "Alle",
+    "Authentication code" : "Autentifikasjons kode"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

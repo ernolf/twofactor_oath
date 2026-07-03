@@ -1,0 +1,15 @@
+{ "translations": {
+    "Minimal" : "Ndogo",
+    "Pending" : "Inasubiri",
+    "Enabled" : "Washwa",
+    "Renew" : "Renew",
+    "Disabled" : "Ilizimwa",
+    "Sort by" : "Panga kwa ",
+    "All" : "Zote",
+    "Algorithm" : "Algorithm",
+    "Digits" : "Nambari",
+    "Period" : "Kipindi",
+    "Wrong password." : "Nenosiri si sahihi.",
+    "Authentication code" : "Msimbo wa uthibitishaji"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

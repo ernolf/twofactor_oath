@@ -1,0 +1,14 @@
+OC.L10N.register(
+    "twofactor_oath",
+    {
+    "Pending" : "Na čakanju",
+    "Disabled" : "Onemogočeno",
+    "Sort by" : "Razvrsti po",
+    "All" : "Vse",
+    "Digits" : "Števke",
+    "Period" : "Obdobje",
+    "Show" : "Pokaži",
+    "Wrong password." : "Napačno geslo",
+    "Authentication code" : "Overitvena koda"
+},
+"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

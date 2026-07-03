@@ -1,0 +1,12 @@
+{ "translations": {
+    "Pending" : "In behandeling",
+    "Disabled" : "Uitgeschakeld",
+    "Sort by" : "Sorteren op",
+    "All" : "Alle",
+    "Digits" : "Cijfers",
+    "Period" : "Duur",
+    "Show" : "Toon",
+    "Wrong password." : "Onjuist wachtwoord.",
+    "Authentication code" : "Authenticatiecode"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

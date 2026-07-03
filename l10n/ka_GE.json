@@ -1,0 +1,7 @@
+{ "translations": {
+    "Pending" : "მოლოდინში",
+    "Disabled" : "არაა მოქმედი",
+    "All" : "ყველა",
+    "Wrong password." : "არასწორი პაროლი."
+},"pluralForm" :"nplurals=2; plural=(n!=1);"
+}

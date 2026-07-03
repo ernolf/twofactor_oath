@@ -1,0 +1,9 @@
+{ "translations": {
+    "Pending" : "Kutilmoqda",
+    "Error" : "Xatolik",
+    "Sort by" : "Saralash turi",
+    "All" : "Barchasi",
+    "Wrong password." : "Wrong password.",
+    "Authentication code" : "Autentifikatsiya kodi"
+},"pluralForm" :"nplurals=1; plural=0;"
+}

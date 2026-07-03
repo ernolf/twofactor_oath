@@ -1,0 +1,18 @@
+OC.L10N.register(
+    "twofactor_oath",
+    {
+    "Minimal" : "Minimal",
+    "Pending" : "Väntande",
+    "Enabled" : "Aktiverad",
+    "Renew" : "Förnya",
+    "Disabled" : "Inaktiverad",
+    "Sort by" : "Sortera efter",
+    "All" : "Alla",
+    "Algorithm" : "Algoritm",
+    "Digits" : "Siffror",
+    "Period" : "Period",
+    "Show" : "Visa",
+    "Wrong password." : "Fel lösenord.",
+    "Authentication code" : "Autentiseringskod"
+},
+"nplurals=2; plural=(n != 1);");

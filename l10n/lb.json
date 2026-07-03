@@ -1,0 +1,6 @@
+{ "translations": {
+    "Pending" : "Ausstoend",
+    "Disabled" : "Deaktivéiert",
+    "All" : "All"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

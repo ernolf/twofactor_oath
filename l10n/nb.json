@@ -1,0 +1,12 @@
+{ "translations": {
+    "Pending" : "Venter",
+    "Disabled" : "Deaktivert",
+    "Sort by" : "Sorter etter",
+    "All" : "Alle",
+    "Digits" : "Sifre",
+    "Period" : "Punktum",
+    "Show" : "Vis",
+    "Wrong password." : "Feil passord.",
+    "Authentication code" : "Autentiseringskode"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

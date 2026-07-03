@@ -1,0 +1,16 @@
+{ "translations": {
+    "Minimal" : "ئەڭ كىچىك",
+    "Recommended" : "تەۋسىيە قىلىندى",
+    "Pending" : "ساقلىنىۋاتىدۇ",
+    "Enabled" : "قوزغىتىلدى",
+    "Renew" : "يېڭىلاش",
+    "Disabled" : "چەكلەنگەن",
+    "Sort by" : "تەرتىپلەش",
+    "All" : "ھەممىسى",
+    "Algorithm" : "ئالگورىزىم",
+    "Digits" : "رەقەملەر",
+    "Period" : "دەۋر",
+    "Wrong password." : "پارول خاتا.",
+    "Authentication code" : "دەلىللەش كودى"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

@@ -1,0 +1,9 @@
+{ "translations": {
+    "Pending" : "In isetu",
+    "Disabled" : "Disativadu",
+    "All" : "Totu",
+    "Show" : "Mustra",
+    "Wrong password." : "Crae isballiada",
+    "Authentication code" : "Còdighe de autenticatzione"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

@@ -1,0 +1,7 @@
+{ "translations": {
+    "Disabled" : "無効",
+    "All" : "すべて",
+    "Show" : "表示",
+    "Wrong password." : "パスワードが間違っています。"
+},"pluralForm" :"nplurals=1; plural=0;"
+}

@@ -1,0 +1,13 @@
+{ "translations": {
+    "Pending" : "Pendente",
+    "Renew" : "Renovar",
+    "Disabled" : "Desativado",
+    "Sort by" : "Ordenar por",
+    "All" : "Todos",
+    "Algorithm" : "Algoritmo",
+    "Digits" : "Dígitos",
+    "Show" : "Mostrar",
+    "Wrong password." : "Palavra-passe errada.",
+    "Authentication code" : "Código de autenticação"
+},"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
+}
