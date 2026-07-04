@@ -57,14 +57,6 @@ final class SettingsControllerTest extends TestCase {
 		);
 	}
 
-	public function testStateReflectsEnabledToken(): void {
-		$this->otpService->method('hasEnabledSecret')->with('alice')->willReturn(true);
-
-		$response = $this->controller->state();
-
-		$this->assertSame(['state' => Constants::STATE_ENABLED], $response->getData());
-	}
-
 	public function testEnableIsForbiddenForManagedUser(): void {
 		$this->policyService->method('isManaged')->with($this->user)->willReturn(true);
 		$this->otpService->expects($this->never())->method('disable');

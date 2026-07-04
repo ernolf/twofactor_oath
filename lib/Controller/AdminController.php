@@ -153,14 +153,13 @@ class AdminController extends Controller {
 		return new JSONResponse(['users' => array_values($users)]);
 	}
 
-	/** Same data as managedUsers(), but as a downloadable CSV. */
-	#[NoCSRFRequired]
 	/**
 	 * Export the managed users as CSV. With `secrets=1` the current (decrypted)
 	 * secret of each stored token (pending or enabled, like the "Show" action)
 	 * is included, so the export can serve as a portable backup that
 	 * re-provisions the same tokens; otherwise the secret column is left empty.
 	 */
+	#[NoCSRFRequired]
 	public function exportUsers(string $secrets = '0'): DataDownloadResponse {
 		$includeSecrets = $secrets === '1';
 		$lines = ['username,status,type,algorithm,digits,period,counter,challenge,suite,secret'];

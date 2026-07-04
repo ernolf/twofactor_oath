@@ -46,16 +46,6 @@ class SettingsController extends ALoginSetupController {
 	/** Session key holding the challenge issued during OCRA self-enrollment. */
 	private const OCRA_SETUP_CHALLENGE = 'twofactor_oath_setup_challenge';
 
-	#[NoAdminRequired]
-	public function state(): JSONResponse {
-		$user = $this->getUser();
-		return new JSONResponse([
-			'state' => $this->otpService->hasEnabledSecret($user->getUID())
-				? Constants::STATE_ENABLED
-				: Constants::STATE_DISABLED,
-		]);
-	}
-
 	/**
 	 * Drive the enrollment state machine:
 	 *  - STATE_DISABLED: remove the user's secret

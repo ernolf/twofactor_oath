@@ -37,16 +37,6 @@ final class OtpSecretMapper extends QBMapper implements IOtpSecretMapper {
 	}
 
 	#[Override]
-	public function hasSecret(string $userId): bool {
-		try {
-			$this->getByUserId($userId);
-			return true;
-		} catch (DoesNotExistException) {
-			return false;
-		}
-	}
-
-	#[Override]
 	public function deleteByUserId(string $userId): void {
 		try {
 			$this->delete($this->getByUserId($userId));

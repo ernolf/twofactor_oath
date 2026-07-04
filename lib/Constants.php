@@ -68,10 +68,6 @@ final class Constants {
 	/** Allowed TOTP periods in seconds (client-compatible steps, e.g. FreeOTP). */
 	public const PERIOD_VALUES = [15, 20, 25, 30, 45, 60, 90, 120, 180, 240, 300, 600];
 
-	/** OCRA (RFC 6287) default suite; the challenge component used for OCRA tokens. */
-	public const DEFAULT_OCRA_SUITE = 'OCRA-1:HOTP-SHA1-6:QN08';
-	public const OCRA_CHALLENGE = 'QN08';
-
 	// Secret length as bytes of key material (NOT Base32 characters): generating a
 	// whole number of bytes guarantees a Base32 string that decodes cleanly and
 	// imports everywhere. RFC 4226 R6: >= 128 bit (16 bytes), 160 bit recommended.

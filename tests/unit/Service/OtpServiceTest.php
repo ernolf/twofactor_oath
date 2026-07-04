@@ -221,10 +221,10 @@ final class OtpServiceTest extends TestCase {
 		$this->mapper->method('deleteByUserId');
 		$this->mapper->expects($this->once())->method('insert')->willReturnArgument(0);
 
-		$entity = $this->service->createSecret('carol', type: Constants::TYPE_OCRA, suite: Constants::DEFAULT_OCRA_SUITE);
+		$entity = $this->service->createSecret('carol', type: Constants::TYPE_OCRA, suite: 'OCRA-1:HOTP-SHA1-6:QN08');
 
 		$this->assertSame(Constants::TYPE_OCRA, $entity->getType());
-		$this->assertSame(Constants::DEFAULT_OCRA_SUITE, $entity->getSuite());
+		$this->assertSame('OCRA-1:HOTP-SHA1-6:QN08', $entity->getSuite());
 		$this->assertSame(Constants::ALGO_SHA1, $entity->getAlgorithm());
 		$this->assertSame(6, $entity->getDigits());
 	}
@@ -404,12 +404,6 @@ final class OtpServiceTest extends TestCase {
 
 		$this->assertStringStartsWith('otpauth://totp/', $uri);
 		$this->assertStringContainsString('issuer=Cloud', $uri);
-		$this->assertStringContainsString('image=', $uri);
-	}
-
-	public function testProvisioningUriUsesExplicitImageUrl(): void {
-		$entity = $this->entity(Constants::TYPE_TOTP, self::RFC_SECRET_B32);
-		$uri = $this->service->getProvisioningUri($entity, 'alice', 'Cloud', 'https://x/icon.png');
 		$this->assertStringContainsString('image=', $uri);
 	}
 

@@ -60,8 +60,8 @@ interface IOtpService {
 	/** The plaintext Base32 secret of a stored token (decrypted from storage). */
 	public function decryptSecret(OtpSecret $config): string;
 
-	/** Build the otpauth:// URI for the QR code, optionally embedding a favicon. */
-	public function getProvisioningUri(OtpSecret $config, string $label, string $issuer, ?string $imageUrl = null): string;
+	/** Build the otpauth:// URI for the QR code (embeds the instance favicon). */
+	public function getProvisioningUri(OtpSecret $config, string $label, string $issuer): string;
 
 	/** Verify a one-time code (advances the HOTP counter / records the TOTP slice). */
 	public function verify(OtpSecret $config, string $code): bool;

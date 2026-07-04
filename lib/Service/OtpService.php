@@ -269,13 +269,13 @@ final class OtpService implements IOtpService {
 		return $otp;
 	}
 
-	/** Build the otpauth:// URI for the QR code, optionally embedding a favicon. */
+	/** Build the otpauth:// URI for the QR code (embeds the instance favicon). */
 	#[Override]
-	public function getProvisioningUri(OtpSecret $config, string $label, string $issuer, ?string $imageUrl = null): string {
+	public function getProvisioningUri(OtpSecret $config, string $label, string $issuer): string {
 		$otp = $this->build($config);
 		$otp->setLabel($label);
 		$otp->setIssuer($issuer);
-		$image = ($imageUrl !== null && $imageUrl !== '') ? $imageUrl : $this->getFaviconUrl();
+		$image = $this->getFaviconUrl();
 		if ($image !== '') {
 			$otp->setParameter('image', $image);
 		}

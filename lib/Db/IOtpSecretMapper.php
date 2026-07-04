@@ -22,8 +22,6 @@ interface IOtpSecretMapper {
 	 */
 	public function getByUserId(string $userId): OtpSecret;
 
-	public function hasSecret(string $userId): bool;
-
 	public function deleteByUserId(string $userId): void;
 
 	/**

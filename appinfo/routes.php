@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 return [
 	'routes' => [
-		['name' => 'settings#state', 'url' => '/settings/state', 'verb' => 'GET'],
 		['name' => 'settings#enable', 'url' => '/settings/enable', 'verb' => 'POST'],
 		['name' => 'settings#resync', 'url' => '/settings/resync', 'verb' => 'POST'],
 		['name' => 'settings#config', 'url' => '/settings/config', 'verb' => 'GET'],

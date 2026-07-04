@@ -39,7 +39,7 @@ export async function resyncOtp(code1, code2) {
 }
 
 /**
- *
+ * Fetch the user's non-sensitive OTP configuration (null if no enabled token).
  */
 export async function getOtpConfig() {
 	const url = generateUrl('/apps/twofactor_oath/settings/config')
@@ -48,10 +48,9 @@ export async function getOtpConfig() {
 	return resp.data.config
 }
 
-// Reveal the current secret/QR. The password is forced on every call by the
-// strict password-confirmation interceptor (no body password needed).
 /**
- *
+ * Reveal the current secret/QR. The strict password-confirmation interceptor
+ * forces a fresh password on every call (no body password needed).
  */
 export async function showOtp() {
 	const url = generateUrl('/apps/twofactor_oath/settings/show')
@@ -60,9 +59,8 @@ export async function showOtp() {
 	return resp.data
 }
 
-// Disable OTP. Password forced on every call by the strict interceptor.
 /**
- *
+ * Disable OTP. The strict interceptor forces a fresh password on every call.
  */
 export async function deactivateOtp() {
 	const url = generateUrl('/apps/twofactor_oath/settings/deactivate')
