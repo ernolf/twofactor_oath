@@ -11,7 +11,7 @@ namespace OCA\TwoFactorOath\Settings;
 
 use OCA\TwoFactorOath\AppInfo\Application;
 use OCA\TwoFactorOath\Constants;
-use OCA\TwoFactorOath\Service\TotpImporter;
+use OCA\TwoFactorOath\Service\ITotpImporter;
 use OCP\App\IAppManager;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
@@ -28,7 +28,7 @@ class AdminSettings implements ISettings {
 		private readonly IInitialState $initialState,
 		private readonly IAppConfig $appConfig,
 		private readonly IGroupManager $groupManager,
-		private readonly TotpImporter $totpImporter,
+		private readonly ITotpImporter $totpImporter,
 		private readonly IAppManager $appManager,
 	) {
 	}

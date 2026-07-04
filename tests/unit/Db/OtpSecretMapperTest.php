@@ -98,14 +98,6 @@ class OtpSecretMapperTest extends TestCase {
 		$this->assertNull($loaded->getSuite());
 	}
 
-	public function testHasSecret(): void {
-		$this->assertFalse($this->mapper->hasSecret(self::TEST_USER));
-
-		$this->mapper->insert($this->newSecret(self::TEST_USER));
-
-		$this->assertTrue($this->mapper->hasSecret(self::TEST_USER));
-	}
-
 	public function testUpdatePersistsChanges(): void {
 		$entity = $this->mapper->insert($this->newSecret(self::TEST_USER));
 
@@ -129,7 +121,6 @@ class OtpSecretMapperTest extends TestCase {
 
 		$this->mapper->deleteByUserId(self::TEST_USER);
 
-		$this->assertFalse($this->mapper->hasSecret(self::TEST_USER));
 		$this->expectException(DoesNotExistException::class);
 		$this->mapper->getByUserId(self::TEST_USER);
 	}
@@ -137,7 +128,9 @@ class OtpSecretMapperTest extends TestCase {
 	public function testDeleteByUserIdIsNoOpWhenMissing(): void {
 		// Must not throw when there is nothing to delete.
 		$this->mapper->deleteByUserId(self::TEST_USER);
-		$this->assertFalse($this->mapper->hasSecret(self::TEST_USER));
+
+		$this->expectException(DoesNotExistException::class);
+		$this->mapper->getByUserId(self::TEST_USER);
 	}
 
 	public function testUserIdUniqueConstraint(): void {
@@ -153,7 +146,7 @@ class OtpSecretMapperTest extends TestCase {
 		$this->mapper->insert($this->newSecret(self::TEST_USER));
 		$this->mapper->insert($this->newSecret(self::OTHER_USER));
 
-		$this->assertTrue($this->mapper->hasSecret(self::TEST_USER));
-		$this->assertTrue($this->mapper->hasSecret(self::OTHER_USER));
+		$this->assertSame(self::TEST_USER, $this->mapper->getByUserId(self::TEST_USER)->getUserId());
+		$this->assertSame(self::OTHER_USER, $this->mapper->getByUserId(self::OTHER_USER)->getUserId());
 	}
 }

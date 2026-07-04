@@ -671,9 +671,8 @@ export default {
 			}
 		},
 
-		// occ commands to remove the lingering twofactor_totp registration of the
-		// users registered with both apps (the default, manual path).
-		// (The list is rendered in the cleanup banner; see totpDisableCommands.)
+		// Button action of the cleanup banner: deregister twofactor_totp for the
+		// users registered with both apps, after an explicit confirmation.
 		async cleanupTotp() {
 			const confirmed = await this.confirm({
 				title: t('twofactor_oath', 'Remove twofactor_totp registrations?'),
@@ -911,12 +910,6 @@ export default {
 	margin-bottom: 12px;
 }
 
-.otp-admin__actions {
-	display: flex;
-	gap: 12px;
-	flex-wrap: wrap;
-}
-
 /* Wide enough that the preset labels are not truncated in the dropdown. */
 .otp-admin__length {
 	width: 28em;
@@ -942,6 +935,7 @@ export default {
 .otp-admin__actions {
 	display: flex;
 	gap: 8px;
+	flex-wrap: wrap;
 	margin-bottom: 12px;
 }
 

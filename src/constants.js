@@ -64,7 +64,7 @@ const ALGORITHM_SUITE_HASH = Object.freeze({
 })
 
 // OCRA challenge: numeric (QN), length is configurable (RFC 6287 allows 04-64).
-export const OCRA_CHALLENGE_DEFAULT = 8
+const OCRA_CHALLENGE_DEFAULT = 8
 
 /**
  * Compose an OCRA suite (RFC 6287) from algorithm code, digit count and challenge length.
@@ -142,7 +142,7 @@ export function periodLabel(seconds) {
 
 // Secret length is configured in bytes of key material. RFC 4226 R6: at least
 // 128 bit (16 bytes), recommended 160 bit (20 bytes). Stored Base32 = 5 bits/char.
-export const SECRET_BYTES_MIN = 16
+const SECRET_BYTES_MIN = 16
 
 /**
  * Base32 (unpadded) character count for a given number of bytes.
@@ -163,7 +163,7 @@ export const SECRET_PRESETS = [
 	{ key: 'paranoia', bytes: 80 },
 ]
 
-export const BASE32_RE = /^[A-Z2-7]+$/
+const BASE32_RE = /^[A-Z2-7]+$/
 
 /**
  * A Base32 length decodes to whole bytes unless (length mod 8) is 1, 3 or 6.
