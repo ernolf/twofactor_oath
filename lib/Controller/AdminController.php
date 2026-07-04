@@ -157,9 +157,9 @@ class AdminController extends Controller {
 	#[NoCSRFRequired]
 	/**
 	 * Export the managed users as CSV. With `secrets=1` the current (decrypted)
-	 * secret of each enabled token is included, so the export can serve as a
-	 * portable backup that re-provisions the same tokens; otherwise the secret
-	 * column is left empty.
+	 * secret of each stored token (pending or enabled, like the "Show" action)
+	 * is included, so the export can serve as a portable backup that
+	 * re-provisions the same tokens; otherwise the secret column is left empty.
 	 */
 	public function exportUsers(string $secrets = '0'): DataDownloadResponse {
 		$includeSecrets = $secrets === '1';
@@ -175,7 +175,7 @@ class AdminController extends Controller {
 			$secret = '';
 			if ($includeSecrets) {
 				$entity = $this->otpService->findByUserId($user->getUID());
-				if ($entity !== null && $entity->isEnabled()) {
+				if ($entity !== null) {
 					$secret = $this->otpService->decryptSecret($entity);
 				}
 			}
