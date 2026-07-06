@@ -123,33 +123,13 @@ The same symlink lets Nextcloud load and enable the app for manual testing.
 
 ## Makefile targets
 
-The `Makefile` drives building, packaging and releasing without any host toolchain — the package managers run in throwaway containers (see [Container-based development](#container-based-development)). `make help` is the authoritative list; in summary:
-
-| Target | Purpose |
-| --- | --- |
-| `build` | run the build commands from `krankerl.toml` (composer install, npm ci, npm run build) |
-| `dist` | build the distribution tarball into `build/artifacts/dist/` |
-| `sign` | print the base64 signature of the tarball |
-| `release` | `dist` + `sign` |
-| `rsync` | deploy the runtime files into an `apps/` dir via rsync, the same set as the tarball (`TARGET=<apps-dir \| user@host:dir>`) |
-| `clean` | remove `build/` |
-| `dist-clean` | remove every git-ignored build output (vendor, node_modules, js, …) for a clean rebuild |
-| `version` | open a release branch with the version bump for a PR (maintainer) |
-| `tag` | tag the merged release commit on main, signed and pushed (maintainer) |
-| `register` | register the app and its signing certificate, one-time (maintainer) |
-| `publish` | submit a release for publication on the App Store (maintainer) |
-
-Choose the container runtime with `RUNTIME=` — auto-detected (`podman-rootless` preferred, then `docker`), or `bare` to use host tools, for example `make build RUNTIME=docker`. Targets marked maintainer need repo write access and/or the App Store signing key; `make help` flags them with `[m]`.
+The `Makefile` is the [ncmake](https://github.com/ernolf/ncmake) bootstrap stub: on first use it fetches the shared ncmake Makefile into a per-machine cache (`~/.cache/ncmake/`) and keeps it current from then on. Building, packaging, deploying, releasing and the container runtime (`RUNTIME=`) are documented in the [ncmake README](https://github.com/ernolf/ncmake#readme); `make help` is the authoritative target list.
 
 ### Releasing
 
-`main` is protected (required checks and signed commits), so a version bump cannot be pushed to it directly. The flow:
+`main` is protected (required checks and signed commits), so a version bump cannot be pushed to it directly. The release cycle (`make version` on a `ncmake/release/X.Y.Z` branch, CHANGELOG entry, PR, then `make tag` on `main`) is described in the [ncmake README](https://github.com/ernolf/ncmake#releasing).
 
-1. `make version` — branches off `main` into `release/X.Y.Z`, bumps the version in `info.xml`/`composer.json`/`package.json`, re-syncs the lockfiles and commits there.
-2. Add a `## [X.Y.Z]` entry to `CHANGELOG.md` on that branch, commit, push, open a PR and merge.
-3. On `main`: `git pull && make tag` — creates and pushes the signed `vX.Y.Z` tag.
-
-From the tag you cut a GitHub release; the release workflow builds the tarball and attaches it as an asset. `make register` registers the app and its signing certificate (one-time); `make publish` then submits the release for publication on the App Store.
+App-specific: from the tag you cut a GitHub release; the release workflow builds the tarball and attaches it as an asset. `make register` registers the app and its signing certificate (one-time); `make publish` then submits the release for publication on the App Store.
 
 ## Deploying to a test instance
 
