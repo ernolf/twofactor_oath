@@ -27,7 +27,7 @@
 
 <?php else: ?>
 
-	<p><?php p($l->t('Enter the one-time code from your OTP app or token.')) ?></p>
+	<p><?php p($l->t('Enter a one-time code from your OTP app or token.')) ?></p>
 
 	<form method="POST" class="otp-form">
 		<input type="text" minlength="6" maxlength="10" name="challenge" required="required" autofocus autocomplete="one-time-code" inputmode="numeric" autocapitalize="off" placeholder="<?php p($l->t('Authentication code')) ?>">

@@ -6,8 +6,8 @@
 <info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>twofactor_oath</id>
-	<name>Two-Factor OATH (advanced)</name>
-	<summary>Advanced OATH second-factor provider: TOTP, HOTP and OCRA</summary>
+	<name>Two-factor OATH (advanced)</name>
+	<summary>Advanced OATH two-factor provider: TOTP, HOTP and OCRA</summary>
 	<description><![CDATA[
 Configurable OATH two-factor authentication for Nextcloud, covering all three OATH algorithms in one provider.
 
@@ -19,7 +19,7 @@ Configurable OATH two-factor authentication for Nextcloud, covering all three OA
 - One-click **import from the bundled twofactor_totp**, so existing users switch over without being locked out
 - Issuer icon embedded in the QR code, HOTP resynchronisation, and a software OCRA token for testing
 
-Built for hardware OATH tokens and elevated requirements, alongside the simple, bundled twofactor_totp app. OATH (one-time passwords) is not the same as FIDO2/WebAuthn; see the documentation for when to use which.
+Built for hardware OATH tokens and elevated requirements, alongside the simple, bundled twofactor_totp app. OATH (one-time passwords) is not the same as FIDO2/WebAuthn. See documentation for when to use which.
 	]]></description>
 	<version>0.2.0</version>
 	<licence>agpl</licence>
