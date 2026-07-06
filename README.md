@@ -132,7 +132,7 @@ occ app:enable twofactor_oath
 
 ### From source
 
-The build runs entirely in throwaway containers, so the only requirement is **[podman](https://podman.io/)** (or Docker) — no PHP or Node toolchain on the host. Clone and build the tarball:
+The build is driven by [ncmake](https://github.com/ernolf/ncmake) and runs entirely in throwaway containers, so the only requirement is **[podman](https://podman.io/)** (or Docker) — no PHP or Node toolchain on the host. The first `make` fetches the shared ncmake Makefile once into `~/.cache/ncmake/`. Clone and build the tarball:
 
 ```sh
 git clone https://github.com/ernolf/twofactor_oath.git
@@ -152,7 +152,7 @@ occ app:enable twofactor_oath
 
 `TARGET` is the `apps/` parent directory and may be a local path or a remote `user@host:` path.
 
-Working on the app itself? See [doc/development.md](doc/development.md) for the quality gates and all `make` targets.
+Working on the app itself? See [doc/development.md](doc/development.md) for the quality gates and the [ncmake README](https://github.com/ernolf/ncmake#readme) for all `make` targets.
 
 ## Documentation
 
@@ -162,7 +162,7 @@ Working on the app itself? See [doc/development.md](doc/development.md) for the 
 - [doc/security.md](doc/security.md): security model
 - [doc/compatibility.md](doc/compatibility.md): client and hardware compatibility, OATH vs FIDO
 - [doc/design.md](doc/design.md): architecture and specification
-- [doc/development.md](doc/development.md): development, quality gates, build and deploy
+- [doc/development.md](doc/development.md): development, quality gates and deploying to a test instance
 
 ## License
 
