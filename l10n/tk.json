@@ -1,4 +1,9 @@
 { "translations": {
-    "Pending" : "Garaşylýar"
+    "Pending" : "Garaşylýar",
+    "Error" : "ýalňyşlyk",
+    "User" : "Ulanyjy",
+    "Type" : "Görnüşi",
+    "Hide" : "Gizläň",
+    "Cancel" : "Cancel"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

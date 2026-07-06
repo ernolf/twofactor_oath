@@ -2,10 +2,23 @@ OC.L10N.register(
     "twofactor_oath",
     {
     "Pending" : "–•“Ø–ª—ç—ç–≥–¥—ç–∂ –±–∞–π–≥–∞–∞",
+    "Enabled" : "–ò–¥—ç–≤—Ö–∏–∂“Ø“Ø–ª—ç—Ö",
     "Disabled" : "–∏–¥—ç–≤—Ö–∏–≥“Ø–π",
+    "Error" : "–ê–ª–¥–∞–∞",
+    "Excluded groups" : "Хассан бүлгүүд",
+    "Export as CSV" : "CSV болгон экспортлох",
     "Sort by" : "Эрэмбэлэх",
+    "User" : "–•—ç—Ä—ç–≥–ª—ç–≥—á",
+    "Status" : "—Ç”©–ª”©–≤",
+    "Type" : "–¢”©—Ä”©–ª",
     "All" : "–±“Ø—Ö",
+    "Hide" : "Нуух",
+    "Cancel" : "‚Äì¬±‚Äì√¶‚Äì¬™‚Äì‚àè‚Äî√â‚Äì¬™‚Äì‚àû‚Äî√ñ",
+    "Confirm" : "–ë–∞—Ç–ª–∞—Ö",
+    "Advanced settings" : "–ù–∞—Ä–∏–π–≤—á–∏–ª—Å–∞–Ω —Ç–æ—Ö–∏—Ä–≥–æ–æ",
     "Wrong password." : "буруу нуууц үг",
-    "Authentication code" : "танилтын код"
+    "Authentication code" : "танилтын код",
+    "Verify" : "Шалнгах",
+    "Submit" : "–º—ç–¥—ç–≥–¥—ç—Ö"
 },
 "nplurals=2; plural=(n != 1);");

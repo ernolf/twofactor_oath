@@ -3,8 +3,15 @@ OC.L10N.register(
     {
     "Pending" : "Ventar",
     "Disabled" : "Deaktivert",
+    "Error" : "Feil",
     "Sort by" : "Sorter på",
+    "User" : "Bruker",
+    "Type" : "Skriv",
     "All" : "Alle",
-    "Authentication code" : "Autentifikasjons kode"
+    "Hide" : "Gøym",
+    "Cancel" : "Cancel",
+    "Advanced settings" : "Avanserte innstillingar",
+    "Authentication code" : "Autentifikasjons kode",
+    "Verify" : "Stadfest"
 },
 "nplurals=2; plural=(n != 1);");

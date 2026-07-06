@@ -1,0 +1,9 @@
+{ "translations": {
+    "Error" : "Սխալ",
+    "Sort by" : "Դասակարգել ըստ",
+    "User" : "User",
+    "Type" : "Տիպ",
+    "Cancel" : "Cancel",
+    "Wrong password." : "Սխալ գաղտնաբառ։"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

@@ -1,16 +1,29 @@
 { "translations": {
     "Minimal" : "Minimal",
+    "Recommended" : "Rekomenderad",
     "Pending" : "Väntande",
     "Enabled" : "Aktiverad",
     "Renew" : "Förnya",
     "Disabled" : "Inaktiverad",
+    "Error" : "Fel",
+    "Excluded groups" : "Exkluderade grupper",
+    "Export as CSV" : "Exportera som CSV",
     "Sort by" : "Sortera efter",
+    "User" : "Användare",
+    "Status" : "Status",
+    "Type" : "Typ",
     "All" : "Alla",
     "Algorithm" : "Algoritm",
     "Digits" : "Siffror",
     "Period" : "Period",
+    "Hide" : "Dölj",
     "Show" : "Visa",
+    "Cancel" : "Cancel",
+    "Confirm" : "Bekräfta",
+    "Advanced settings" : "Avancerade inställningar",
     "Wrong password." : "Fel lösenord.",
-    "Authentication code" : "Autentiseringskod"
+    "Authentication code" : "Autentiseringskod",
+    "Verify" : "Verifiera",
+    "Submit" : "Skicka"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

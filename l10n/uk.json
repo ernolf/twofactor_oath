@@ -1,16 +1,30 @@
 { "translations": {
     "Minimal" : "Мінімальний",
     "Recommended" : "Рекомендуємо",
+    "High" : "Високий",
+    "Extreme" : "Екстрим",
     "Pending" : "Очікування",
     "Enabled" : "Увімкнено",
     "Renew" : "Поновити",
     "Disabled" : "Вимкнено",
+    "Error" : "Помилка",
+    "Excluded groups" : "Виключені групи",
+    "Export as CSV" : "Експорт у CSV",
     "Sort by" : "Впорядкувати за",
+    "User" : "Користувач",
+    "Status" : "Статус",
+    "Type" : "Кому надано доступ",
     "All" : "Всі",
     "Algorithm" : "Алгоритм",
     "Digits" : "Цифри",
     "Period" : "Період",
+    "Hide" : "Сховати",
+    "Cancel" : "Cancel",
+    "Confirm" : "Підтвердити",
+    "Advanced settings" : "Розширені",
     "Wrong password." : "Невірний пароль.",
-    "Authentication code" : "Код автентифікації"
+    "Authentication code" : "Код автентифікації",
+    "Verify" : "Перевірити",
+    "Submit" : "Відправити"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);"
 }

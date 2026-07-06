@@ -1,0 +1,26 @@
+OC.L10N.register(
+    "twofactor_oath",
+    {
+    "Recommended" : "Mælt með",
+    "Pending" : "Í bið",
+    "Enabled" : "Virkt",
+    "Disabled" : "Óvirkt",
+    "Error" : "Villa",
+    "Excluded groups" : "Útilokaðir hópar",
+    "Sort by" : "Raða sem",
+    "User" : "Notandi",
+    "Type" : "Tegund",
+    "All" : "Allt",
+    "Algorithm" : "Reiknirit",
+    "Digits" : "Tölustafir",
+    "Period" : "Punktur",
+    "Hide" : "Fela",
+    "Cancel" : "Cancel",
+    "Confirm" : "Staðfesta",
+    "Advanced settings" : "Ítarlegri valkostir",
+    "Wrong password." : "Rangt lykilorð.",
+    "Authentication code" : "Auðkenningarkóði",
+    "Verify" : "Sannprófa",
+    "Submit" : "Senda inn"
+},
+"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

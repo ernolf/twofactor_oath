@@ -1,10 +1,25 @@
 { "translations": {
+    "Recommended" : "추천",
     "Pending" : "보류 중",
+    "Enabled" : "활성화",
     "Disabled" : "비활성화됨",
+    "Error" : "오류",
+    "Excluded groups" : "제외된 그룹",
+    "Export as CSV" : "CSV로 내보내기",
+    "Sort by" : "정렬",
+    "User" : "사용자",
+    "Status" : "상태",
+    "Type" : "종류",
     "All" : "모두",
     "Digits" : "자리 수",
     "Period" : "기간",
+    "Hide" : "비공개",
+    "Cancel" : "Cancel",
+    "Confirm" : "확인",
+    "Advanced settings" : "고급 설정",
     "Wrong password." : "암호가 잘못되었습니다.",
-    "Authentication code" : "인증 코드"
+    "Authentication code" : "인증 코드",
+    "Verify" : "인증",
+    "Submit" : "제출"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

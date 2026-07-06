@@ -1,4 +1,31 @@
 { "translations": {
-    "Period" : "Zeitraum"
+    "Minimal" : "Minimal",
+    "Recommended" : "Empfohlen",
+    "High" : "Hoch",
+    "Extreme" : "Extrem",
+    "Pending" : "Ausstehend",
+    "Enabled" : "Aktiviert",
+    "Renew" : "Erneuern",
+    "Disabled" : "Deaktiviert",
+    "Error" : "Fehler",
+    "Excluded groups" : "Ausgeschlossene Gruppen",
+    "Export as CSV" : "Als CSV exportieren",
+    "Sort by" : "Sortieren nach",
+    "User" : "Benutzer",
+    "Status" : "Status",
+    "Type" : "Typ",
+    "All" : "Alle",
+    "Algorithm" : "Algorithmus",
+    "Digits" : "Zeichen",
+    "Period" : "Zeitraum",
+    "Hide" : "Ausblenden",
+    "Show" : "Zeige",
+    "Cancel" : "Abbrechen",
+    "Confirm" : "Bestätigen",
+    "Advanced settings" : "Erweiterte Einstellungen",
+    "Wrong password." : "Falsches Passwort.",
+    "Authentication code" : "Authentifizierungscode",
+    "Verify" : "Überprüfen",
+    "Submit" : "Übermitteln"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

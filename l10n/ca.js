@@ -1,0 +1,27 @@
+OC.L10N.register(
+    "twofactor_oath",
+    {
+    "Minimal" : "Mínim",
+    "Recommended" : "Recomanat",
+    "High" : "Alt",
+    "Enabled" : "Habilitat",
+    "Disabled" : "Inhabilitat",
+    "Error" : "Error",
+    "Excluded groups" : "Grups exclosos",
+    "Export as CSV" : "Exporta a CSV",
+    "Sort by" : "Ordena per",
+    "User" : "Usuari",
+    "Type" : "Tipus",
+    "All" : "Totes",
+    "Digits" : "Dígits",
+    "Period" : "Període",
+    "Hide" : "Amaga",
+    "Cancel" : "Cancel",
+    "Confirm" : "Confirma",
+    "Advanced settings" : "Paràmetres avançats",
+    "Wrong password." : "Contrasenya incorrecta.",
+    "Authentication code" : "Codi d'autenticació",
+    "Verify" : "Verifica",
+    "Submit" : "Envia"
+},
+"nplurals=2; plural=(n != 1);");

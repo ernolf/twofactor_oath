@@ -6,9 +6,18 @@ OC.L10N.register(
     "Disabled" : "Đã vô hiệu",
     "Error" : "Lỗi",
     "Excluded groups" : "Các nhóm bị loại trừ",
+    "Export as CSV" : "Xuất dưới dạng CSV",
+    "User" : "Người dùng",
+    "Type" : "Loại",
     "All" : "Tất cả",
+    "Hide" : "Ẩn",
     "Show" : "Hiển thị",
+    "Cancel" : "Cancel",
+    "Confirm" : "Xác nhận",
+    "Advanced settings" : "Cài đặt nâng cao",
     "Wrong password." : "Sai mật khẩu.",
-    "Authentication code" : "Mã xác thực"
+    "Authentication code" : "Mã xác thực",
+    "Verify" : "Xác minh",
+    "Submit" : "Gửi"
 },
 "nplurals=1; plural=0;");

@@ -1,11 +1,25 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "High" : "Artu",
+    "Extreme" : "Istremu",
     "Pending" : "In isetu",
+    "Enabled" : "Ativadu",
     "Disabled" : "Disativadu",
+    "Error" : "Errore",
+    "Excluded groups" : "Grupos esclùdidos",
+    "User" : "Utente",
+    "Status" : "Status",
+    "Type" : "Genia",
     "All" : "Totu",
+    "Hide" : "Cua",
     "Show" : "Mustra",
+    "Cancel" : "Cancel",
+    "Confirm" : "Cunfirma",
+    "Advanced settings" : "Cunfiguratzione avantzada",
     "Wrong password." : "Crae isballiada",
-    "Authentication code" : "Còdighe de autenticatzione"
+    "Authentication code" : "Còdighe de autenticatzione",
+    "Verify" : "Verìfica",
+    "Submit" : "Imbia"
 },
 "nplurals=2; plural=(n != 1);");

@@ -2,6 +2,10 @@ OC.L10N.register(
     "twofactor_oath",
     {
     "Pending" : "Dalam proses",
-    "Sort by" : "Susun mengikut"
+    "Error" : "Ralat",
+    "Sort by" : "Susun mengikut",
+    "User" : "User",
+    "Type" : "Jenis",
+    "Cancel" : "Cancel"
 },
 "nplurals=1; plural=0;");

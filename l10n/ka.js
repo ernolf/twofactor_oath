@@ -2,10 +2,24 @@ OC.L10N.register(
     "twofactor_oath",
     {
     "Pending" : "Pending",
+    "Enabled" : "Enabled",
     "Disabled" : "Disabled",
+    "Error" : "შეცდომა",
+    "Excluded groups" : "Excluded groups",
+    "Sort by" : "Sort by",
+    "User" : "User",
+    "Status" : "Status",
+    "Type" : "სახე",
     "All" : "All",
     "Digits" : "Digits",
     "Period" : "Period",
-    "Wrong password." : "Wrong password."
+    "Hide" : "Hide",
+    "Cancel" : "გაუქმება",
+    "Confirm" : "Confirm",
+    "Advanced settings" : "Advanced settings",
+    "Wrong password." : "Wrong password.",
+    "Authentication code" : "Authentication code",
+    "Verify" : "Verify",
+    "Submit" : "გაგზავნა"
 },
 "nplurals=2; plural=(n!=1);");

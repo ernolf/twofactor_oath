@@ -1,15 +1,31 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Minimal" : "Minimalus",
+    "Recommended" : "Rekomenduojama",
     "Pending" : "Laukiama",
+    "Enabled" : "Įjungta",
     "Renew" : "Atnaujinti",
     "Disabled" : "Išjungta",
+    "Error" : "Klaida",
+    "Excluded groups" : "Pašalintos grupės",
+    "Export as CSV" : "Eksportuoti kaip CSV",
+    "Sort by" : "Rikiuoti pagal",
+    "User" : "Vartotojas",
+    "Status" : "Būsena",
+    "Type" : "Tipas",
     "All" : "Visos",
     "Algorithm" : "Algoritmas",
     "Digits" : "Skaičiai",
     "Period" : "Laikotarpis",
+    "Hide" : "Slėpti",
     "Show" : "Rodyti",
+    "Cancel" : "Atsisakyti",
+    "Confirm" : "Patvirtinti",
+    "Advanced settings" : "Išplėstiniai nustatymai",
     "Wrong password." : "Neteisingas slaptažodis.",
-    "Authentication code" : "Autentifikavimo kodas"
+    "Authentication code" : "Autentifikavimo kodas",
+    "Verify" : "Patikrinti",
+    "Submit" : "Pateikti"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");
