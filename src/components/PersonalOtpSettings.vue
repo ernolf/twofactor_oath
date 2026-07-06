@@ -103,12 +103,12 @@
 								@error="currentIconFailed = true">
 						</div>
 						<div class="otp-current__qr-hint">
-							<p>{{ t('twofactor_oath', 'The icon in the center is used by the FreeOTP app.') }}</p>
+							<p>{{ t('twofactor_oath', 'The icon in the center is used by FreeOTP.') }}</p>
 							<p>{{ t('twofactor_oath', 'Other authenticator apps do not display it.') }}</p>
 						</div>
 					</div>
 					<p class="otp-current__countdown">
-						{{ t('twofactor_oath', 'Hides in {n}s — click to keep visible', { n: countdown }) }}
+						{{ n('twofactor_oath', 'Hides in %n second — click to keep visible', 'Hides in %n seconds — click to keep visible', countdown) }}
 					</p>
 				</div>
 
@@ -117,7 +117,7 @@
 						{{ t('twofactor_oath', 'HOTP token out of sync?') }}
 					</summary>
 					<p class="otp-resync__hint">
-						{{ t('twofactor_oath', 'If your counter-based (HOTP) token no longer works, enter two consecutive codes from it to re-synchronize the counter.') }}
+						{{ t('twofactor_oath', 'If your counter-based (HOTP) token no longer works, enter two consecutive codes from it to resynchronize the counter.') }}
 					</p>
 					<div class="otp-resync__fields">
 						<NcTextField
@@ -136,7 +136,7 @@
 							variant="primary"
 							:disabled="resyncLoading || resyncCode1.trim() === '' || resyncCode2.trim() === ''"
 							@click="resync">
-							{{ t('twofactor_oath', 'Re-synchronize') }}
+							{{ t('twofactor_oath', 'Resynchronize') }}
 						</NcButton>
 					</div>
 				</details>
@@ -331,7 +331,7 @@ export default {
 					this.showAdvanced = false
 					this.appliedSettings = null
 				} else {
-					OC.Notification.showTemporary(t('twofactor_oath', 'Could not verify the code. Please try again'))
+					OC.Notification.showTemporary(t('twofactor_oath', 'Could not verify code. Please try again.'))
 				}
 			} catch (e) {
 				OC.Notification.showTemporary(t('twofactor_oath', 'Could not enable OTP'))
@@ -362,7 +362,7 @@ export default {
 				}
 				const message = e?.response?.status === 403
 					? t('twofactor_oath', 'Wrong password.')
-					: t('twofactor_oath', 'Could not reveal the secret')
+					: t('twofactor_oath', 'Could not reveal secret')
 				OC.Notification.showTemporary(message)
 				logger.error('could not reveal secret', { e })
 			}
@@ -402,7 +402,7 @@ export default {
 				this.config = await getOtpConfig()
 				this.shown = true
 			} catch (e) {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not load the configuration'))
+				OC.Notification.showTemporary(t('twofactor_oath', 'Could not load configuration'))
 				logger.error('could not load OTP configuration', { e })
 			} finally {
 				this.showLoading = false
@@ -451,7 +451,7 @@ export default {
 				await navigator.clipboard.writeText(this.secretData.secret)
 				OC.Notification.showTemporary(t('twofactor_oath', 'Secret copied to clipboard'))
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not copy the secret'))
+				OC.Notification.showTemporary(t('twofactor_oath', 'Could not copy secret'))
 			}
 		},
 
@@ -468,14 +468,14 @@ export default {
 			try {
 				const { success } = await resyncOtp(this.resyncCode1.trim(), this.resyncCode2.trim())
 				if (success) {
-					OC.Notification.showTemporary(t('twofactor_oath', 'Token re-synchronized.'))
+					OC.Notification.showTemporary(t('twofactor_oath', 'Token resynchronized.'))
 					this.resyncCode1 = ''
 					this.resyncCode2 = ''
 				} else {
-					OC.Notification.showTemporary(t('twofactor_oath', 'Could not re-synchronize. Check the two consecutive codes and try again.'))
+					OC.Notification.showTemporary(t('twofactor_oath', 'Could not resynchronize. Check the two consecutive codes and try again.'))
 				}
 			} catch (e) {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not re-synchronize the token'))
+				OC.Notification.showTemporary(t('twofactor_oath', 'Could not resynchronize token'))
 				logger.error('could not resync OTP', { e })
 			} finally {
 				this.resyncLoading = false

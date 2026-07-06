@@ -157,7 +157,7 @@ export default {
 				if (state === STATE.ENABLED) {
 					this.$refs.confirmForm.submit()
 				} else {
-					OC.Notification.showTemporary(t('twofactor_oath', 'Could not verify the code. Please try again'))
+					OC.Notification.showTemporary(t('twofactor_oath', 'Could not verify code. Please try again.'))
 				}
 			} catch (e) {
 				OC.Notification.showTemporary(t('twofactor_oath', 'Could not enable OTP'))

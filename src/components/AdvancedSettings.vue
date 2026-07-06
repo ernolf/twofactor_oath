@@ -9,7 +9,7 @@
 			:modelValue="strict"
 			type="switch"
 			@update:modelValue="setStrict">
-			{{ t('twofactor_oath', 'Strict RFC compliance (grey out options the relevant RFC does not cover)') }}
+			{{ t('twofactor_oath', 'Strict RFC compliance (gray out options the relevant RFC does not cover)') }}
 		</NcCheckboxRadioSwitch>
 
 		<fieldset class="otp-advanced-form__group">
@@ -241,7 +241,7 @@ export default {
 				return t('twofactor_oath', 'This length does not decode to whole bytes and would be rejected by authenticator apps.')
 			}
 			if (issue === 'short') {
-				return t('twofactor_oath', 'Secret is too short (minimum 128 bit / 16 bytes).')
+				return t('twofactor_oath', 'Secret is too short (minimum 128 bit/16 bytes).')
 			}
 			return ''
 		},

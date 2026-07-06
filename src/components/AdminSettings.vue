@@ -16,7 +16,7 @@
 		</NcNoteCard>
 		<NcNoteCard v-if="totpEnabled && totpDuplicateUsers.length > 0" type="warning" class="otp-admin__banner">
 			<p>{{ n('twofactor_oath', '%n user is registered with both twofactor_totp and OATH. OATH already covers everything twofactor_totp does, so their twofactor_totp registration should be removed — otherwise it breaks their login once twofactor_totp is disabled.', '%n users are registered with both twofactor_totp and OATH. OATH already covers everything twofactor_totp does, so their twofactor_totp registration should be removed — otherwise it breaks their login once twofactor_totp is disabled.', totpDuplicateUsers.length) }}</p>
-			<p>{{ t('twofactor_oath', 'Because twofactor_totp is a separate app, the recommended way is to run these commands:') }}</p>
+			<p>{{ t('twofactor_oath', 'As "twofactor_totp" is a standalone app, it is advisable to run the following commands:') }}</p>
 			<pre class="otp-admin__occ">{{ totpDisableCommands }}</pre>
 			<NcButton :disabled="cleaningTotp" @click="cleanupTotp">
 				{{ t('twofactor_oath', 'Or let twofactor_oath remove them now') }}
@@ -44,7 +44,7 @@
 			{{ t('twofactor_oath', 'Admin-managed users (no self-service)') }}
 		</h3>
 		<p class="otp-admin__hint">
-			{{ t('twofactor_oath', 'Members of the managed groups cannot set up or disable OTP themselves; an administrator provisions it for them. Managed and excluded groups are mutually exclusive: set one, or neither. With a managed group, only its members are managed. With an excluded group, everyone except its members is managed. With neither, every user may self-service.') }}
+			{{ t('twofactor_oath', 'Members of managed groups cannot set up or disable OTP themselves; an administrator provisions it for them. Managed and excluded groups are mutually exclusive: set one, or neither. With a managed group, only its members are managed. With an excluded group, everyone except its members is managed. With neither, every user may self-service.') }}
 		</p>
 
 		<div class="otp-admin__field">
@@ -77,7 +77,7 @@
 			{{ t('twofactor_oath', 'Bulk provisioning') }}
 		</h3>
 		<p class="otp-admin__hint">
-			{{ t('twofactor_oath', 'Load the managed users. Use "Show" to reveal a user\'s current secret and QR code without changing it. Enter a custom secret (empty = random) and adjust the settings, then provision to create, enable and lock the tokens. Provisioning a user who already has a token replaces and invalidates the old secret.') }}
+			{{ t('twofactor_oath', 'Load managed users. Use "Show" to reveal a user\'s current secret and QR code without changing it. Enter a custom secret (empty = random) and adjust settings, then provision to create, enable and lock the tokens. Provisioning a user who already has a token replaces and invalidates the old secret.') }}
 		</p>
 
 		<div class="otp-admin__actions">
@@ -113,7 +113,7 @@
 			:modelValue="strict"
 			type="switch"
 			@update:modelValue="setStrict">
-			{{ t('twofactor_oath', 'Strict RFC compliance (grey out options the relevant RFC does not cover)') }}
+			{{ t('twofactor_oath', 'Strict RFC compliance (gray out options the relevant RFC does not cover)') }}
 		</NcCheckboxRadioSwitch>
 
 		<div v-if="rows.length" class="otp-admin__toolbar">
@@ -163,7 +163,7 @@
 					<th>{{ t('twofactor_oath', 'OCRA suite') }}</th>
 					<th>{{ t('twofactor_oath', 'Custom secret') }}</th>
 					<th />
-					<th>{{ t('twofactor_oath', 'Secret / QR') }}</th>
+					<th>{{ t('twofactor_oath', 'Secret/QR') }}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -244,7 +244,7 @@
 							<input
 								v-model="row.input"
 								type="text"
-								:placeholder="t('twofactor_oath', 'random')"
+								:placeholder="t('twofactor_oath', 'Random')"
 								class="otp-admin__secret"
 								:class="{ 'otp-admin__secret--error': secretError(row) !== '' }">
 							<div v-if="secretError(row)" class="otp-admin__secret-err">
@@ -302,7 +302,7 @@
 			:open="exportDialogOpen"
 			:name="t('twofactor_oath', 'Export as CSV')"
 			@update:open="exportDialogOpen = $event">
-			{{ t('twofactor_oath', 'Include the existing secrets in the export? They are written in plaintext, so store the file securely.') }}
+			{{ t('twofactor_oath', 'Include existing secrets in the export? They are written in plaintext, so store the file securely.') }}
 			<template #actions>
 				<NcButton variant="error" @click="doExport(true)">
 					{{ t('twofactor_oath', 'Include secrets') }}
@@ -407,7 +407,7 @@ export default {
 			}
 			return SECRET_PRESETS.map((p) => ({
 				value: p.bytes,
-				label: t('twofactor_oath', '{name} — {bytes} byte ({bits} bit, {chars} characters)', { name: names[p.key] || p.key, bytes: p.bytes, bits: p.bytes * 8, chars: base32Length(p.bytes) }),
+				label: t('twofactor_oath', '{name} — {bytes} bytes ({bits} bits, {chars} characters)', { name: names[p.key] || p.key, bytes: p.bytes, bits: p.bytes * 8, chars: base32Length(p.bytes) }),
 			}))
 		},
 
@@ -527,7 +527,7 @@ export default {
 				return t('twofactor_oath', 'This length does not decode to whole bytes and would be rejected by authenticator apps.')
 			}
 			if (issue === 'short') {
-				return t('twofactor_oath', 'Secret is too short (minimum 128 bit / 16 bytes).')
+				return t('twofactor_oath', 'Secret is too short (minimum 128 bit/16 bytes).')
 			}
 			return ''
 		},
@@ -703,23 +703,23 @@ export default {
 				await navigator.clipboard.writeText(secret)
 				OC.Notification.showTemporary(t('twofactor_oath', 'Secret copied to clipboard'))
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not copy the secret'))
+				OC.Notification.showTemporary(t('twofactor_oath', 'Could not copy secret'))
 			}
 		},
 
 		onLengthChange(value) {
 			this.length = value
-			this.post('/apps/twofactor_oath/admin/secret-length', { length: value }, t('twofactor_oath', 'Could not save the secret length'))
+			this.post('/apps/twofactor_oath/admin/secret-length', { length: value }, t('twofactor_oath', 'Could not save secret length'))
 		},
 
 		onManagedChange(value) {
 			this.managedGroups = value
-			this.post('/apps/twofactor_oath/admin/managed-groups', { groups: value }, t('twofactor_oath', 'Could not save the managed groups'))
+			this.post('/apps/twofactor_oath/admin/managed-groups', { groups: value }, t('twofactor_oath', 'Could not save managed groups'))
 		},
 
 		onExcludedChange(value) {
 			this.excludedGroups = value
-			this.post('/apps/twofactor_oath/admin/excluded-groups', { groups: value }, t('twofactor_oath', 'Could not save the excluded groups'))
+			this.post('/apps/twofactor_oath/admin/excluded-groups', { groups: value }, t('twofactor_oath', 'Could not save excluded groups'))
 		},
 
 		async loadUsers() {
@@ -730,7 +730,7 @@ export default {
 				this.loaded = true
 				this.refreshTotpStatus()
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not load the managed users'))
+				OC.Notification.showTemporary(t('twofactor_oath', 'Could not load managed users'))
 			} finally {
 				this.loading = false
 			}
@@ -752,7 +752,7 @@ export default {
 				row.secret = resp.data.secret
 				row.uri = resp.data.uri
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not load the token'))
+				OC.Notification.showTemporary(t('twofactor_oath', 'Could not load token'))
 			}
 		},
 
@@ -881,7 +881,7 @@ export default {
 				OC.Notification.showTemporary(t('twofactor_oath', 'Selected tokens disabled.'))
 				this.refreshTotpStatus()
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not disable the selected tokens'))
+				OC.Notification.showTemporary(t('twofactor_oath', 'Could not disable selected tokens'))
 			} finally {
 				this.provisioning = false
 			}

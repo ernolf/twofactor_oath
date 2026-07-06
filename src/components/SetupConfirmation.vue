@@ -46,7 +46,7 @@
 						@error="iconFailed = true">
 				</div>
 				<div class="otp-setup__qr-hint">
-					<p>{{ t('twofactor_oath', 'The icon in the center is used by the FreeOTP app.') }}</p>
+					<p>{{ t('twofactor_oath', 'The icon in the center is used by FreeOTP.') }}</p>
 					<p>{{ t('twofactor_oath', 'Other authenticator apps do not display it.') }}</p>
 				</div>
 			</div>
@@ -218,7 +218,7 @@ export default {
 				await navigator.clipboard.writeText(this.secret)
 				OC.Notification.showTemporary(t('twofactor_oath', 'Secret copied to clipboard'))
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not copy the secret'))
+				OC.Notification.showTemporary(t('twofactor_oath', 'Could not copy secret'))
 			}
 		},
 	},
