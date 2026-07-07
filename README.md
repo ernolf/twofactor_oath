@@ -5,6 +5,10 @@
 
 # Two-Factor OATH (TOTP / HOTP / OCRA)
 
+[![REUSE status](https://api.reuse.software/badge/github.com/ernolf/twofactor_oath)](https://api.reuse.software/info/github.com/ernolf/twofactor_oath)
+[![Nextcloud App Store](https://img.shields.io/badge/Nextcloud-App_Store-0082c9?logo=nextcloud&logoColor=white)](https://apps.nextcloud.com/apps/twofactor_oath)
+[![Latest release](https://img.shields.io/github/v/release/ernolf/twofactor_oath?sort=semver&color=0082c9)](https://github.com/ernolf/twofactor_oath/releases/latest)
+
 > Advanced, fully open OATH one-time-password provider for Nextcloud: time-based (TOTP), counter-based (HOTP) and challenge-response (OCRA) tokens, configurable per token, with encrypted secrets, admin-managed bulk provisioning and a seamless import from the bundled `twofactor_totp` app.
 
 <p align="center"><img src="img/app.svg" width="96" alt="App icon"></p>
@@ -117,8 +121,9 @@ Secrets are encrypted at rest, revealing a secret or disabling the provider alwa
 
 ## Installation
 
-> [!NOTE]
-> This app is not in the Nextcloud App Store yet. Until it is, install it from a release tarball or build it from source.
+The app is published in the [App Store](https://apps.nextcloud.com/apps/twofactor_oath). It can be [installed through Nextcloud's app management UI](https://docs.nextcloud.com/server/latest/admin_manual/apps_management.html#managing-apps) or with `occ app:enable twofactor_oath`.
+
+A release tarball and a from-source build are available too:
 
 ### From a release tarball
 
