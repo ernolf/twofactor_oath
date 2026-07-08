@@ -1,29 +1,16 @@
 { "translations": {
     "Minimal" : "Minimal",
     "Recommended" : "Anbefalt",
-    "High" : "Høy",
     "Extreme" : "Ekstrem",
-    "Pending" : "Venter",
     "Enabled" : "Aktivert",
     "Disabled" : "Deaktivert",
     "Error" : "Feil",
     "Excluded groups" : "Utelukkede grupper",
     "Export as CSV" : "Eksporter som CSV",
-    "Sort by" : "Sorter etter",
-    "User" : "Bruker",
-    "Status" : "Status",
-    "Type" : "Type",
     "All" : "Alle",
-    "Digits" : "Sifre",
-    "Period" : "Punktum",
     "Hide" : "Skjul",
     "Show" : "Vis",
-    "Cancel" : "Cancel",
-    "Confirm" : "Bekreft",
-    "Advanced settings" : "Avanserte innstillinger",
     "Wrong password." : "Feil passord.",
-    "Authentication code" : "Autentiseringskode",
-    "Verify" : "Verifiser",
-    "Submit" : "Send inn"
+    "Authentication code" : "Autentiseringskode"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

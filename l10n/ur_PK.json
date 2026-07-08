@@ -1,6 +1,5 @@
 { "translations": {
     "Error" : "ایرر",
-    "User" : "User",
-    "Cancel" : "Cancel"
+    "User" : "User"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

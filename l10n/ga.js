@@ -1,32 +1,10 @@
 OC.L10N.register(
     "twofactor_oath",
     {
-    "Minimal" : "Íosráta",
     "Recommended" : "Molta",
-    "High" : "Ard",
-    "Extreme" : "mhór",
-    "Pending" : "Ar feitheamh",
-    "Enabled" : "Cumasaithe",
-    "Renew" : "Athnuachan",
-    "Disabled" : "Faoi mhíchumas",
     "Error" : "Earráid",
     "Excluded groups" : "Grúpaí eisiata",
-    "Export as CSV" : "Easpórtáil mar CSV",
-    "Sort by" : "Sórtáil de réir",
-    "User" : "Úsáideoir",
-    "Status" : "Stádas",
-    "Type" : "Cineál",
     "All" : "Gach",
-    "Algorithm" : "Algartam",
-    "Digits" : "Digití",
-    "Period" : "Tréimhse",
-    "Hide" : "Folaigh",
-    "Cancel" : "Cealaigh",
-    "Confirm" : "Deimhnigh",
-    "Advanced settings" : "Ardsocruithe",
-    "Wrong password." : "Pasfhocal mícheart.",
-    "Authentication code" : "Cód fíordheimhnithe",
-    "Verify" : "Fíoraigh",
-    "Submit" : "Cuir isteach"
+    "Authentication code" : "Cód fíordheimhnithe"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

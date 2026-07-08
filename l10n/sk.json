@@ -1,29 +1,18 @@
 { "translations": {
     "Minimal" : "Minimalistický",
     "Recommended" : "Odporúčané",
-    "High" : "Vysoká",
     "Extreme" : "Extrémne",
-    "Pending" : "Čakajúce",
     "Enabled" : "Zapnuté",
     "Disabled" : "Vypnuté",
     "Error" : "Chyba",
     "Excluded groups" : "Vynechané skupiny",
     "Export as CSV" : "Exportovať do CSV",
-    "Sort by" : "Zoradiť podľa",
     "User" : "Používateľ",
-    "Status" : "Stav",
-    "Type" : "Typ",
     "All" : "Všetko",
-    "Digits" : "Číslic",
     "Period" : "Obdobie",
     "Hide" : "Skryť",
     "Show" : "Zobraziť",
-    "Cancel" : "Cancel",
-    "Confirm" : "Potvrdiť",
-    "Advanced settings" : "Rozšírené nastavenia",
     "Wrong password." : "Nesprávne heslo.",
-    "Authentication code" : "Overovací kód",
-    "Verify" : "Overiť",
-    "Submit" : "Odoslať"
+    "Authentication code" : "Overovací kód"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);"
 }

@@ -2,25 +2,15 @@ OC.L10N.register(
     "twofactor_oath",
     {
     "Recommended" : "Препорачано",
-    "Pending" : "Чекање",
     "Enabled" : "Овозможено",
     "Disabled" : "Оневозможено",
     "Error" : "Грешка",
     "Excluded groups" : "Исклучени групи",
     "Export as CSV" : "Извези како CSV",
-    "Sort by" : "Сортирај по",
-    "User" : "Корисник",
-    "Status" : "Статус",
-    "Type" : "Вид",
     "All" : "Сите",
     "Hide" : "Сокриј",
     "Show" : "Прикажи",
-    "Cancel" : "Cancel",
-    "Confirm" : "Потврди",
-    "Advanced settings" : "Напредни параметри",
     "Wrong password." : "Погрешна лозинка.",
-    "Authentication code" : "Код за автентификација",
-    "Verify" : "Потврди",
-    "Submit" : "Испрати"
+    "Authentication code" : "Код за автентификација"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

@@ -2,27 +2,12 @@ OC.L10N.register(
     "twofactor_oath",
     {
     "Recommended" : "Direkomendasikan",
-    "Pending" : "Tertunda",
-    "Enabled" : "Diaktifkan",
-    "Renew" : "Perbarui",
     "Disabled" : "Dinonaktifkan",
     "Error" : "Kesalahan",
     "Excluded groups" : "Grup yang dikecualikan",
-    "Export as CSV" : "Ekspor sebagai CSV",
-    "Sort by" : "Urutan",
-    "User" : "Pengguna",
-    "Status" : "Status",
-    "Type" : "Jenis",
     "All" : "Semua",
-    "Digits" : "Digit",
-    "Period" : "Periode",
     "Hide" : "Sembunyikan",
-    "Cancel" : "Cancel",
-    "Confirm" : "Konfirmasi",
-    "Advanced settings" : "Pengaturan lanjutan",
     "Wrong password." : "Sandi salah.",
-    "Authentication code" : "Kode autentikasi",
-    "Verify" : "Verifikasi",
-    "Submit" : "Kirim"
+    "Authentication code" : "Kode autentikasi"
 },
 "nplurals=1; plural=0;");

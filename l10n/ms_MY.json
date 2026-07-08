@@ -1,9 +1,4 @@
 { "translations": {
-    "Pending" : "Dalam proses",
-    "Error" : "Ralat",
-    "Sort by" : "Susun mengikut",
-    "User" : "User",
-    "Type" : "Jenis",
-    "Cancel" : "Cancel"
+    "Error" : "Ralat"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

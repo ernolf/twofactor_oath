@@ -1,28 +1,17 @@
 { "translations": {
     "Recommended" : "Priporočeno",
-    "High" : "Visoka",
     "Extreme" : "Izjemni",
-    "Pending" : "Na čakanju",
     "Enabled" : "Omogočeno",
     "Disabled" : "Onemogočeno",
     "Error" : "Napaka",
     "Excluded groups" : "Izločene skupine",
     "Export as CSV" : "Izvozi v zapis CSV",
-    "Sort by" : "Razvrsti po",
     "User" : "Uporabnik",
-    "Status" : "Stanje",
-    "Type" : "Vrsta",
     "All" : "Vse",
-    "Digits" : "Števke",
     "Period" : "Obdobje",
     "Hide" : "Skrij",
     "Show" : "Pokaži",
-    "Cancel" : "Cancel",
-    "Confirm" : "Potrdi",
-    "Advanced settings" : "Napredne nastavitve",
     "Wrong password." : "Napačno geslo",
-    "Authentication code" : "Overitvena koda",
-    "Verify" : "Overi",
-    "Submit" : "Pošlji"
+    "Authentication code" : "Overitvena koda"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

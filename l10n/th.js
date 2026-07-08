@@ -2,21 +2,13 @@ OC.L10N.register(
     "twofactor_oath",
     {
     "Recommended" : "แนะนำ",
-    "Pending" : "รอดำเนินการ",
     "Enabled" : "เปิดใช้งาน",
     "Disabled" : "ปิดใช้งาน",
     "Error" : "ข้อผิดพลาด",
-    "Sort by" : "เรียงตาม",
     "User" : "ผู้ใช้",
-    "Status" : "สถานะ",
-    "Type" : "ประเภท",
     "All" : "ทั้งหมด",
     "Hide" : "ซ๋อน",
-    "Cancel" : "Cancel",
-    "Confirm" : "ยืนยัน",
-    "Advanced settings" : "การตั้งค่าขั้นสูง",
     "Wrong password." : "รหัสผ่านไม่ถูกต้อง",
-    "Verify" : "ยืนยัน",
     "Submit" : "ส่ง"
 },
 "nplurals=1; plural=0;");

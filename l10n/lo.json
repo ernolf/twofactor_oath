@@ -1,26 +1,12 @@
 { "translations": {
-    "Pending" : "ກຳລັງລໍຖ້າ",
     "Enabled" : "ເປີດໃຊ້ງານ",
-    "Renew" : "ຕໍ່ອາຍຸ",
     "Disabled" : "ປິດໃຊ້ງານ",
     "Error" : "ຂໍ້ຜິດພາດ",
     "Excluded groups" : "Excluded groups",
     "Export as CSV" : "ສົ່ງອອກເປັນ CSV",
-    "Sort by" : "ຈັດລຽງຕາມ",
-    "User" : "ຜູ້ໃຊ້",
-    "Status" : "ສະຖານະ",
-    "Type" : "ປະເພດ",
     "All" : "ທັງໝົດ",
-    "Algorithm" : "Algorithm",
-    "Digits" : "Digits",
-    "Period" : "Period",
     "Hide" : "ເຊື່ຶອງ",
-    "Cancel" : "Cancel",
-    "Confirm" : "ຢືນຢັນ",
-    "Advanced settings" : "ການຕັ້ງຄ່າຂັ້ນສູງ",
     "Wrong password." : "Wrong password.",
-    "Authentication code" : "Authentication code",
-    "Verify" : "Verify",
-    "Submit" : "ຕົກລົງ"
+    "Authentication code" : "Authentication code"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

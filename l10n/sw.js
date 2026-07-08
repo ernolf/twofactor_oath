@@ -3,27 +3,16 @@ OC.L10N.register(
     {
     "Minimal" : "Ndogo",
     "Recommended" : "Iliyopendekezwa",
-    "Pending" : "Inasubiri",
     "Enabled" : "Washwa",
-    "Renew" : "Renew",
     "Disabled" : "Ilizimwa",
     "Error" : "Hitilafu",
     "Export as CSV" : "Safirisha kama CSV",
-    "Sort by" : "Panga kwa ",
     "User" : "Mtumiaji",
-    "Status" : "Wadhifa/hadhi/hali",
-    "Type" : "Aina",
     "All" : "Zote",
     "Algorithm" : "Algorithm",
-    "Digits" : "Nambari",
     "Period" : "Kipindi",
     "Hide" : "Ficha",
-    "Cancel" : "Ghairi",
-    "Confirm" : "Thibitisha",
-    "Advanced settings" : "Mipangilio ya kiwango cha juu",
     "Wrong password." : "Nenosiri si sahihi.",
-    "Authentication code" : "Msimbo wa uthibitishaji",
-    "Verify" : "Thibitisha",
-    "Submit" : "Wasilisha"
+    "Authentication code" : "Msimbo wa uthibitishaji"
 },
 "nplurals=2; plural=(n != 1);");

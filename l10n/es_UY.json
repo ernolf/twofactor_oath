@@ -1,18 +1,5 @@
 { "translations": {
-    "Pending" : "Pendiente",
-    "Enabled" : "Habilitado",
-    "Disabled" : "Deshabilitado",
-    "Error" : "Error",
-    "User" : "Usuario",
-    "Type" : "Tipo",
     "All" : "Todos",
-    "Hide" : "Ocultar",
-    "Cancel" : "Cancel",
-    "Confirm" : "Confirmar",
-    "Advanced settings" : "Configuraciones avanzados",
-    "Wrong password." : "Contraseña incorrecta. ",
-    "Authentication code" : "Código de autenticación",
-    "Verify" : "Verificar",
-    "Submit" : "Enviar"
+    "Authentication code" : "Código de autenticación"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

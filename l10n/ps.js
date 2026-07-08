@@ -1,8 +1,6 @@
 OC.L10N.register(
     "twofactor_oath",
     {
-    "Pending" : "د انتظار په حال کې",
-    "Error" : "شسیب",
-    "Cancel" : "Cancel"
+    "Error" : "شسیب"
 },
 "nplurals=2; plural=(n != 1);");

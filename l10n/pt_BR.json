@@ -1,31 +1,18 @@
 { "translations": {
     "Minimal" : "Mínimo",
     "Recommended" : "Recomendado",
-    "High" : "Alta",
     "Extreme" : "Extremas",
-    "Pending" : "Pendente",
     "Enabled" : "Ativado",
-    "Renew" : "Renovar",
     "Disabled" : "Desativado",
     "Error" : "Erro",
     "Excluded groups" : "Grupos excluídos",
     "Export as CSV" : "Exportar como CSV",
-    "Sort by" : "Ordenar por",
     "User" : "Usuário",
-    "Status" : "Status",
-    "Type" : "Tipo",
     "All" : "Todos",
-    "Algorithm" : "Algoritmo",
-    "Digits" : "Dígitos",
     "Period" : "Período",
     "Hide" : "Ocultar",
     "Show" : "Mostrar",
-    "Cancel" : "Cancelar",
-    "Confirm" : "Confirmar",
-    "Advanced settings" : "Configurações avançadas",
     "Wrong password." : "Senha incorreta.",
-    "Authentication code" : "Código de autenticação",
-    "Verify" : "Verificar",
-    "Submit" : "Enviar"
+    "Authentication code" : "Código de autenticação"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

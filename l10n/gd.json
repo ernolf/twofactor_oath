@@ -1,10 +1,5 @@
 { "translations": {
-    "Pending" : "Ri dhèiligeadh",
     "Error" : "Mearachd",
-    "Sort by" : "Seòrsaich a-rèir",
-    "User" : "Cleachdaiche",
-    "Type" : "Seòrsa",
-    "Hide" : "Cuir am falach",
-    "Cancel" : "Cancel"
+    "Hide" : "Cuir am falach"
 },"pluralForm" :"nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;"
 }

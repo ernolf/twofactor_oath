@@ -5,8 +5,6 @@ OC.L10N.register(
     "Disabled" : "අබල කර ඇත",
     "Error" : "දෝෂය",
     "User" : "පරිශීලක",
-    "All" : "සියල්ල",
-    "Cancel" : "Cancel",
-    "Confirm" : "තහවුරු කරන්න"
+    "All" : "සියල්ල"
 },
 "nplurals=2; plural=(n != 1);");

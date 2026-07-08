@@ -1,6 +1,4 @@
 { "translations": {
-    "Pending" : "د انتظار په حال کې",
-    "Error" : "شسیب",
-    "Cancel" : "Cancel"
+    "Error" : "شسیب"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

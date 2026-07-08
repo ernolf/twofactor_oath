@@ -1,31 +1,10 @@
 OC.L10N.register(
     "twofactor_oath",
     {
-    "Minimal" : "Minimaalinen",
     "Recommended" : "Suositeltu",
-    "High" : "Korkea",
-    "Extreme" : "Extreme",
-    "Pending" : "Odottaa",
-    "Enabled" : "Käytössä",
-    "Renew" : "Uudista",
-    "Disabled" : "Pois käytöstä",
-    "Error" : "Virhe",
     "Excluded groups" : "Poissuljetut ryhmät",
-    "Export as CSV" : "Vie CSV:nä",
-    "Sort by" : "Lajittelujärjestys",
-    "User" : "Käyttäjä",
-    "Status" : "Tila",
-    "Type" : "Tyyppi",
     "All" : "Kaikki",
-    "Algorithm" : "Algoritmi",
-    "Hide" : "Piilota",
     "Show" : "Näytä",
-    "Cancel" : "Cancel",
-    "Confirm" : "Vahvista",
-    "Advanced settings" : "Lisäasetukset",
-    "Wrong password." : "Väärä salasana.",
-    "Authentication code" : "Tunnistautumiskoodi",
-    "Verify" : "Vahvista",
-    "Submit" : "Lähetä"
+    "Authentication code" : "Tunnistautumiskoodi"
 },
 "nplurals=2; plural=(n != 1);");

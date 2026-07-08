@@ -1,32 +1,13 @@
 OC.L10N.register(
     "twofactor_oath",
     {
-    "Minimal" : "Minimális",
     "Recommended" : "Ajánlott",
-    "High" : "Magas",
-    "Extreme" : "Rendkívüli",
-    "Pending" : "Folyamatban",
-    "Enabled" : "Engedélyezve",
-    "Disabled" : "Letiltva",
     "Error" : "Hiba",
     "Excluded groups" : "Kizárt csoportok",
-    "Export as CSV" : "Exportálás CSV-ként",
-    "Sort by" : "Rendezés",
-    "User" : "Felhasználó",
-    "Status" : "Állapot",
-    "Type" : "Típus",
     "All" : "Összes",
-    "Algorithm" : "Algoritmus",
-    "Digits" : "Számjegyek",
-    "Period" : "Pont",
     "Hide" : "Elrejtés",
     "Show" : "Megjelenítés",
-    "Cancel" : "Mégse",
-    "Confirm" : "Megerősítés",
-    "Advanced settings" : "Speciális beállítások",
     "Wrong password." : "Hibás jelszó.",
-    "Authentication code" : "Hitelesítőkód",
-    "Verify" : "Ellenőrzés",
-    "Submit" : "Beküldés"
+    "Authentication code" : "Hitelesítőkód"
 },
 "nplurals=2; plural=(n != 1);");

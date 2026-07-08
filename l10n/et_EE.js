@@ -1,30 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
-    "Minimal" : "Minimalselt",
-    "Recommended" : "Soovitatud",
-    "Pending" : "Ootel",
-    "Enabled" : "Sisselülitatud",
-    "Renew" : "Uuenda",
-    "Disabled" : "Väljalülitatud",
-    "Error" : "Viga",
     "Excluded groups" : "Välistatud neis gruppides",
-    "Export as CSV" : "Ekspordi CSV-failina",
-    "Sort by" : "Järjestuse alus",
-    "User" : "Kasutaja",
-    "Status" : "Olek",
-    "Type" : "Tüüp",
     "All" : "Kõik",
-    "Algorithm" : "Algoritm",
-    "Digits" : "Numbrid",
-    "Period" : "Tühik",
-    "Hide" : "Peida",
-    "Cancel" : "Katkesta",
-    "Confirm" : "Kinnita",
-    "Advanced settings" : "Lisavalikud",
-    "Wrong password." : "Vale salasõna.",
-    "Authentication code" : "Autentimiskood",
-    "Verify" : "Kontrolli",
-    "Submit" : "Saada"
+    "Authentication code" : "Autentimiskood"
 },
 "nplurals=2; plural=(n != 1);");
