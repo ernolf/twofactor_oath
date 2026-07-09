@@ -2,13 +2,22 @@ OC.L10N.register(
     "twofactor_oath",
     {
     "Recommended" : "E rekomanduar",
+    "Pending" : "Në Pritje të Konfirmimit",
     "Enabled" : "E aktivizuar",
     "Disabled" : "I/E çaktivizuar",
     "Error" : "Gabim",
+    "Sort by" : "Renditni sipas",
     "User" : "Përdorues",
+    "Status" : "Statusi",
+    "Type" : "Tipi",
     "All" : "Të gjithë",
     "Hide" : "Fshihe",
+    "Cancel" : "Cancel",
+    "Confirm" : "Konfirmo",
+    "Advanced settings" : "Rregullime të mëtejshme",
     "Wrong password." : "Fjalëkalim i gabuar.",
-    "Authentication code" : "Kodi i verifikimit"
+    "Authentication code" : "Kodi i verifikimit",
+    "Verify" : "Verifiko",
+    "Submit" : "Dërgo"
 },
 "nplurals=2; plural=(n != 1);");

@@ -1,10 +1,20 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Pending" : "Yegguni",
     "Enabled" : "Yermed",
     "Disabled" : "Ittwarermed",
     "Error" : "Tuccḍa",
+    "Sort by" : "Trier par",
+    "User" : "Aseqdac",
+    "Status" : "Addad",
+    "Type" : "Anaw",
     "All" : "Akk",
-    "Hide" : "Ffer"
+    "Algorithm" : "Awarzim",
+    "Hide" : "Ffer",
+    "Cancel" : "Semmet",
+    "Confirm" : "Sergeg",
+    "Verify" : "Senqed",
+    "Submit" : "Azen"
 },
 "nplurals=2; plural=(n != 1);");

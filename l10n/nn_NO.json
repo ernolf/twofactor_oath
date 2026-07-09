@@ -1,9 +1,15 @@
 { "translations": {
+    "Pending" : "Ventar",
     "Disabled" : "Deaktivert",
     "Error" : "Feil",
+    "Sort by" : "Sorter på",
     "User" : "Bruker",
+    "Type" : "Skriv",
     "All" : "Alle",
     "Hide" : "Gøym",
-    "Authentication code" : "Autentifikasjons kode"
+    "Cancel" : "Cancel",
+    "Advanced settings" : "Avanserte innstillingar",
+    "Authentication code" : "Autentifikasjons kode",
+    "Verify" : "Stadfest"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

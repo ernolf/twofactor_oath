@@ -1,0 +1,24 @@
+{ "translations": {
+    "Minimal" : "Mínimu",
+    "Pending" : "Pendiente",
+    "Enabled" : "Activóse",
+    "Disabled" : "Desactivóse",
+    "Error" : "Error",
+    "Excluded groups" : "Grupos escluyíos",
+    "Sort by" : "Ordenar per",
+    "User" : "Usuariu",
+    "Status" : "Estáu",
+    "Type" : "Tipu",
+    "All" : "Too",
+    "Digits" : "Díxitos",
+    "Period" : "Periodu",
+    "Hide" : "Esconder",
+    "Cancel" : "Cancel",
+    "Confirm" : "Confirmar",
+    "Advanced settings" : "Configuración avanzada",
+    "Wrong password." : "La contraseña ye incorreuta.",
+    "Authentication code" : "Códigu d'autenticación",
+    "Verify" : "Verificar",
+    "Submit" : "Unviar"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

@@ -1,12 +1,23 @@
 { "translations": {
     "Recommended" : "おすすめ",
+    "Enabled" : "有効",
     "Disabled" : "無効",
     "Error" : "エラー",
     "Excluded groups" : "除外するグループ",
+    "Export as CSV" : "CSV にエクスポート",
+    "Sort by" : "ソート: ",
+    "User" : "ユーザー",
+    "Status" : "ステータス",
+    "Type" : "タイプ",
     "All" : "すべて",
     "Hide" : "隠す",
     "Show" : "表示",
+    "Cancel" : "キャンセル",
+    "Confirm" : "承認",
+    "Advanced settings" : "詳細設定",
     "Wrong password." : "パスワードが間違っています。",
-    "Authentication code" : "認証コード"
+    "Authentication code" : "認証コード",
+    "Verify" : "検証",
+    "Submit" : "登録する"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

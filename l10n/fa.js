@@ -1,9 +1,32 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Minimal" : "Minimal",
     "Recommended" : "توصیه‌شده",
+    "High" : "High",
+    "Extreme" : "Extreme",
+    "Pending" : "در انتظار",
+    "Enabled" : "فعال",
+    "Renew" : "تمدید",
+    "Disabled" : "غیرفعال شده",
+    "Error" : "خطا",
     "Excluded groups" : "گروه‌های مستثنی‌شده",
+    "Export as CSV" : "خروجی به‌صورت CSV",
+    "Sort by" : "مرتب‌سازی بر اساس",
+    "User" : "کاربر",
+    "Status" : "وضعیت",
+    "Type" : "نوع",
     "All" : "همه",
-    "Authentication code" : "کد احراز هویت"
+    "Algorithm" : "الگوریتم",
+    "Digits" : "ارقام",
+    "Period" : "دوره",
+    "Hide" : "مخفی کردن",
+    "Cancel" : "انصراف",
+    "Confirm" : "تأیید",
+    "Advanced settings" : "تنظیمات پیشرفته",
+    "Wrong password." : "رمز عبور اشتباه است.",
+    "Authentication code" : "کد احراز هویت",
+    "Verify" : "تأیید",
+    "Submit" : "ثبت"
 },
 "nplurals=2; plural=(n > 1);");

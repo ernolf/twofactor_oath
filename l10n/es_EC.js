@@ -1,8 +1,29 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Minimal" : "Minimalista",
+    "High" : "Alta",
+    "Extreme" : "Extremo",
+    "Pending" : "Pendiente",
+    "Enabled" : "Habilitado",
+    "Disabled" : "Deshabilitado",
+    "Error" : "Error",
     "Excluded groups" : "Grupos excluidos",
+    "Export as CSV" : "Exportar como CSV",
+    "Sort by" : "Ordenar por",
+    "User" : "Usuario",
+    "Status" : "Estado",
+    "Type" : "Tipo",
     "All" : "Todos",
-    "Authentication code" : "Código de autenticación"
+    "Digits" : "Dígitos",
+    "Period" : "Período",
+    "Hide" : "Ocultar",
+    "Cancel" : "Cancel",
+    "Confirm" : "Confirmar",
+    "Advanced settings" : "Configuraciones avanzados",
+    "Wrong password." : "Contraseña incorrecta. ",
+    "Authentication code" : "Código de autenticación",
+    "Verify" : "Verificar",
+    "Submit" : "Enviar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
