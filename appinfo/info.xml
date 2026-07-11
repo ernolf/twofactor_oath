@@ -25,6 +25,9 @@ Built for hardware OATH tokens and elevated requirements, alongside the simple, 
 	<licence>agpl</licence>
 	<author mail="raphael.gradenwitz@googlemail.com">[ernolf] Raphael Gradenwitz</author>
 	<namespace>TwoFactorOath</namespace>
+	<types>
+		<prevent_group_restriction />
+	</types>
 	<documentation>
 		<user>https://github.com/ernolf/twofactor_oath/blob/main/README.md</user>
 		<admin>https://github.com/ernolf/twofactor_oath/blob/main/doc/admin-guide.md</admin>
