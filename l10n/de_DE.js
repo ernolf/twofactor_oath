@@ -24,7 +24,7 @@ OC.L10N.register(
     "Imported {imported}, skipped {skipped}." : "{imported} importiert, {skipped} übersprungen.",
     "Could not import from twofactor_totp" : "Konnte nicht aus twofactor_totp importieren",
     "Remove twofactor_totp registrations?" : "Twofactor_totp-Registrierungen entfernen?",
-    "_This removes the twofactor_totp registration and secret of %n user who already has an OATH token. This cannot be undone._::_This removes the twofactor_totp registration and secret of %n users who already have an OATH token. This cannot be undone._" : ["Dadurch werden die Twofactor_totp-Registrierung und das Geheimnis von %n Benutzer entfernt, die bereits über ein OATH-Token verfügen. Dies kann nicht rückgängig gemacht werden.","Dadurch werden die Twofactor_totp-Registrierung und das Geheimnis von %n Benutzern entfernt, die bereits über ein OATH-Token verfügen. Dies kann nicht rückgängig gemacht werden."],
+    "_This removes the twofactor_totp registration and secret of %n user who already has an OATH token. This cannot be undone._::_This removes the twofactor_totp registration and secret of %n users who already have an OATH token. This cannot be undone._" : ["Dadurch wird die twofactor_totp-Registrierung und das Geheimnis von %n Benutzer entfernt, der bereits über ein OATH-Token verfügt. Dies kann nicht rückgängig gemacht werden.","Dadurch werden die tofactor_totp-Registrierungen und das Geheimnis von %n Benutzern entfernt, die bereits über ein OATH-Token verfügen. Dies kann nicht rückgängig gemacht werden."],
     "_%n twofactor_totp registration removed._::_%n twofactor_totp registrations removed._" : ["%n twofactor_totp-Registrierung entfernt.","%n twofactor_totp-Registrierungen entfernt."],
     "Could not remove twofactor_totp registrations" : "Twofactor_totp-Registrierungen konnten nicht entfernt werden",
     "Secret copied to clipboard" : "Geheimnis in die Zwischenablage kopiert",
@@ -66,6 +66,7 @@ OC.L10N.register(
     "Digits" : "Zeichen",
     "Period" : "Zeitraum",
     "Counter" : "Zähler",
+    "Challenge" : "Challenge",
     "OCRA suite" : "OCRA-Suite",
     "Custom secret" : "Benutzerdefiniertes Geheimnis",
     "Secret/QR" : "Geheimnis/QR",
@@ -85,6 +86,7 @@ OC.L10N.register(
     "HOTP (counter-based)" : "HOTP (Zählerbasiert)",
     "OCRA (challenge-response)" : "OCRA (Challenge-Response)",
     "Start counter" : "Zähler starten",
+    "Challenge length" : "Challenge-Länge",
     "Resulting OCRA suite:" : "Resultierende OCRA-Suite:",
     "Custom secret (Base32, optional)" : "Benutzerdefiniertes Geheimnis (Base32, optional)",
     "Leave empty for a random secret. Allowed characters: A–Z and 2–7." : "Leer lassen für ein zufälliges Geheimnis. Zulässige Zeichen: A–Z und 2–7.",
@@ -117,7 +119,7 @@ OC.L10N.register(
     "Authentication code" : "Authentifizierungscode",
     "Verify" : "Überprüfen",
     "Submit" : "Übermitteln",
-    "Enter a one-time code from your OTP app or token." : "Einen Einmal-Code aus der OTP-App oder dem Token eingeben.",
+    "Enter a one-time code from your OTP app or token." : "Einen Einmal-Code aus der OTP-App oder ein Token eingeben.",
     "My HOTP token is out of sync" : "Mein HOTP-Token ist nicht synchron"
 },
 "nplurals=2; plural=(n != 1);");
