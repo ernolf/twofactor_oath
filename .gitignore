@@ -8,6 +8,7 @@
 
 # Built frontend assets — this app is not shipped, so built JS is not committed
 /js/
+/css/
 node_modules/
 
 # Tooling caches
