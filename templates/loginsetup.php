@@ -6,6 +6,7 @@
  */
 
 script('twofactor_oath', 'twofactor_oath-login-setup');
+style('twofactor_oath', 'twofactor_oath-login-setup');
 ?>
 
 <div id="twofactor-oath-login-setup"></div>
