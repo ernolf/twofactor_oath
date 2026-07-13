@@ -21,7 +21,7 @@ Configurable OATH two-factor authentication for Nextcloud, covering all three OA
 
 Built for hardware OATH tokens and elevated requirements, alongside the simple, bundled twofactor_totp app. OATH (one-time passwords) is not the same as FIDO2/WebAuthn. See documentation for when to use which.
 	]]></description>
-	<version>0.2.0</version>
+	<version>0.2.1</version>
 	<licence>agpl</licence>
 	<author mail="raphael.gradenwitz@googlemail.com">[ernolf] Raphael Gradenwitz</author>
 	<namespace>TwoFactorOath</namespace>
