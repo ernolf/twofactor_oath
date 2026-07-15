@@ -17,6 +17,7 @@ use OCA\TwoFactorOath\Db\OtpSecret;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\IAppConfig;
 use OCP\IURLGenerator;
+use OCP\IUser;
 use OCP\Security\ICrypto;
 use OTPHP\HOTP;
 use OTPHP\OTPInterface;
@@ -281,6 +282,39 @@ final class OtpService implements IOtpService {
 		}
 
 		return $otp->getProvisioningUri();
+	}
+
+	/**
+	 * The default account label shown in the authenticator app: `<local>@<host>`.
+	 *
+	 * The host is taken from the user's federated cloud ID and the local part
+	 * defaults to the user's UID. When that UID is opaque - a guests-app SHA-256
+	 * hash or an LDAP UUID mapping - and an email address is known, the email is
+	 * used instead, so the app shows a recognizable account rather than a hash.
+	 * This is only the default; the UI lets the user override the local part.
+	 */
+	#[Override]
+	public function getProvisioningLabel(IUser $user): string {
+		$cloudId = $user->getCloudId();
+		$at = strrpos($cloudId, '@');
+		$host = $at === false ? '' : substr($cloudId, $at + 1);
+		$local = $user->getUID();
+		$email = $user->getEMailAddress();
+		if ($email !== null && $email !== '' && $this->isOpaqueUid($local)) {
+			$local = $email;
+		}
+
+		return $host === '' ? $local : $local . '@' . $host;
+	}
+
+	/**
+	 * Whether a UID carries no human meaning and is better replaced by the email
+	 * in the provisioning label: a guests-app SHA-256 hash (64 hex chars) or an
+	 * LDAP UUID mapping.
+	 */
+	private function isOpaqueUid(string $uid): bool {
+		return preg_match('/^[0-9a-f]{64}$/', $uid) === 1
+			|| preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $uid) === 1;
 	}
 
 	/**

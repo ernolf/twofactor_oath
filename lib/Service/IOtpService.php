@@ -12,6 +12,7 @@ namespace OCA\TwoFactorOath\Service;
 use InvalidArgumentException;
 use OCA\TwoFactorOath\Constants;
 use OCA\TwoFactorOath\Db\OtpSecret;
+use OCP\IUser;
 
 /**
  * OTP business logic the controllers and provider depend on. Lets them be
@@ -62,6 +63,9 @@ interface IOtpService {
 
 	/** Build the otpauth:// URI for the QR code (embeds the instance favicon). */
 	public function getProvisioningUri(OtpSecret $config, string $label, string $issuer): string;
+
+	/** The default account label (`<local>@<host>`) for a user's provisioning URI. */
+	public function getProvisioningLabel(IUser $user): string;
 
 	/** Verify a one-time code (advances the HOTP counter / records the TOTP slice). */
 	public function verify(OtpSecret $config, string $code): bool;

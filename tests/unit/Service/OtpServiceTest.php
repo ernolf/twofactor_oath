@@ -18,6 +18,7 @@ use OCA\TwoFactorOath\Service\OtpService;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\IAppConfig;
 use OCP\IURLGenerator;
+use OCP\IUser;
 use OCP\Security\ICrypto;
 use OTPHP\HOTP;
 use OTPHP\TOTP;
@@ -389,6 +390,56 @@ final class OtpServiceTest extends TestCase {
 	public function testFindByUserIdReturnsNullWhenMissing(): void {
 		$this->mapper->method('getByUserId')->willThrowException(new DoesNotExistException('none'));
 		$this->assertNull($this->service->findByUserId('ghost'));
+	}
+
+	// == provisioning label ==
+
+	private function user(string $uid, string $cloudId, ?string $email): IUser&MockObject {
+		$user = $this->createMock(IUser::class);
+		$user->method('getUID')->willReturn($uid);
+		$user->method('getCloudId')->willReturn($cloudId);
+		$user->method('getEMailAddress')->willReturn($email);
+
+		return $user;
+	}
+
+	public function testProvisioningLabelKeepsReadableUid(): void {
+		$label = $this->service->getProvisioningLabel(
+			$this->user('alice', 'alice@cloud.example', 'alice@mail.example'),
+		);
+		$this->assertSame('alice@cloud.example', $label);
+	}
+
+	public function testProvisioningLabelKeepsEmailLikeUid(): void {
+		// A legacy guest whose UID is the (readable) email must not be touched.
+		$label = $this->service->getProvisioningLabel(
+			$this->user('user@mail.example', 'user@mail.example@cloud.example', 'user@mail.example'),
+		);
+		$this->assertSame('user@mail.example@cloud.example', $label);
+	}
+
+	public function testProvisioningLabelReplacesHashUidWithEmail(): void {
+		$hash = str_repeat('a', 64);
+		$label = $this->service->getProvisioningLabel(
+			$this->user($hash, $hash . '@cloud.example', 'guest@mail.example'),
+		);
+		$this->assertSame('guest@mail.example@cloud.example', $label);
+	}
+
+	public function testProvisioningLabelReplacesUuidUidWithEmail(): void {
+		$uuid = '01234567-89ab-cdef-0123-456789abcdef';
+		$label = $this->service->getProvisioningLabel(
+			$this->user($uuid, $uuid . '@cloud.example', 'ldap@mail.example'),
+		);
+		$this->assertSame('ldap@mail.example@cloud.example', $label);
+	}
+
+	public function testProvisioningLabelKeepsHashUidWithoutEmail(): void {
+		$hash = str_repeat('b', 64);
+		$label = $this->service->getProvisioningLabel(
+			$this->user($hash, $hash . '@cloud.example', null),
+		);
+		$this->assertSame($hash . '@cloud.example', $label);
 	}
 
 	// == provisioning URI ==
