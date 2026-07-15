@@ -94,7 +94,7 @@
 					</div>
 					<div v-if="secretData.uri" class="otp-current__qr-row">
 						<div class="otp-current__qr">
-							<Qrcode :value="secretData.uri" :options="{ width: 120, errorCorrectionLevel: 'H' }" class="otp-current__qr-canvas" />
+							<Qrcode :value="revealDisplayUrl || secretData.uri" :options="{ width: 120, errorCorrectionLevel: 'H' }" class="otp-current__qr-canvas" />
 							<!-- Cosmetic centered logo: the same icon the QR carries in image=, app icon as fallback. -->
 							<img
 								class="otp-current__qr-logo"
@@ -107,6 +107,7 @@
 							<p>{{ t('twofactor_oath', 'Other authenticator apps do not display it.') }}</p>
 						</div>
 					</div>
+					<AccountLabelField v-if="secretData.uri" :uri="secretData.uri" @update="revealDisplayUrl = $event" />
 					<p class="otp-current__countdown">
 						{{ n('twofactor_oath', 'Hides in %n second — click to keep visible', 'Hides in %n seconds — click to keep visible', countdown) }}
 					</p>
@@ -155,6 +156,7 @@ import { loadState } from '@nextcloud/initial-state'
 import { confirmPassword } from '@nextcloud/password-confirmation'
 import { imagePath } from '@nextcloud/router'
 import { NcButton, NcCheckboxRadioSwitch, NcNoteCard, NcTextField } from '@nextcloud/vue'
+import AccountLabelField from './AccountLabelField.vue'
 import AdvancedSettings from './AdvancedSettings.vue'
 import SetupConfirmation from './SetupConfirmation.vue'
 import { ALGORITHM_NAME_OPTIONS, customSecretIssue, DEFAULTS, ocraSuite, periodLabel, STATE, TYPE } from '../constants.js'
@@ -173,6 +175,7 @@ export default {
 		NcCheckboxRadioSwitch,
 		NcNoteCard,
 		NcTextField,
+		AccountLabelField,
 		AdvancedSettings,
 		SetupConfirmation,
 	},
@@ -199,6 +202,8 @@ export default {
 			config: null,
 			secretShown: false,
 			secretData: null,
+			// Server reveal URI with the edited account label patched in.
+			revealDisplayUrl: '',
 			currentIconFailed: false,
 			countdown: 0,
 			countdownTimer: null,
@@ -438,6 +443,7 @@ export default {
 			this.stopCountdown()
 			this.secretShown = false
 			this.secretData = null
+			this.revealDisplayUrl = ''
 		},
 
 		hideCurrent() {

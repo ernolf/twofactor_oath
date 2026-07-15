@@ -260,7 +260,12 @@
 					</td>
 					<td>
 						<div v-if="row.uri || row.secret" class="otp-admin__result">
-							<Qrcode v-if="row.uri" :value="row.uri" :options="{ width: 120 }" />
+							<Qrcode v-if="row.uri" :value="row.displayUri || row.uri" :options="{ width: 120 }" />
+							<AccountLabelField
+								v-if="row.uri"
+								:uri="row.uri"
+								managed
+								@update="row.displayUri = $event" />
 							<div class="otp-admin__secret-line">
 								<code class="otp-admin__shown-secret">{{ row.secret }}</code>
 								<NcButton
@@ -337,6 +342,7 @@ import axios from '@nextcloud/axios'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import { NcButton, NcCheckboxRadioSwitch, NcDialog, NcNoteCard, NcSelect, NcSettingsSection } from '@nextcloud/vue'
+import AccountLabelField from './AccountLabelField.vue'
 import { ALGORITHM_NAME_OPTIONS, base32Length, customSecretIssue, DIGITS_MAX, DIGITS_MIN, ocraChallengeLength, PERIOD_VALUES, periodLabel, SECRET_PRESETS, strictAllowedAlgorithms, strictMinDigits, TYPE } from '../constants.js'
 
 // Algorithm code -> CSV/name representation (matches Constants::ALGORITHM_DIGESTS).
@@ -352,6 +358,7 @@ export default {
 		NcNoteCard,
 		NcSelect,
 		NcSettingsSection,
+		AccountLabelField,
 	},
 
 	setup() {
@@ -726,7 +733,7 @@ export default {
 			this.loading = true
 			try {
 				const resp = await axios.get(generateUrl('/apps/twofactor_oath/admin/managed-users'))
-				this.rows = resp.data.users.map((user) => ({ ...user, challenge: ocraChallengeLength(user.suite), input: '', secret: '', uri: null, message: '', selected: user.status === 'none' }))
+				this.rows = resp.data.users.map((user) => ({ ...user, challenge: ocraChallengeLength(user.suite), input: '', secret: '', uri: null, displayUri: null, message: '', selected: user.status === 'none' }))
 				this.loaded = true
 				this.refreshTotpStatus()
 			} catch {
@@ -741,6 +748,7 @@ export default {
 			if (row.secret || row.uri) {
 				row.secret = ''
 				row.uri = null
+				row.displayUri = null
 			} else {
 				this.showRow(row)
 			}
@@ -751,6 +759,7 @@ export default {
 				const resp = await axios.get(generateUrl('/apps/twofactor_oath/admin/show-token'), { params: { username: row.username } })
 				row.secret = resp.data.secret
 				row.uri = resp.data.uri
+				row.displayUri = null
 			} catch {
 				OC.Notification.showTemporary(t('twofactor_oath', 'Could not load token'))
 			}
@@ -833,6 +842,7 @@ export default {
 						row.message = result.message || ''
 						row.secret = result.secret || ''
 						row.uri = result.uri || null
+						row.displayUri = null
 					}
 				}
 				this.refreshTotpStatus()
@@ -875,6 +885,7 @@ export default {
 						row.status = 'none'
 						row.secret = ''
 						row.uri = null
+						row.displayUri = null
 						row.message = ''
 					}
 				}
