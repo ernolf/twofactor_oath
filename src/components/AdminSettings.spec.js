@@ -19,6 +19,7 @@ vi.mock('@nextcloud/vue', () => ({
 	NcNoteCard: { name: 'NcNoteCard', template: '<div><slot /></div>' },
 	NcSelect: { name: 'NcSelect', template: '<div />' },
 	NcSettingsSection: { name: 'NcSettingsSection', template: '<div><slot /></div>' },
+	NcTextField: { name: 'NcTextField', template: '<input>' },
 }))
 
 const tMock = (app, text) => text

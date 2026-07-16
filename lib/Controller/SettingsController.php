@@ -107,7 +107,7 @@ class SettingsController extends ALoginSetupController {
 				return new JSONResponse([
 					'state' => Constants::STATE_CREATED,
 					'secret' => $this->otpService->decryptSecret($entity),
-					'qrUrl' => $this->otpService->getProvisioningUri($entity, $user->getCloudId(), $this->defaults->getName()),
+					'qrUrl' => $this->otpService->getProvisioningUri($entity, $this->otpService->getProvisioningLabel($user), $this->defaults->getName()),
 				]);
 			case Constants::STATE_ENABLED:
 				if ($code === null) {
@@ -211,7 +211,7 @@ class SettingsController extends ALoginSetupController {
 			'period' => $entity->getPeriod(),
 			'counter' => $entity->getCounter(),
 			'secret' => $this->otpService->decryptSecret($entity),
-			'uri' => $entity->isOcra() ? '' : $this->otpService->getProvisioningUri($entity, $user->getCloudId(), $this->defaults->getName()),
+			'uri' => $entity->isOcra() ? '' : $this->otpService->getProvisioningUri($entity, $this->otpService->getProvisioningLabel($user), $this->defaults->getName()),
 		]);
 	}
 

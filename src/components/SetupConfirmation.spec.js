@@ -11,6 +11,7 @@ vi.mock('@nextcloud/router', () => ({ imagePath: () => '/img/app-dark.svg' }))
 vi.mock('@chenfengyuan/vue-qrcode', () => ({ default: { name: 'Qrcode', render: () => null } }))
 vi.mock('@nextcloud/vue', () => ({
 	NcButton: { name: 'NcButton', template: '<button><slot /></button>' },
+	NcNoteCard: { name: 'NcNoteCard', template: '<div><slot /></div>' },
 	NcTextField: { name: 'NcTextField', template: '<input>' },
 }))
 

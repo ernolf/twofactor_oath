@@ -240,7 +240,7 @@ class AdminController extends Controller {
 					'username' => $username,
 					'status' => 'provisioned',
 					'secret' => $this->otpService->decryptSecret($entity),
-					'uri' => $entity->isOcra() ? '' : $this->otpService->getProvisioningUri($entity, $user->getCloudId(), $this->defaults->getName()),
+					'uri' => $entity->isOcra() ? '' : $this->otpService->getProvisioningUri($entity, $this->otpService->getProvisioningLabel($user), $this->defaults->getName()),
 				];
 			} catch (InvalidArgumentException $e) {
 				$results[] = ['username' => $username, 'status' => 'error', 'message' => $e->getMessage()];
@@ -265,7 +265,7 @@ class AdminController extends Controller {
 		return new JSONResponse([
 			'username' => $username,
 			'secret' => $this->otpService->decryptSecret($entity),
-			'uri' => $entity->isOcra() ? '' : $this->otpService->getProvisioningUri($entity, $user->getCloudId(), $this->defaults->getName()),
+			'uri' => $entity->isOcra() ? '' : $this->otpService->getProvisioningUri($entity, $this->otpService->getProvisioningLabel($user), $this->defaults->getName()),
 		]);
 	}
 

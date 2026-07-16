@@ -6,6 +6,10 @@
 <template>
 	<div class="otp-setup" :class="{ 'otp-setup--centered': centered }">
 		<div class="otp-setup__note">
+			<AccountLabelField
+				v-if="!ocra && qrUrl"
+				:uri="qrUrl"
+				@update="displayUrl = $event" />
 			<div class="otp-setup__secret-head">
 				<span>{{ t('twofactor_oath', 'Your new secret is:') }}</span>
 				<NcButton
@@ -35,7 +39,7 @@
 			<div class="otp-setup__qr-row">
 				<div class="otp-setup__qr" :class="{ 'otp-setup__qr--stale': stale }">
 					<Qrcode
-						:value="qrUrl"
+						:value="displayUrl || qrUrl"
 						:options="{ width: 200, errorCorrectionLevel: 'H' }"
 						class="otp-setup__qr-canvas" />
 					<!-- Cosmetic centered logo: the same icon the QR carries in image=, app icon as fallback. -->
@@ -89,6 +93,7 @@
 import Qrcode from '@chenfengyuan/vue-qrcode'
 import { imagePath } from '@nextcloud/router'
 import { NcButton, NcTextField } from '@nextcloud/vue'
+import AccountLabelField from './AccountLabelField.vue'
 
 export default {
 	name: 'SetupConfirmation',
@@ -96,6 +101,7 @@ export default {
 		Qrcode,
 		NcButton,
 		NcTextField,
+		AccountLabelField,
 	},
 
 	props: {
@@ -145,6 +151,9 @@ export default {
 		return {
 			code: '',
 			iconFailed: false,
+			// The URI the QR is generated from: the server URI with the user's
+			// edited account label patched in (falls back to the server URI).
+			displayUrl: '',
 		}
 	},
 
@@ -178,6 +187,8 @@ export default {
 
 		qrUrl() {
 			this.code = ''
+			// Fall back to the new server URI until the label field re-emits.
+			this.displayUrl = ''
 			// Retry the embedded icon for the freshly generated QR.
 			this.iconFailed = false
 			this.focusCode()
@@ -199,7 +210,9 @@ export default {
 		// code immediately without first clicking into the field.
 		focusCode() {
 			this.$nextTick(() => {
-				const input = this.$el.querySelector('input')
+				// Target the code field explicitly: the account-label field renders
+				// its own input earlier in the DOM, so a bare 'input' would grab that.
+				const input = this.$el.querySelector('.otp-setup__code input')
 				if (input !== null && !input.disabled) {
 					input.focus()
 				}
@@ -246,6 +259,10 @@ export default {
 	border-radius: var(--border-radius);
 	background-color: var(--color-background-hover);
 	border-inline-start: 4px solid var(--color-primary-element);
+}
+
+.otp-setup__note :deep(.otp-label) {
+	margin: 0;
 }
 
 .otp-setup__secret-head {

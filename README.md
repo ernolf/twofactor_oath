@@ -39,6 +39,7 @@ OATH is not the same as FIDO2/WebAuthn. OATH uses a shared secret and a code you
 - **Encrypted at rest**: secrets are stored encrypted with the Nextcloud instance key, the same mechanism the bundled `twofactor_totp` uses.
 - **Strict RFC mode**: an optional switch that greys out anything the relevant RFC does not cover, so an admin gets safe, interoperable defaults without losing the freedom to deviate.
 - **Issuer icon in the QR code**: the instance favicon is embedded via the `otpauth://` `image=` parameter, shown by authenticators that support it (for example FreeOTP).
+- **Readable, editable account label**: the account name carried in the QR code (what an authenticator app shows for the token) is prefilled and can be edited before scanning. When the user ID is opaque, such as a guests-app hash or an LDAP UUID, the email is used so the label stays readable instead of a hash. The label goes only into the QR code and is not stored on the server.
 - **HOTP resynchronisation**: a drifted counter recovers with two consecutive codes ([RFC 4226 section 7.4](https://www.rfc-editor.org/info/rfc4226/#section-7.4)), both at the login prompt and in the personal settings, so users never get locked out.
 - **Admin enrollment**: define managed groups whose members cannot self-service; provision, enable and lock their tokens for them.
 - **Bulk provisioning**: an inline table with sorting and filtering, per-row editing, custom secrets, live validation, QR and secret reveal, and a replace guard.
@@ -86,9 +87,10 @@ When two-factor authentication is enforced, a user without a token sets one up d
 ### For users
 
 1. Open **Settings → Security**, find **OATH (TOTP/HOTP/OCRA)** and turn it on.
-2. Scan the QR code with your authenticator app, or copy the secret.
-3. Enter a generated code to confirm and activate.
-4. Use **Show configuration** at any time to review your settings, or reveal the secret and QR again (protected by your password).
+2. Optionally edit the **account label** shown next to the secret; it only changes the name your authenticator app displays.
+3. Scan the QR code with your authenticator app, or copy the secret.
+4. Enter a generated code to confirm and activate.
+5. Use **Show configuration** at any time to review your settings, or reveal the secret and QR again (protected by your password).
 
 Need advanced options, HOTP or OCRA? Open **Advanced settings** during setup. See [doc/ocra.md](doc/ocra.md) for challenge-response.
 
@@ -114,6 +116,7 @@ Details: [doc/admin-guide.md](doc/admin-guide.md).
 | Custom (predetermined) secret | yes | no |
 | Admin-managed enrollment and lock | yes | no |
 | Bulk provisioning, CSV, import | yes | no |
+| Readable, editable account label | yes | no |
 | Re-display an existing secret and QR | yes (password-confirmed, 60 s auto-hide) | no |
 | Password required to disable | yes (see [security](doc/security.md)) | no |
 

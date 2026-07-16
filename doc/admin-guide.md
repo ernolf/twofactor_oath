@@ -33,6 +33,10 @@ Managed users see a note pointing them to their administrator instead of the sel
 
 ![A managed user's personal security settings: the OATH section shows a note that the token is administrator-managed](screenshots/personal-managed.png)
 
+## Guest accounts
+
+The [guests app](https://apps.nextcloud.com/apps/guests) restricts guests to a whitelist of apps, and `twofactor_oath` is not on it by default: a guest opening the OTP setup gets "Could not start OTP setup". Add `twofactor_oath` to the allowed apps under **Settings → Guests**, and guests enroll like any other user. If the guests app is set to use a hash of the email as user ID, the account label defaults to the email address instead of the hash.
+
 ## Bulk provisioning
 
 ![Admin bulk provisioning table with sorting and filtering](screenshots/admin-provisioning.png)
