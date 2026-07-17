@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "Примени",
+    "Reset to default" : "Ресетирај на стандардно",
     "Recommended" : "Препорачано",
     "Pending" : "Чекање",
     "Enabled" : "Овозможено",

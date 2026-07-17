@@ -1,6 +1,7 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Uwenden",
     "Pending" : "Ausstoend",
     "Enabled" : "Aktivéiert",
     "Disabled" : "Deaktivéiert",

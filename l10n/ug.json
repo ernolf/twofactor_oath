@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "ئىلتىماس قىلىڭ",
+    "Reset to default" : "سۈكۈتتىكى ھالىتىگە قايتىڭ",
     "Minimal" : "ئەڭ كىچىك",
     "Recommended" : "تەۋسىيە قىلىندى",
     "High" : "ئېگىز",

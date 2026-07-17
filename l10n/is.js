@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Virkja",
+    "Reset to default" : "Endurstilla á sjálfgefið",
     "Recommended" : "Mælt með",
     "Pending" : "Í bið",
     "Enabled" : "Virkt",

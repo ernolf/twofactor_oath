@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Apliko",
+    "Reset to default" : "Rivendos tek të paracaktuarat",
     "Recommended" : "E rekomanduar",
     "Pending" : "Në Pritje të Konfirmimit",
     "Enabled" : "E aktivizuar",

@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Snes",
+    "Reset to default" : "Ales awennez ɣer umezwer",
     "Pending" : "Yegguni",
     "Enabled" : "Yermed",
     "Disabled" : "Ittwarermed",

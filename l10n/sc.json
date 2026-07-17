@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "Àplica",
+    "Reset to default" : "Torra a sa cunfiguratzione predefinida",
     "High" : "Artu",
     "Extreme" : "Istremu",
     "Pending" : "In isetu",

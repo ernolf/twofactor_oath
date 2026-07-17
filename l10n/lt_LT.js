@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Taikyti",
+    "Reset to default" : "Atstatyti į numatytąjį",
     "Minimal" : "Minimalus",
     "Recommended" : "Rekomenduojama",
     "Pending" : "Laukiama",

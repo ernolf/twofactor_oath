@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Uveljavi",
+    "Reset to default" : "Ponastavi na privzeto",
     "Recommended" : "Priporočeno",
     "High" : "Visoka",
     "Extreme" : "Izjemni",

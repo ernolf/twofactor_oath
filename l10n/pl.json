@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "Zastosuj",
+    "Reset to default" : "Przywróć domyślne",
     "Minimal" : "Minimalny",
     "Recommended" : "Zalecane",
     "High" : "Wysoko",

@@ -4,6 +4,8 @@ OC.L10N.register(
     "Authenticate with an OATH-compliant app or hardware token" : "Автентифікація із застосунком, сумісним з OATH, або апаратним токеном  ",
     "Two-factor OATH (advanced)" : "Другий фактор OATH (розширені)",
     "Advanced OATH two-factor provider: TOTP, HOTP and OCRA" : "Розширений провайдер двофакторної автентифікації OATH: TOTP, HOTP та OCRA",
+    "Apply" : "Застосувати",
+    "Reset to default" : "Скинути до типового",
     "Minimal" : "Мінімальний",
     "Recommended" : "Рекомендуємо",
     "High" : "Високий",

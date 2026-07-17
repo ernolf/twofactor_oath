@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Alkalmaz",
+    "Reset to default" : "Visszaállítás az alapértelmezettre",
     "Minimal" : "Minimális",
     "Recommended" : "Ajánlott",
     "High" : "Magas",

@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Áp dụng",
+    "Reset to default" : "Đặt lại về mặc định",
     "Pending" : "Đang dừng",
     "Enabled" : "Đá kích hoạt",
     "Disabled" : "Đã vô hiệu",

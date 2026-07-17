@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "გამოყენება",
+    "Reset to default" : "საწყის მდგომარეობაში დაბრუნება",
     "Pending" : "მოლოდინში",
     "Enabled" : "მოქმედია",
     "Disabled" : "არაა მოქმედი",

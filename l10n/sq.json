@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "Apliko",
+    "Reset to default" : "Rivendos tek të paracaktuarat",
     "Recommended" : "E rekomanduar",
     "Pending" : "Në Pritje të Konfirmimit",
     "Enabled" : "E aktivizuar",

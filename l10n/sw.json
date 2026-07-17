@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "Omba",
+    "Reset to default" : "Weka upya chaguo msingi",
     "Minimal" : "Ndogo",
     "Recommended" : "Iliyopendekezwa",
     "Pending" : "Inasubiri",

@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "Apstiprināt",
+    "Reset to default" : "Atiestatīt",
     "Recommended" : "Rekomendēts",
     "Pending" : "Gaida",
     "Enabled" : "Iespējots",

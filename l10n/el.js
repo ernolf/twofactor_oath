@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Εφαρμογή",
+    "Reset to default" : "Επαναφορά στα προεπιλεγμένα",
     "Minimal" : "Ελάχιστο",
     "Recommended" : "Προτείνεται",
     "High" : "Υψηλά",

@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "החלה",
+    "Reset to default" : "איפוס לבררת מחדל",
     "Recommended" : "מומלץ",
     "High" : "קשה",
     "Extreme" : "קיצוניות",

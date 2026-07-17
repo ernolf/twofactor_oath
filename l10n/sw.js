@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Omba",
+    "Reset to default" : "Weka upya chaguo msingi",
     "Minimal" : "Ndogo",
     "Recommended" : "Iliyopendekezwa",
     "Pending" : "Inasubiri",

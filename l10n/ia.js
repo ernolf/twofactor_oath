@@ -1,6 +1,7 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Applicar",
     "Pending" : "Pendente",
     "Enabled" : "Activate",
     "Error" : "Error",

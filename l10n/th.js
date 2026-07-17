@@ -1,6 +1,7 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "นำไปใช้",
     "Recommended" : "แนะนำ",
     "Pending" : "รอดำเนินการ",
     "Enabled" : "เปิดใช้งาน",

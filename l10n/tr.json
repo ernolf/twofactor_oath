@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "Uygula",
+    "Reset to default" : "Varsayılanlara dön",
     "Minimal" : "Minimal",
     "Recommended" : "Önerilen",
     "High" : "Yüksek",

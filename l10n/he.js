@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "החלה",
+    "Reset to default" : "איפוס לבררת מחדל",
     "Recommended" : "מומלץ",
     "High" : "קשה",
     "Extreme" : "קיצוניות",

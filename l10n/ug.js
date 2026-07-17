@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "ئىلتىماس قىلىڭ",
+    "Reset to default" : "سۈكۈتتىكى ھالىتىگە قايتىڭ",
     "Minimal" : "ئەڭ كىچىك",
     "Recommended" : "تەۋسىيە قىلىندى",
     "High" : "ئېگىز",

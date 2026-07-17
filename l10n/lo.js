@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Apply",
+    "Reset to default" : "ຕັ້ງຄ່າກັບເປັນຄ່າເລີ່ມຕົ້ນ",
     "Pending" : "ກຳລັງລໍຖ້າ",
     "Enabled" : "ເປີດໃຊ້ງານ",
     "Renew" : "ຕໍ່ອາຍຸ",

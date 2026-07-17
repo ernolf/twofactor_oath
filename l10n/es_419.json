@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "Aplicar",
+    "Reset to default" : "Restablecer al predeterminado",
     "Pending" : "Pendiente",
     "Sort by" : "Ordenar por",
     "User" : "Ususario",

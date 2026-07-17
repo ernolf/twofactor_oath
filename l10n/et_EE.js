@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Rakenda",
+    "Reset to default" : "Taasta vaikimisi seadistused",
     "Minimal" : "Minimalne",
     "Recommended" : "Soovitatud",
     "High" : "Kõrge",

@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Pas toe",
+    "Reset to default" : "Herstellen naar standaard",
     "Minimal" : "Minimaal",
     "Recommended" : "Aanbevolen",
     "High" : "Hoog",

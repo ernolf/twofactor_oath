@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "Tillämpa",
+    "Reset to default" : "Återställ till grundinställningar",
     "Minimal" : "Minimal",
     "Recommended" : "Rekomenderad",
     "Pending" : "Väntande",

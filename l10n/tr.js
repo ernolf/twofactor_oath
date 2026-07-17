@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Uygula",
+    "Reset to default" : "Varsayılanlara dön",
     "Minimal" : "Minimal",
     "Recommended" : "Önerilen",
     "High" : "Yüksek",

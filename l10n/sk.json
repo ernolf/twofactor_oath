@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "Použiť",
+    "Reset to default" : "Nastaviť predvolené",
     "Minimal" : "Minimalistický",
     "Recommended" : "Odporúčané",
     "High" : "Vysoká",

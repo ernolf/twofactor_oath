@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "適用",
+    "Reset to default" : "デフォルトに戻す",
     "Recommended" : "おすすめ",
     "Enabled" : "有効",
     "Disabled" : "無効",

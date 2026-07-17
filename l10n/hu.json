@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "Alkalmaz",
+    "Reset to default" : "Visszaállítás az alapértelmezettre",
     "Minimal" : "Minimális",
     "Recommended" : "Ajánlott",
     "High" : "Magas",

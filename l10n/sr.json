@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "Примени",
+    "Reset to default" : "Врати на подразумевано",
     "Minimal" : "Минимална",
     "Recommended" : "Препоручено",
     "High" : "Висок",

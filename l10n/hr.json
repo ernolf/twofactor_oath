@@ -1,4 +1,6 @@
 { "translations": {
+    "Apply" : "Primijeni",
+    "Reset to default" : "Vrati na zadanu postavku",
     "Recommended" : "Preporuceno",
     "High" : "Visok",
     "Extreme" : "Ekstremni",

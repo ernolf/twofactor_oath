@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "套用",
+    "Reset to default" : "重設為預設值",
     "Minimal" : "最小化",
     "Recommended" : "建議",
     "Pending" : "待處理",

@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Aplikatu",
+    "Reset to default" : "Berezarri balio lehenetsira",
     "Minimal" : "Minimoa",
     "Recommended" : "Aholkatuta",
     "High" : "Altua",

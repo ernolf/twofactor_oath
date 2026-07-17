@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Apstiprināt",
+    "Reset to default" : "Atiestatīt",
     "Recommended" : "Rekomendēts",
     "Pending" : "Gaida",
     "Enabled" : "Iespējots",

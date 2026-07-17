@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Validigi",
+    "Reset to default" : "Restarigi al defaŭltaj agordoj",
     "Recommended" : "Rekomendata",
     "Pending" : "Pritraktota",
     "Disabled" : "Malkapabligita",
