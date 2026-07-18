@@ -1,6 +1,7 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Прымяніць",
     "Pending" : "У чаканні",
     "Enabled" : "Уключаны",
     "Disabled" : "Адключаны",

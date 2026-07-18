@@ -1,6 +1,7 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Reset to default" : "Herstel na verstek",
     "Pending" : "Hangend",
     "User" : "Gebruiker",
     "All" : "Alle",

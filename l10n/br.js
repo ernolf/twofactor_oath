@@ -1,6 +1,7 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Lakaat",
     "Pending" : "O c'hortoz",
     "Disabled" : "Disaotreañ",
     "Error" : "Fazi",
