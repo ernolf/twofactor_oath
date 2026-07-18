@@ -126,41 +126,9 @@ Secrets are encrypted at rest, revealing a secret or disabling the provider alwa
 
 ## Installation
 
-The app is published in the [App Store](https://apps.nextcloud.com/apps/twofactor_oath). It can be [installed through Nextcloud's app management UI](https://docs.nextcloud.com/server/latest/admin_manual/apps_management.html#managing-apps) or with `occ app:enable twofactor_oath`.
+The app is published in the [App Store](https://apps.nextcloud.com/apps/twofactor_oath). Install it through [Nextcloud's app management UI](https://docs.nextcloud.com/server/latest/admin_manual/apps_management.html#managing-apps) (**Apps** → search for **Two-factor OATH (advanced)** → Install) or with `occ app:enable twofactor_oath`.
 
-A release tarball and a from-source build are available too:
-
-### From a release tarball
-
-Download the latest release tarball from the [releases page](https://github.com/ernolf/twofactor_oath/releases) and extract it into your Nextcloud `apps/` directory, so the app lives at `apps/twofactor_oath/`. Then set ownership to your web server user and enable it:
-
-```sh
-tar -xzf twofactor_oath-x.y.z.tar.gz -C /path/to/nextcloud/apps/
-chown -R www-data:www-data /path/to/nextcloud/apps/twofactor_oath
-occ app:enable twofactor_oath
-```
-
-### From source
-
-The build is driven by [ncmake](https://github.com/ernolf/ncmake) and runs entirely in throwaway containers, so the only requirement is **[podman](https://podman.io/)** (or Docker) — no PHP or Node toolchain on the host. The first `make` fetches the shared ncmake Makefile once into `~/.cache/ncmake/`. Clone and build the tarball:
-
-```sh
-git clone https://github.com/ernolf/twofactor_oath.git
-cd twofactor_oath
-make build && make dist
-```
-
-This writes `build/artifacts/dist/twofactor_oath-x.y.z.tar.gz`. Install it exactly like a release tarball above (extract into `apps/`, set ownership, then `occ app:enable twofactor_oath`).
-
-If your Nextcloud is on the same machine (or reachable over SSH), you can skip the tarball and rsync the runtime files straight into its `apps/` directory:
-
-```sh
-make build && make rsync TARGET=/path/to/nextcloud/apps/
-chown -R www-data:www-data /path/to/nextcloud/apps/twofactor_oath
-occ app:enable twofactor_oath
-```
-
-`TARGET` is the `apps/` parent directory and may be a local path or a remote `user@host:` path.
+It is built with [ncmake](https://github.com/ernolf/ncmake). To build and install it from source — release tarball, `make rsync` or `make cp` — see the [installation guide](https://github.com/ernolf/ncmake/blob/main/doc/INSTALL.md).
 
 Working on the app itself? See [doc/development.md](doc/development.md) for the quality gates and the [ncmake README](https://github.com/ernolf/ncmake#readme) for all `make` targets.
 
