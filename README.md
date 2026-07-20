@@ -9,7 +9,7 @@
 [![Nextcloud App Store](https://img.shields.io/badge/Nextcloud-App_Store-0082c9?logo=nextcloud&logoColor=white)](https://apps.nextcloud.com/apps/twofactor_oath)
 [![Latest release](https://img.shields.io/github/v/release/ernolf/twofactor_oath?sort=semver&color=0082c9)](https://github.com/ernolf/twofactor_oath/releases/latest)
 [![Localization on Transifex](https://img.shields.io/badge/l10n-Transifex-0082c9)](https://explore.transifex.com/nextcloud/nextcloud/)
-[![Built with ncmake](https://img.shields.io/badge/built%20with-ncmake-0082c9)](https://github.com/ernolf/ncmake)
+[![built with ncmake](https://cdn.jsdelivr.net/gh/ernolf/ncmake@main/img/ncmake-badge.svg)](https://github.com/ernolf/ncmake)
 
 > Advanced, fully open OATH one-time-password provider for Nextcloud: time-based (TOTP), counter-based (HOTP) and challenge-response (OCRA) tokens, configurable per token, with encrypted secrets, admin-managed bulk provisioning and a seamless import from the bundled `twofactor_totp` app.
 
