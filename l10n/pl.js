@@ -18,6 +18,7 @@ OC.L10N.register(
     "Status" : "Status",
     "Type" : "Rodzaj",
     "All" : "Wszystkie",
+    "Algorithm" : "Algorytm",
     "Digits" : "Cyfry",
     "Period" : "Kropka",
     "Hide" : "Ukryj",
