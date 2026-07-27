@@ -298,6 +298,13 @@ final class OtpService implements IOtpService {
 		$cloudId = $user->getCloudId();
 		$at = strrpos($cloudId, '@');
 		$host = $at === false ? '' : substr($cloudId, $at + 1);
+		// A misconfigured instance URL can leave a scheme or :port in the host;
+		// otphp forbids any colon in the label, so reduce it to the bare host.
+		$schemeEnd = strpos($host, '://');
+		if ($schemeEnd !== false) {
+			$host = substr($host, $schemeEnd + 3);
+		}
+		$host = explode(':', $host, 2)[0];
 		$local = $user->getUID();
 		$email = $user->getEMailAddress();
 		if ($email !== null && $email !== '' && $this->isOpaqueUid($local)) {

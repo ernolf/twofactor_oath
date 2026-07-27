@@ -442,6 +442,35 @@ final class OtpServiceTest extends TestCase {
 		$this->assertSame($hash . '@cloud.example', $label);
 	}
 
+	public function testProvisioningLabelStripsHttpsSchemeFromHost(): void {
+		$label = $this->service->getProvisioningLabel(
+			$this->user('alice', 'alice@https://cloud.example', 'alice@mail.example'),
+		);
+		$this->assertSame('alice@cloud.example', $label);
+	}
+
+	public function testProvisioningLabelStripsHttpSchemeFromHost(): void {
+		$label = $this->service->getProvisioningLabel(
+			$this->user('alice', 'alice@http://cloud.example', null),
+		);
+		$this->assertSame('alice@cloud.example', $label);
+	}
+
+	public function testProvisioningLabelStripsPortFromHost(): void {
+		$label = $this->service->getProvisioningLabel(
+			$this->user('alice', 'alice@cloud.example:8443', null),
+		);
+		$this->assertSame('alice@cloud.example', $label);
+	}
+
+	public function testProvisioningLabelStripsSchemeAndPortFromHost(): void {
+		$label = $this->service->getProvisioningLabel(
+			$this->user('alice', 'alice@https://cloud.example:8443', null),
+		);
+		$this->assertSame('alice@cloud.example', $label);
+		$this->assertStringNotContainsString(':', $label);
+	}
+
 	// == provisioning URI ==
 
 	public function testProvisioningUriContainsIssuerAndImage(): void {
