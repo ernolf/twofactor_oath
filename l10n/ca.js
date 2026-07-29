@@ -1,6 +1,7 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Aplica",
     "Reset to default" : "Reinicialitza els valors per defecte",
     "Minimal" : "Mínim",
     "Recommended" : "Recomanat",
@@ -12,6 +13,7 @@ OC.L10N.register(
     "Export as CSV" : "Exporta a CSV",
     "Sort by" : "Ordena per",
     "User" : "Usuari",
+    "Status" : "Estat",
     "Type" : "Tipus",
     "All" : "Totes",
     "Digits" : "Dígits",
