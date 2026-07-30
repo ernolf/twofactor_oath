@@ -1,6 +1,7 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Configurable OATH two-factor authentication for Nextcloud, covering all three OATH algorithms in one provider.\n\n- **TOTP** (RFC 6238), **HOTP** (RFC 4226) and **OCRA** challenge-response (RFC 6287), selectable per token\n- Per-token hash algorithm (SHA-1 to SHA-512), digits (4 to 10), TOTP period or HOTP counter, and OCRA suite\n- Custom or random secrets, with clear strength presets (128 to 640 bit) and secrets encrypted at rest\n- A **Strict RFC** switch for safe, interoperable defaults, without losing the freedom to deviate\n- Admin-managed enrollment for whole groups, with **bulk provisioning** (sorting, filtering, live validation), CSV export and paste import\n- One-click **import from the bundled twofactor_totp**, so existing users switch over without being locked out\n- Issuer icon embedded in the QR code, HOTP resynchronisation, and a software OCRA token for testing\n\nBuilt for hardware OATH tokens and elevated requirements, alongside the simple, bundled twofactor_totp app. OATH (one-time passwords) is not the same as FIDO2/WebAuthn. See documentation for when to use which." : "Konfigūruojamas dviejų veiksnių OATH autentifikavimas, skirtas „Nextcloud“, apimantis visus tris OATH algoritmus iš vieno tiekėjo.\n\n- **TOTP** (RFC 6238), **HOTP** (RFC 4226) ir **OCRA** iššūkio-atsako (RFC 6287) sistema, pasirenkama kiekvienam žymeniui\n- Maišos algoritmas kiekvienam žymeniui (nuo SHA-1 iki SHA-512), skaitmenys (nuo 4 iki 10), TOTP periodas arba HOTP skaitiklis ir OCRA rinkinys\n- Pasirinktinės arba atsitiktinės paslaptys su aiškiais stiprumo nustatymais (nuo 128 iki 640 bitų) ir paslaptys, užšifruotos ramybės būsenoje\n- Griežtas RFC** jungiklis, užtikrinantis saugius, sąveikius numatytuosius nustatymus, neprarandant laisvės nukrypti\n- Administratoriaus valdoma registracija visoms grupėms su **masiniu aprūpinimu** (rūšiavimas, filtravimas, tiesioginis patvirtinimas), CSV eksportavimu ir įklijavimo importu\n- Importavimas vienu spustelėjimu iš pridėto **twofactor_totp**, kad esami vartotojai galėtų perjungti nebūdami užblokuoti\n- Išdavėjo piktograma, įterpta į QR kodą, HOTP pakartotinis sinchronizavimas ir programinės įrangos OCRA prieigos raktas testavimui\n\nSukurta aparatinės įrangos OATH prieigos raktams ir aukštesni reikalavimai, kartu su paprasta, pridedama programėle „twofactor_totp“. OATH (vienkartiniai slaptažodžiai) nėra tas pats, kas FIDO2/WebAuthn. Žr. dokumentaciją, kada kurį naudoti.",
     "Apply" : "Taikyti",
     "Reset to default" : "Atstatyti į numatytąjį",
     "Minimal" : "Minimalus",
@@ -22,6 +23,7 @@ OC.L10N.register(
     "Period" : "Laikotarpis",
     "Hide" : "Slėpti",
     "Show" : "Rodyti",
+    "Include existing secrets in the export? They are written in plaintext, so store the file securely." : "Ar įtraukti į eksportavimą esamus paslaptis? Jie įrašomi paprastuoju tekstu, todėl failą laikykite saugiai.",
     "Cancel" : "Atsisakyti",
     "Confirm" : "Patvirtinti",
     "Advanced settings" : "Išplėstiniai nustatymai",
