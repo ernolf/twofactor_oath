@@ -4,6 +4,7 @@ OC.L10N.register(
     "Apply" : "適用",
     "Reset to default" : "デフォルトに戻す",
     "Recommended" : "おすすめ",
+    "Pending" : "保留中",
     "Enabled" : "有効",
     "Disabled" : "無効",
     "Error" : "エラー",
