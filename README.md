@@ -128,7 +128,7 @@ Secrets are encrypted at rest, revealing a secret or disabling the provider alwa
 
 The app is published in the [App Store](https://apps.nextcloud.com/apps/twofactor_oath). Install it through [Nextcloud's app management UI](https://docs.nextcloud.com/server/latest/admin_manual/apps_management.html#managing-apps) (**Apps** → search for **Two-factor OATH (advanced)** → Install) or with `occ app:enable twofactor_oath`.
 
-It is built with [ncmake](https://github.com/ernolf/ncmake). To build and install it from source — release tarball, `make rsync` or `make cp` — see the [installation guide](https://github.com/ernolf/ncmake/blob/main/doc/INSTALL.md).
+It is built with [ncmake](https://github.com/ernolf/ncmake). To build and install it from source — release tarball, `make rsync` or `make cp` — see the [installation guide](https://github.com/ernolf/ncmake/wiki/Installation).
 
 Working on the app itself? See [doc/development.md](doc/development.md) for the quality gates and the [ncmake README](https://github.com/ernolf/ncmake#readme) for all `make` targets.
 
