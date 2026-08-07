@@ -7,6 +7,7 @@ OC.L10N.register(
     "Error" : "Feil",
     "Sort by" : "Sorter på",
     "User" : "Bruker",
+    "Status" : "Status",
     "Type" : "Skriv",
     "All" : "Alle",
     "Hide" : "Gøym",
