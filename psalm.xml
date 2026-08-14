@@ -27,13 +27,4 @@
 		<directory name="vendor" />
 		<directory name="vendor-bin/nextcloud-ocp" />
 	</extraFiles>
-	<issueHandlers>
-		<UndefinedDocblockClass>
-			<errorLevel type="suppress">
-				<referencedClass name="Doctrine\DBAL\Schema\Schema" />
-				<referencedClass name="Doctrine\DBAL\Schema\Table" />
-				<referencedClass name="Doctrine\DBAL\Schema\SchemaException" />
-			</errorLevel>
-		</UndefinedDocblockClass>
-	</issueHandlers>
 </psalm>
