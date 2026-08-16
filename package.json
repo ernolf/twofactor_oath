@@ -25,7 +25,7 @@
     "@nextcloud/password-confirmation": "^6.1.0",
     "@nextcloud/router": "^3.1.0",
     "@nextcloud/vue": "^9.9.0",
-    "pinia": "^3.0.4",
+    "pinia": "^4.0.2",
     "vue": "^3.5.41"
   },
   "devDependencies": {
