@@ -1,6 +1,8 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Authenticate with an OATH-compliant app or hardware token" : "Meld aan met een OATH-compatibele app of een hardwaretoken",
+    "Two-factor OATH (advanced)" : "Tweefactorauthenticatie via OATH (uitgebreid)",
     "Apply" : "Pas toe",
     "Reset to default" : "Herstellen naar standaard",
     "Minimal" : "Minimaal",
@@ -26,8 +28,18 @@ OC.L10N.register(
     "Confirm" : "Bevestigen",
     "Advanced settings" : "Geavanceerde instellingen",
     "Wrong password." : "Onjuist wachtwoord.",
+    "_Hides in %n second — click to keep visible_::_Hides in %n seconds — click to keep visible_" : ["Verbergt na %n second — click to keep visible ","Verbergt na %n seconden — klik om zichtbaar te houden"],
+    "Your new secret is:" : "Je nieuwe geheim is:",
+    "For quick setup, scan this QR code with your authenticator app:" : "Om het configuratie proces te bevorderen, scan deze QR-code met je authenticator-app:",
+    "Then enter a generated code below to confirm and activate:" : "Voer vervolgens hieronder de gegenereerde code in om te bevestigen en te activeren:",
+    "Enter this challenge into your OCRA token, then type the response below to confirm:" : "Voer deze uitdaging in op je OCRA-token en typ vervolgens het onderstaande antwoord om te bevestigen:",
+    "Response" : "Respons",
     "Authentication code" : "Authenticatiecode",
-    "Verify" : "Controleer",
-    "Submit" : "Indienen"
+    "Verify" : "Verifiëren",
+    "Challenge-response: type the challenge below into your OCRA token, then enter the response it shows." : "Vraag-antwoord: typ de onderstaande vraag in uw OCRA-token en voer vervolgens het antwoord in dat daar wordt weergegeven.",
+    "Submit" : "Indienen",
+    "Enter a one-time code from your OTP app or token." : "Voer een eenmalige code in vanuit je OTP-app of -token.",
+    "My HOTP token is out of sync" : "Mijn HOTP-token loopt niet synchroon",
+    "Enter your current code in the field above, then the very next code from your token here, and submit." : "Voer je huidige code in het veld hierboven in, voer vervolgens de code in van het token dat daar direct op volgt en klik op ‘Indienen’."
 },
 "nplurals=2; plural=(n != 1);");
