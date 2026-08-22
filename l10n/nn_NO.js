@@ -10,6 +10,7 @@ OC.L10N.register(
     "Status" : "Status",
     "Type" : "Skriv",
     "All" : "Alle",
+    "Period" : "Periode",
     "Hide" : "Gøym",
     "Cancel" : "Cancel",
     "Advanced settings" : "Avanserte innstillingar",
