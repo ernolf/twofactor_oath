@@ -25,7 +25,7 @@
     "@nextcloud/password-confirmation": "^6.1.0",
     "@nextcloud/router": "^3.1.0",
     "@nextcloud/vue": "^9.9.0",
-    "pinia": "^4.0.2",
+    "pinia": "^4.0.3",
     "vue": "^3.5.41"
   },
   "devDependencies": {
@@ -38,7 +38,7 @@
     "jsdom": "^29.1.1",
     "stylelint": "^17.14.1",
     "vite": "^7.1.10",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
