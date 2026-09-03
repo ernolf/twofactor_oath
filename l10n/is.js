@@ -11,6 +11,7 @@ OC.L10N.register(
     "Excluded groups" : "Útilokaðir hópar",
     "Sort by" : "Raða sem",
     "User" : "Notandi",
+    "Status" : "Staða",
     "Type" : "Tegund",
     "All" : "Allt",
     "Algorithm" : "Reiknirit",
