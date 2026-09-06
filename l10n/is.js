@@ -9,6 +9,7 @@ OC.L10N.register(
     "Disabled" : "Óvirkt",
     "Error" : "Villa",
     "Excluded groups" : "Útilokaðir hópar",
+    "Export as CSV" : "Flytja út sem CSV",
     "Sort by" : "Raða sem",
     "User" : "Notandi",
     "Status" : "Staða",
