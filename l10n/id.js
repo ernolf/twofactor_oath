@@ -19,6 +19,7 @@ OC.L10N.register(
     "Digits" : "Digit",
     "Period" : "Periode",
     "Hide" : "Sembunyikan",
+    "Show" : "Tampilkan",
     "Cancel" : "Cancel",
     "Confirm" : "Konfirmasi",
     "Advanced settings" : "Pengaturan lanjutan",
