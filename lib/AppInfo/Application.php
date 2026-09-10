@@ -11,6 +11,7 @@ namespace OCA\TwoFactorOath\AppInfo;
 
 use OCA\TwoFactorOath\Db\IOtpSecretMapper;
 use OCA\TwoFactorOath\Db\OtpSecretMapper;
+use OCA\TwoFactorOath\Listener\UserDeleted;
 use OCA\TwoFactorOath\Provider\OtpProvider;
 use OCA\TwoFactorOath\Service\IOtpService;
 use OCA\TwoFactorOath\Service\IPolicyService;
@@ -23,6 +24,7 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\Authentication\TwoFactorAuth\IProvider;
+use OCP\User\Events\UserDeletedEvent;
 use Override;
 
 final class Application extends App implements IBootstrap {
@@ -49,6 +51,9 @@ final class Application extends App implements IBootstrap {
 
 		// The 2FA provider is registered declaratively via appinfo/info.xml
 		// (<two-factor-providers>); no programmatic registration is needed here.
+
+		// Deleting a user must not leave their secret behind.
+		$context->registerEventListener(UserDeletedEvent::class, UserDeleted::class);
 	}
 
 	#[Override]
