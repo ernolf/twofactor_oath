@@ -15,11 +15,17 @@ vi.mock('@nextcloud/router', () => ({ imagePath: () => '/img/app-dark.svg' }))
 vi.mock('../logger.js', () => ({ default: { error: vi.fn(), warn: vi.fn(), debug: vi.fn(), info: vi.fn(), fatal: vi.fn() } }))
 vi.mock('../services/StateService.js', () => ({ saveState: vi.fn() }))
 vi.mock('@chenfengyuan/vue-qrcode', () => ({ default: { name: 'Qrcode', render: () => null } }))
-vi.mock('@nextcloud/vue', () => ({
-	NcButton: { name: 'NcButton', template: '<button><slot /></button>' },
-	NcCheckboxRadioSwitch: { name: 'NcCheckboxRadioSwitch', template: '<label><slot /></label>' },
-	NcNoteCard: { name: 'NcNoteCard', template: '<div><slot /></div>' },
-	NcTextField: { name: 'NcTextField', template: '<input>' },
+vi.mock('@nextcloud/vue/components/NcButton', () => ({
+	default: { name: 'NcButton', template: '<button><slot /></button>' },
+}))
+vi.mock('@nextcloud/vue/components/NcCheckboxRadioSwitch', () => ({
+	default: { name: 'NcCheckboxRadioSwitch', template: '<label><slot /></label>' },
+}))
+vi.mock('@nextcloud/vue/components/NcNoteCard', () => ({
+	default: { name: 'NcNoteCard', template: '<div><slot /></div>' },
+}))
+vi.mock('@nextcloud/vue/components/NcTextField', () => ({
+	default: { name: 'NcTextField', template: '<input>' },
 }))
 
 const tMock = (app, text) => text

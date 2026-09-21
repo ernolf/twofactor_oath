@@ -52,7 +52,9 @@
 
 <script>
 import { loadState } from '@nextcloud/initial-state'
-import { NcButton, NcCheckboxRadioSwitch, NcNoteCard } from '@nextcloud/vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import AdvancedSettings from './AdvancedSettings.vue'
 import SetupConfirmation from './SetupConfirmation.vue'
 import { customSecretIssue, DEFAULTS, ocraSuite, STATE, TYPE } from '../constants.js'

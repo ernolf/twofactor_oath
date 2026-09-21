@@ -7,10 +7,14 @@ import { shallowMount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import AccountLabelField from './AccountLabelField.vue'
 
-vi.mock('@nextcloud/vue', () => ({
-	NcButton: { name: 'NcButton', template: '<button><slot name="icon" /><slot /></button>' },
-	NcNoteCard: { name: 'NcNoteCard', template: '<div><slot /></div>' },
-	NcTextField: { name: 'NcTextField', template: '<input>' },
+vi.mock('@nextcloud/vue/components/NcButton', () => ({
+	default: { name: 'NcButton', template: '<button><slot name="icon" /><slot /></button>' },
+}))
+vi.mock('@nextcloud/vue/components/NcNoteCard', () => ({
+	default: { name: 'NcNoteCard', template: '<div><slot /></div>' },
+}))
+vi.mock('@nextcloud/vue/components/NcTextField', () => ({
+	default: { name: 'NcTextField', template: '<input>' },
 }))
 
 const tMock = (app, text) => text

@@ -8,9 +8,11 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import AdvancedSettings from './AdvancedSettings.vue'
 import { ALGORITHM, DEFAULTS, TYPE } from '../constants.js'
 
-vi.mock('@nextcloud/vue', () => ({
-	NcCheckboxRadioSwitch: { name: 'NcCheckboxRadioSwitch', template: '<label><slot /></label>' },
-	NcTextField: { name: 'NcTextField', template: '<input>' },
+vi.mock('@nextcloud/vue/components/NcCheckboxRadioSwitch', () => ({
+	default: { name: 'NcCheckboxRadioSwitch', template: '<label><slot /></label>' },
+}))
+vi.mock('@nextcloud/vue/components/NcTextField', () => ({
+	default: { name: 'NcTextField', template: '<input>' },
 }))
 
 const tMock = (app, text) => text
