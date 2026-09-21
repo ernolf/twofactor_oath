@@ -12,14 +12,26 @@ vi.mock('@nextcloud/initial-state', () => ({ loadState: vi.fn() }))
 vi.mock('@nextcloud/router', () => ({ generateUrl: (url) => url }))
 vi.mock('@nextcloud/axios', () => ({ default: { get: vi.fn(), post: vi.fn() } }))
 vi.mock('@chenfengyuan/vue-qrcode', () => ({ default: { name: 'Qrcode', render: () => null } }))
-vi.mock('@nextcloud/vue', () => ({
-	NcButton: { name: 'NcButton', template: '<button><slot /></button>' },
-	NcCheckboxRadioSwitch: { name: 'NcCheckboxRadioSwitch', template: '<label><slot /></label>' },
-	NcDialog: { name: 'NcDialog', template: '<div><slot /></div>' },
-	NcNoteCard: { name: 'NcNoteCard', template: '<div><slot /></div>' },
-	NcSelect: { name: 'NcSelect', template: '<div />' },
-	NcSettingsSection: { name: 'NcSettingsSection', template: '<div><slot /></div>' },
-	NcTextField: { name: 'NcTextField', template: '<input>' },
+vi.mock('@nextcloud/vue/components/NcButton', () => ({
+	default: { name: 'NcButton', template: '<button><slot /></button>' },
+}))
+vi.mock('@nextcloud/vue/components/NcCheckboxRadioSwitch', () => ({
+	default: { name: 'NcCheckboxRadioSwitch', template: '<label><slot /></label>' },
+}))
+vi.mock('@nextcloud/vue/components/NcDialog', () => ({
+	default: { name: 'NcDialog', template: '<div><slot /></div>' },
+}))
+vi.mock('@nextcloud/vue/components/NcNoteCard', () => ({
+	default: { name: 'NcNoteCard', template: '<div><slot /></div>' },
+}))
+vi.mock('@nextcloud/vue/components/NcSelect', () => ({
+	default: { name: 'NcSelect', template: '<div />' },
+}))
+vi.mock('@nextcloud/vue/components/NcSettingsSection', () => ({
+	default: { name: 'NcSettingsSection', template: '<div><slot /></div>' },
+}))
+vi.mock('@nextcloud/vue/components/NcTextField', () => ({
+	default: { name: 'NcTextField', template: '<input>' },
 }))
 
 const tMock = (app, text) => text

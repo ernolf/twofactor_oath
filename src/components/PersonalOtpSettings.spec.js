@@ -26,11 +26,17 @@ vi.mock('../services/StateService.js', () => ({
 	deactivateOtp: vi.fn(),
 }))
 vi.mock('@chenfengyuan/vue-qrcode', () => ({ default: { name: 'Qrcode', render: () => null } }))
-vi.mock('@nextcloud/vue', () => ({
-	NcButton: { name: 'NcButton', template: '<button><slot /></button>' },
-	NcCheckboxRadioSwitch: { name: 'NcCheckboxRadioSwitch', template: '<label><slot /></label>' },
-	NcNoteCard: { name: 'NcNoteCard', template: '<div><slot /></div>' },
-	NcTextField: { name: 'NcTextField', template: '<input>' },
+vi.mock('@nextcloud/vue/components/NcButton', () => ({
+	default: { name: 'NcButton', template: '<button><slot /></button>' },
+}))
+vi.mock('@nextcloud/vue/components/NcCheckboxRadioSwitch', () => ({
+	default: { name: 'NcCheckboxRadioSwitch', template: '<label><slot /></label>' },
+}))
+vi.mock('@nextcloud/vue/components/NcNoteCard', () => ({
+	default: { name: 'NcNoteCard', template: '<div><slot /></div>' },
+}))
+vi.mock('@nextcloud/vue/components/NcTextField', () => ({
+	default: { name: 'NcTextField', template: '<input>' },
 }))
 
 // Nextcloud injects t/n as runtime globals: the component template resolves them

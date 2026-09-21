@@ -101,7 +101,8 @@
 </template>
 
 <script>
-import { NcCheckboxRadioSwitch, NcTextField } from '@nextcloud/vue'
+import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
+import NcTextField from '@nextcloud/vue/components/NcTextField'
 import SelectField from './SelectField.vue'
 import { ALGORITHM_OPTIONS, customSecretIssue, DIGITS_MAX, DIGITS_MIN, ocraSuite, PERIOD_VALUES, periodLabel, strictAllowedAlgorithms, strictMinDigits, TYPE } from '../constants.js'
 

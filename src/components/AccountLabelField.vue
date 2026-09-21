@@ -88,7 +88,9 @@
 </template>
 
 <script>
-import { NcButton, NcNoteCard, NcTextField } from '@nextcloud/vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
+import NcTextField from '@nextcloud/vue/components/NcTextField'
 import { accountLabel, withAccountLabel } from '../otpauth.js'
 
 export default {

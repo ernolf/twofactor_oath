@@ -92,7 +92,8 @@
 <script>
 import Qrcode from '@chenfengyuan/vue-qrcode'
 import { imagePath } from '@nextcloud/router'
-import { NcButton, NcTextField } from '@nextcloud/vue'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcTextField from '@nextcloud/vue/components/NcTextField'
 import AccountLabelField from './AccountLabelField.vue'
 
 export default {
