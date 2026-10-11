@@ -14,11 +14,11 @@ use OCA\TwoFactorOath\Service\TotpImporter;
 use OCP\Authentication\TwoFactorAuth\IProvider;
 use OCP\Authentication\TwoFactorAuth\IRegistry;
 use OCP\IDBConnection;
-use OCP\IServerContainer;
 use OCP\IUserManager;
 use OCP\Security\ICrypto;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
 use RuntimeException;
 
 /**
@@ -42,7 +42,7 @@ final class TotpImporterTest extends TestCase {
 			$this->createMock(IRegistry::class),
 			$this->createMock(IProvider::class),
 			$this->createMock(ICrypto::class),
-			$this->createMock(IServerContainer::class),
+			$this->createMock(ContainerInterface::class),
 		);
 	}
 

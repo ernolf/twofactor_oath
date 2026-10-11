@@ -13,11 +13,11 @@ use OCA\TwoFactorOath\Constants;
 use OCP\Authentication\TwoFactorAuth\IProvider;
 use OCP\Authentication\TwoFactorAuth\IRegistry;
 use OCP\IDBConnection;
-use OCP\IServerContainer;
 use OCP\IUser;
 use OCP\IUserManager;
 use OCP\Security\ICrypto;
 use Override;
+use Psr\Container\ContainerInterface;
 use Throwable;
 
 /**
@@ -49,7 +49,7 @@ final class TotpImporter implements ITotpImporter {
 		private readonly IRegistry $registry,
 		private readonly IProvider $provider,
 		private readonly ICrypto $crypto,
-		private readonly IServerContainer $serverContainer,
+		private readonly ContainerInterface $container,
 	) {
 	}
 
@@ -215,7 +215,7 @@ final class TotpImporter implements ITotpImporter {
 	 */
 	private function deregisterTotp(IUser $user): void {
 		try {
-			$providerManager = $this->serverContainer->get(self::PROVIDER_MANAGER_CLASS);
+			$providerManager = $this->container->get(self::PROVIDER_MANAGER_CLASS);
 			/** @psalm-suppress MixedMethodCall */
 			$providerManager->tryDisableProviderFor(self::TOTP_PROVIDER_ID, $user);
 		} catch (Throwable) {
