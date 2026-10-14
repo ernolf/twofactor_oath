@@ -1,6 +1,7 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Edit label" : "Изменить название",
     "Apply" : "Применить",
     "Reset to default" : "Сбросить до значения по умолчанию",
     "Minimal" : "Минималистичная",
