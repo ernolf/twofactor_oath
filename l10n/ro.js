@@ -2,6 +2,7 @@ OC.L10N.register(
     "twofactor_oath",
     {
     "Apply" : "Aplică",
+    "Reset to default" : "Resetează la valorile implicite",
     "Recommended" : "Recomandat",
     "Pending" : "În așteptare",
     "Enabled" : "Activat",
