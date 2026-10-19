@@ -1,6 +1,7 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Edit label" : "Шошгыг өөрчлөх",
     "Apply" : "хэрэглэх",
     "Reset to default" : "–ê–Ω—Ö–Ω—ã –±–∞–π–¥–ª–∞–∞—Ä —Å—ç—Ä–≥—ç—ç—Ö",
     "Pending" : "–•“Ø–ª—ç—ç–≥–¥—ç–∂ –±–∞–π–≥–∞–∞",
