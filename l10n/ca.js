@@ -1,6 +1,7 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Edit label" : "Edita l'etiqueta",
     "Apply" : "Aplica",
     "Reset to default" : "Reinicialitza els valors per defecte",
     "Minimal" : "Mínim",
