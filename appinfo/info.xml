@@ -29,9 +29,9 @@ Built for hardware OATH tokens and elevated requirements, alongside the simple, 
 		<prevent_group_restriction />
 	</types>
 	<documentation>
-		<user>https://github.com/ernolf/twofactor_oath/blob/main/README.md</user>
-		<admin>https://github.com/ernolf/twofactor_oath/blob/main/doc/admin-guide.md</admin>
-		<developer>https://github.com/ernolf/twofactor_oath/blob/main/doc/development.md</developer>
+		<user>https://github.com/ernolf/twofactor_oath/wiki/User-guide</user>
+		<admin>https://github.com/ernolf/twofactor_oath/wiki/Administration</admin>
+		<developer>https://github.com/ernolf/twofactor_oath/wiki/Development</developer>
 	</documentation>
 	<category>security</category>
 	<website>https://github.com/ernolf/twofactor_oath#readme</website>
