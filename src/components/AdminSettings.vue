@@ -23,7 +23,7 @@
 			</NcButton>
 		</NcNoteCard>
 		<NcNoteCard v-if="totpEnabled && totpImportCount === 0 && totpDuplicateUsers.length === 0" type="info" class="otp-admin__banner">
-			<p>{{ t('twofactor_oath', 'twofactor_totp and twofactor_oath can run side by side, but OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended since your users have moved to OATH.') }}</p>
+			<p>{{ t('twofactor_oath', 'twofactor_totp is still enabled, but no user has a twofactor_totp token that is not already in OATH. OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended.') }}</p>
 			<p>{{ t('twofactor_oath', 'To retire it cleanly, disable the app and remove its leftover associations:') }}</p>
 			<pre class="otp-admin__occ">{{ retireCommands }}</pre>
 			<p>{{ t('twofactor_oath', 'The second command belongs with the first: after disabling, the stale associations would otherwise cause a "could not load" error at login.') }}</p>
@@ -404,7 +404,7 @@ export default {
 			return this.totpDuplicateUsers.map((uid) => `occ twofactorauth:disable ${uid} totp`).join('\n')
 		},
 
-		// Commands to fully retire twofactor_totp once everyone has moved to OATH:
+		// Commands to fully retire twofactor_totp once no token is left outside OATH:
 		// disable the app, then remove the stale provider associations.
 		retireCommands() {
 			return 'occ app:disable twofactor_totp\nocc twofactorauth:cleanup totp'
