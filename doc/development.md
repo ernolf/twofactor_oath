@@ -11,7 +11,7 @@ How to set up the development environment and run the quality gates for `twofact
 
 For the container-based workflow (recommended), only **podman** or **Docker** is required — the toolchain below runs inside the images. For native, on-host work you need:
 
-- PHP 8.1 or newer (the app supports Nextcloud 32 to 35, PHP 8.1 to 8.5)
+- PHP 8.2 or newer (the app supports Nextcloud 34 to 36, PHP 8.2 to 8.5)
 - Composer
 - Node.js and npm (for the frontend build)
 - For the Nextcloud-dependent unit tests: a Nextcloud checkout (the app must live inside its `apps/` directory)
@@ -39,7 +39,7 @@ Run these before every commit. Everything except the Nextcloud-dependent tests r
 | `composer rector` | apply rector suggestions, then `cs:fix` |
 | `composer test:unit` | PHPUnit unit tests |
 
-Expected on a clean tree: `lint` clean, `cs:check` reports `0 of N files`, `psalm` says `No errors found` (info-level notes such as `MissingClassConstType` are expected, since typed class constants require PHP 8.3 and the app still supports 8.1), `rector --dry-run` reports no changes.
+Expected on a clean tree: `lint` clean, `cs:check` reports `0 of N files`, `psalm` says `No errors found` (info-level notes such as `MissingClassConstType` are expected, since typed class constants require PHP 8.3 and the app still supports 8.2), `rector --dry-run` reports no changes.
 
 ## Frontend (npm)
 
@@ -57,7 +57,7 @@ npm run test           # vitest unit tests (npm run test:watch to watch)
 
 ## Container-based development
 
-Run every gate in a throwaway container, so the host stays untouched and you can test against any PHP version (for example 8.1) even if it is not installed on the host. This mirrors the Nextcloud CI, which ships ready-made images per PHP version with all required extensions.
+Run every gate in a throwaway container, so the host stays untouched and you can test against any PHP version (for example 8.2) even if it is not installed on the host. This mirrors the Nextcloud CI, which ships ready-made images per PHP version with all required extensions.
 
 The `Makefile` automates exactly these invocations: `make build` and `make version` run the package managers in a container chosen by `RUNTIME` (see [Makefile targets](#makefile-targets)).
 
@@ -75,10 +75,10 @@ The `Makefile` automates exactly these invocations: `make build` and `make versi
 
 ### Running the PHP gates in a container
 
-The Nextcloud CI images (`ghcr.io/nextcloud/continuous-integration-php8.1`, `-php8.2`, `-php8.3`) bundle the matching PHP version, all required extensions and composer. They run as root internally, so composer needs `COMPOSER_ALLOW_SUPERUSER=1` to load the bamarni plugin.
+The Nextcloud CI images (`ghcr.io/nextcloud/continuous-integration-php8.2`, `-php8.3`) bundle the matching PHP version, all required extensions and composer. They run as root internally, so composer needs `COMPOSER_ALLOW_SUPERUSER=1` to load the bamarni plugin.
 
 ```sh
-for v in 8.1 8.2 8.3; do
+for v in 8.2 8.3; do
   echo "== PHP $v =="
   podman run --rm -v "$PWD":/app -w /app \
     -e COMPOSER_HOME=/tmp/composer -e COMPOSER_ALLOW_SUPERUSER=1 \
@@ -90,8 +90,8 @@ done
 
 Notes on the images:
 
-- The `:latest` tags are pinned to fixed patch levels that can be older than the newest psalm requires (psalm 6.16 needs PHP 8.1.31 or newer). `lint`, `cs:check` and `phpunit` run fine on them; `psalm` does not on a stale patch. Run `psalm` once on a current PHP (simplest on the host).
-- `psalm` analyses for the version configured in `psalm.xml` (`phpVersion="8.1"`) regardless of the runtime PHP.
+- The `:latest` tags are pinned to fixed patch levels that can be older than the newest psalm requires (psalm 6.16 needs PHP 8.2.27 or newer on the 8.2 line). `lint`, `cs:check` and `phpunit` run fine on them; `psalm` does not on a stale patch. Run `psalm` once on a current PHP (simplest on the host).
+- `psalm` analyses for the version configured in `psalm.xml` (`phpVersion="8.2"`) regardless of the runtime PHP.
 
 ### Running npm in a container
 

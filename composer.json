@@ -5,7 +5,7 @@
 	"license": "AGPL-3.0-or-later",
 	"config": {
 		"platform": {
-			"php": "8.1"
+			"php": "8.2"
 		},
 		"sort-packages": true,
 		"allow-plugins": {
@@ -35,7 +35,7 @@
 		"rector": "rector && composer cs:fix"
 	},
 	"require": {
-		"php": ">=8.1",
+		"php": ">=8.2",
 		"bamarni/composer-bin-plugin": "^1.9",
 		"spomky-labs/otphp": "^11.3"
 	},

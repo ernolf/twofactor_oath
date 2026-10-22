@@ -62,7 +62,7 @@ flowchart TD
     TI --> DB
 ```
 
-- **Backend:** PHP 8.1+, Nextcloud 32 to 35. App id `twofactor_oath`, namespace `OCA\TwoFactorOath`, provider id `oath`, table `twofactor_oath_secrets`.
+- **Backend:** PHP 8.2+, Nextcloud 34 to 36. App id `twofactor_oath`, namespace `OCA\TwoFactorOath`, provider id `oath`, table `twofactor_oath_secrets`.
 - **Frontend:** Vue 3 with the official `@nextcloud/vue` v9 component library, Pinia, `@chenfengyuan/vue-qrcode`, built with `@nextcloud/webpack-vue-config`. Three entry points: personal settings, login setup, admin settings.
 - **Provider registration:** declarative via `appinfo/info.xml` (`<two-factor-providers>`), the standard for single-provider apps.
 
