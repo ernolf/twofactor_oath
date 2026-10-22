@@ -12,6 +12,7 @@ import { saveState } from '../services/StateService.js'
 
 vi.mock('@nextcloud/initial-state', () => ({ loadState: vi.fn(() => false) }))
 vi.mock('@nextcloud/router', () => ({ imagePath: () => '/img/app-dark.svg' }))
+vi.mock('@nextcloud/dialogs', () => ({ showError: vi.fn(), showSuccess: vi.fn() }))
 vi.mock('../logger.js', () => ({ default: { error: vi.fn(), warn: vi.fn(), debug: vi.fn(), info: vi.fn(), fatal: vi.fn() } }))
 vi.mock('../services/StateService.js', () => ({ saveState: vi.fn() }))
 vi.mock('@chenfengyuan/vue-qrcode', () => ({ default: { name: 'Qrcode', render: () => null } }))
@@ -40,7 +41,6 @@ beforeEach(() => {
 		? { state: STATE.ENABLED }
 		: { secret: 'JBSWY3DPEHPK3PXP', qrUrl: 'otpauth://totp/x', challenge: '' }))
 	globalThis.t = tMock
-	globalThis.OC = { Notification: { showTemporary: vi.fn() } }
 })
 
 describe('LoginSetup', () => {

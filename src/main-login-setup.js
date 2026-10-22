@@ -7,6 +7,8 @@ import { translatePlural as n, translate as t } from '@nextcloud/l10n'
 import { createApp } from 'vue'
 import LoginSetup from './components/LoginSetup.vue'
 
+import '@nextcloud/dialogs/style.css'
+
 const app = createApp(LoginSetup)
 app.mixin({ methods: { t, n } })
 app.mount('#twofactor-oath-login-setup')

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+import { showError } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import { confirmPassword } from '@nextcloud/password-confirmation'
 import { flushPromises, shallowMount } from '@vue/test-utils'
@@ -18,6 +19,7 @@ vi.mock('../store.js', () => ({ useOtpStore: () => storeRef.current }))
 vi.mock('@nextcloud/password-confirmation', () => ({ confirmPassword: vi.fn() }))
 vi.mock('@nextcloud/initial-state', () => ({ loadState: vi.fn(() => false) }))
 vi.mock('@nextcloud/router', () => ({ imagePath: () => '/img/app-dark.svg' }))
+vi.mock('@nextcloud/dialogs', () => ({ showError: vi.fn(), showSuccess: vi.fn() }))
 vi.mock('../logger.js', () => ({ default: { error: vi.fn(), warn: vi.fn(), debug: vi.fn(), info: vi.fn(), fatal: vi.fn() } }))
 vi.mock('../services/StateService.js', () => ({
 	getOtpConfig: vi.fn(),
@@ -61,7 +63,6 @@ beforeEach(() => {
 	loadState.mockReturnValue(false)
 	globalThis.t = tMock
 	globalThis.n = nMock
-	globalThis.OC = { Notification: { showTemporary: vi.fn() } }
 })
 
 describe('PersonalOtpSettings — enrollment', () => {
@@ -105,7 +106,7 @@ describe('PersonalOtpSettings — enrollment', () => {
 
 		expect(wrapper.vm.enabled).toBe(false)
 		expect(wrapper.vm.secret).toBeUndefined()
-		expect(OC.Notification.showTemporary).toHaveBeenCalled()
+		expect(showError).toHaveBeenCalled()
 	})
 
 	it('shows the managed note and hides the switch for admin-managed tokens', () => {

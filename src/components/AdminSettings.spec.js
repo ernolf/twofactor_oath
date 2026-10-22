@@ -10,6 +10,7 @@ import AdminSettings from './AdminSettings.vue'
 
 vi.mock('@nextcloud/initial-state', () => ({ loadState: vi.fn() }))
 vi.mock('@nextcloud/router', () => ({ generateUrl: (url) => url }))
+vi.mock('@nextcloud/dialogs', () => ({ showError: vi.fn(), showInfo: vi.fn(), showSuccess: vi.fn(), showWarning: vi.fn() }))
 vi.mock('@nextcloud/axios', () => ({ default: { get: vi.fn(), post: vi.fn() } }))
 vi.mock('@chenfengyuan/vue-qrcode', () => ({ default: { name: 'Qrcode', render: () => null } }))
 vi.mock('@nextcloud/vue/components/NcButton', () => ({
@@ -57,7 +58,6 @@ beforeEach(() => {
 	loadState.mockImplementation((app, key, def) => (key in stateValues ? stateValues[key] : def))
 	globalThis.t = tMock
 	globalThis.n = nMock
-	globalThis.OC = { Notification: { showTemporary: vi.fn() } }
 })
 
 describe('AdminSettings', () => {

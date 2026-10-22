@@ -339,6 +339,7 @@
 <script>
 import Qrcode from '@chenfengyuan/vue-qrcode'
 import axios from '@nextcloud/axios'
+import { showError, showInfo, showSuccess, showWarning } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import NcButton from '@nextcloud/vue/components/NcButton'
@@ -654,12 +655,12 @@ export default {
 					applied++
 				}
 			}
-			OC.Notification.showTemporary(n('twofactor_oath', '%n row applied.', '%n rows applied.', applied))
+			showInfo(n('twofactor_oath', '%n row applied.', '%n rows applied.', applied))
 			if (skipped.length) {
 				// Build the list separately: a quoted string inside the n() call
 				// would confuse the translation extractor's regex.
 				const list = skipped.join(', ')
-				OC.Notification.showTemporary(n('twofactor_oath', '%n row skipped (not managed users): {list}', '%n rows skipped (not managed users): {list}', skipped.length, { list }))
+				showWarning(n('twofactor_oath', '%n row skipped (not managed users): {list}', '%n rows skipped (not managed users): {list}', skipped.length, { list }))
 			}
 			// Show exactly the rows that will be changed.
 			this.filterStatus = 'selected'
@@ -670,14 +671,14 @@ export default {
 			try {
 				const resp = await axios.post(generateUrl('/apps/twofactor_oath/admin/import-totp'), {})
 				const { imported, skipped } = resp.data
-				OC.Notification.showTemporary(t('twofactor_oath', 'Imported {imported}, skipped {skipped}.', { imported, skipped }))
+				showSuccess(t('twofactor_oath', 'Imported {imported}, skipped {skipped}.', { imported, skipped }))
 				if (this.loaded) {
 					this.loadUsers()
 				} else {
 					this.refreshTotpStatus()
 				}
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not import from twofactor_totp'))
+				showError(t('twofactor_oath', 'Could not import from twofactor_totp'))
 			} finally {
 				this.importingTotp = false
 			}
@@ -697,14 +698,14 @@ export default {
 			this.cleaningTotp = true
 			try {
 				const resp = await axios.post(generateUrl('/apps/twofactor_oath/admin/cleanup-totp-duplicates'), {})
-				OC.Notification.showTemporary(n('twofactor_oath', '%n twofactor_totp registration removed.', '%n twofactor_totp registrations removed.', resp.data.cleaned))
+				showSuccess(n('twofactor_oath', '%n twofactor_totp registration removed.', '%n twofactor_totp registrations removed.', resp.data.cleaned))
 				if (this.loaded) {
 					this.loadUsers()
 				} else {
 					this.refreshTotpStatus()
 				}
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not remove twofactor_totp registrations'))
+				showError(t('twofactor_oath', 'Could not remove twofactor_totp registrations'))
 			} finally {
 				this.cleaningTotp = false
 			}
@@ -713,9 +714,9 @@ export default {
 		async copySecret(secret) {
 			try {
 				await navigator.clipboard.writeText(secret)
-				OC.Notification.showTemporary(t('twofactor_oath', 'Secret copied to clipboard'))
+				showSuccess(t('twofactor_oath', 'Secret copied to clipboard'))
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not copy secret'))
+				showError(t('twofactor_oath', 'Could not copy secret'))
 			}
 		},
 
@@ -742,7 +743,7 @@ export default {
 				this.loaded = true
 				this.refreshTotpStatus()
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not load managed users'))
+				showError(t('twofactor_oath', 'Could not load managed users'))
 			} finally {
 				this.loading = false
 			}
@@ -766,7 +767,7 @@ export default {
 				row.uri = resp.data.uri
 				row.displayUri = null
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not load token'))
+				showError(t('twofactor_oath', 'Could not load token'))
 			}
 		},
 
@@ -827,7 +828,7 @@ export default {
 				return
 			}
 			if (chosen.some((row) => customSecretIssue(row.input) !== null)) {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Some selected rows have an invalid custom secret.'))
+				showError(t('twofactor_oath', 'Some selected rows have an invalid custom secret.'))
 				return
 			}
 			const existing = chosen.filter((row) => this.hasToken(row))
@@ -852,7 +853,7 @@ export default {
 				}
 				this.refreshTotpStatus()
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Provisioning failed'))
+				showError(t('twofactor_oath', 'Provisioning failed'))
 			} finally {
 				this.provisioning = false
 			}
@@ -894,10 +895,10 @@ export default {
 						row.message = ''
 					}
 				}
-				OC.Notification.showTemporary(t('twofactor_oath', 'Selected tokens disabled.'))
+				showSuccess(t('twofactor_oath', 'Selected tokens disabled.'))
 				this.refreshTotpStatus()
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not disable selected tokens'))
+				showError(t('twofactor_oath', 'Could not disable selected tokens'))
 			} finally {
 				this.provisioning = false
 			}
@@ -907,7 +908,7 @@ export default {
 			try {
 				await axios.post(generateUrl(url), data)
 			} catch {
-				OC.Notification.showTemporary(errorMessage)
+				showError(errorMessage)
 			}
 		},
 	},

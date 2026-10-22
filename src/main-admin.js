@@ -7,6 +7,8 @@ import { translatePlural as n, translate as t } from '@nextcloud/l10n'
 import { createApp } from 'vue'
 import AdminSettings from './components/AdminSettings.vue'
 
+import '@nextcloud/dialogs/style.css'
+
 const app = createApp(AdminSettings)
 app.mixin({ methods: { t, n } })
 app.mount('#twofactor-oath-admin')
