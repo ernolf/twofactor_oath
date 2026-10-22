@@ -2,6 +2,7 @@
   SPDX-FileCopyrightText: 2026 [ernolf] Raphael Gradenwitz <raphael.gradenwitz@googlemail.com>
   SPDX-License-Identifier: AGPL-3.0-or-later
 -->
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/ernolf/twofactor_oath@main/img/app.svg"><img src="https://cdn.jsdelivr.net/gh/ernolf/twofactor_oath@main/img/app-dark.svg" alt="Two-Factor OATH" width="72"></picture>
 
 # Two-Factor OATH (TOTP / HOTP / OCRA)
 
@@ -12,8 +13,6 @@
 [![built with ncmake](https://cdn.jsdelivr.net/gh/ernolf/ncmake@main/img/ncmake-badge.svg)](https://github.com/ernolf/ncmake)
 
 > Advanced, fully open OATH one-time-password provider for Nextcloud: time-based (TOTP), counter-based (HOTP) and challenge-response (OCRA) tokens, configurable per token, with encrypted secrets, admin-managed bulk provisioning and a seamless import from the bundled `twofactor_totp` app.
-
-<p align="center"><img src="img/app.svg" width="96" alt="App icon"></p>
 
 `twofactor_oath` is a second-factor provider for the Nextcloud login. It is built for everything the bundled `twofactor_totp` cannot do: hardware OATH tokens, configurable algorithm and length, predetermined (custom) secrets, challenge-response, admin enrollment for whole groups, and mass provisioning. The simple cases stay simple, the advanced cases become possible.
 
