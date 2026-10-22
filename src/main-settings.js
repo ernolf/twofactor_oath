@@ -11,6 +11,7 @@ import PersonalOtpSettings from './components/PersonalOtpSettings.vue'
 import logger from './logger.js'
 import { useOtpStore } from './store.js'
 
+import '@nextcloud/dialogs/style.css'
 import '@nextcloud/password-confirmation/style.css'
 
 const pinia = createPinia()

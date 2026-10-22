@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { showError } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcCheckboxRadioSwitch from '@nextcloud/vue/components/NcCheckboxRadioSwitch'
@@ -141,7 +142,7 @@ export default {
 				this.ocraChallenge = challenge || ''
 				this.appliedSettings = { ...this.settings }
 			} catch (e) {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not start OTP setup'))
+				showError(t('twofactor_oath', 'Could not start OTP setup'))
 				logger.error('could not start OTP login setup', { e })
 			} finally {
 				this.loading = false
@@ -159,10 +160,10 @@ export default {
 				if (state === STATE.ENABLED) {
 					this.$refs.confirmForm.submit()
 				} else {
-					OC.Notification.showTemporary(t('twofactor_oath', 'Could not verify code. Please try again.'))
+					showError(t('twofactor_oath', 'Could not verify code. Please try again.'))
 				}
 			} catch (e) {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not enable OTP'))
+				showError(t('twofactor_oath', 'Could not enable OTP'))
 				logger.error('could not confirm OTP login setup', { e })
 			} finally {
 				this.confirmationLoading = false

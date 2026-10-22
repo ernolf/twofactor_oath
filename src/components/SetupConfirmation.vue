@@ -91,6 +91,7 @@
 
 <script>
 import Qrcode from '@chenfengyuan/vue-qrcode'
+import { showError, showSuccess } from '@nextcloud/dialogs'
 import { imagePath } from '@nextcloud/router'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
@@ -230,9 +231,9 @@ export default {
 		async copySecret() {
 			try {
 				await navigator.clipboard.writeText(this.secret)
-				OC.Notification.showTemporary(t('twofactor_oath', 'Secret copied to clipboard'))
+				showSuccess(t('twofactor_oath', 'Secret copied to clipboard'))
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not copy secret'))
+				showError(t('twofactor_oath', 'Could not copy secret'))
 			}
 		},
 	},

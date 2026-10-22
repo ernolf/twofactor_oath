@@ -152,6 +152,7 @@
 
 <script>
 import Qrcode from '@chenfengyuan/vue-qrcode'
+import { showError, showSuccess } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import { confirmPassword } from '@nextcloud/password-confirmation'
 import { imagePath } from '@nextcloud/router'
@@ -301,7 +302,7 @@ export default {
 				this.ocraChallenge = challenge || ''
 				this.appliedSettings = { ...this.settings }
 			} catch (e) {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not start OTP setup'))
+				showError(t('twofactor_oath', 'Could not start OTP setup'))
 				logger.error('could not start OTP setup', { e })
 				this.enabled = false
 			} finally {
@@ -339,10 +340,10 @@ export default {
 					this.showAdvanced = false
 					this.appliedSettings = null
 				} else {
-					OC.Notification.showTemporary(t('twofactor_oath', 'Could not verify code. Please try again.'))
+					showError(t('twofactor_oath', 'Could not verify code. Please try again.'))
 				}
 			} catch (e) {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not enable OTP'))
+				showError(t('twofactor_oath', 'Could not enable OTP'))
 				logger.error('could not enable OTP', { e })
 			} finally {
 				this.loading = false
@@ -371,7 +372,7 @@ export default {
 				const message = e?.response?.status === 403
 					? t('twofactor_oath', 'Wrong password.')
 					: t('twofactor_oath', 'Could not reveal secret')
-				OC.Notification.showTemporary(message)
+				showError(message)
 				logger.error('could not reveal secret', { e })
 			}
 		},
@@ -398,7 +399,7 @@ export default {
 				const message = e?.response?.status === 403
 					? t('twofactor_oath', 'Wrong password.')
 					: t('twofactor_oath', 'Could not disable OTP')
-				OC.Notification.showTemporary(message)
+				showError(message)
 				logger.error('could not disable OTP', { e })
 			}
 		},
@@ -410,7 +411,7 @@ export default {
 				this.config = await getOtpConfig()
 				this.shown = true
 			} catch (e) {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not load configuration'))
+				showError(t('twofactor_oath', 'Could not load configuration'))
 				logger.error('could not load OTP configuration', { e })
 			} finally {
 				this.showLoading = false
@@ -458,9 +459,9 @@ export default {
 		async copyCurrentSecret() {
 			try {
 				await navigator.clipboard.writeText(this.secretData.secret)
-				OC.Notification.showTemporary(t('twofactor_oath', 'Secret copied to clipboard'))
+				showSuccess(t('twofactor_oath', 'Secret copied to clipboard'))
 			} catch {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not copy secret'))
+				showError(t('twofactor_oath', 'Could not copy secret'))
 			}
 		},
 
@@ -477,14 +478,14 @@ export default {
 			try {
 				const { success } = await resyncOtp(this.resyncCode1.trim(), this.resyncCode2.trim())
 				if (success) {
-					OC.Notification.showTemporary(t('twofactor_oath', 'Token resynchronized.'))
+					showSuccess(t('twofactor_oath', 'Token resynchronized.'))
 					this.resyncCode1 = ''
 					this.resyncCode2 = ''
 				} else {
-					OC.Notification.showTemporary(t('twofactor_oath', 'Could not resynchronize. Check the two consecutive codes and try again.'))
+					showError(t('twofactor_oath', 'Could not resynchronize. Check the two consecutive codes and try again.'))
 				}
 			} catch (e) {
-				OC.Notification.showTemporary(t('twofactor_oath', 'Could not resynchronize token'))
+				showError(t('twofactor_oath', 'Could not resynchronize token'))
 				logger.error('could not resync OTP', { e })
 			} finally {
 				this.resyncLoading = false

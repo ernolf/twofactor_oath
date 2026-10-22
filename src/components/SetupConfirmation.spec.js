@@ -8,6 +8,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import SetupConfirmation from './SetupConfirmation.vue'
 
 vi.mock('@nextcloud/router', () => ({ imagePath: () => '/img/app-dark.svg' }))
+vi.mock('@nextcloud/dialogs', () => ({ showError: vi.fn(), showSuccess: vi.fn() }))
 vi.mock('@chenfengyuan/vue-qrcode', () => ({ default: { name: 'Qrcode', render: () => null } }))
 vi.mock('@nextcloud/vue/components/NcButton', () => ({
 	default: { name: 'NcButton', template: '<button><slot /></button>' },
@@ -25,7 +26,6 @@ const mountOptions = { props: baseProps, global: { mocks: { t: tMock } } }
 
 beforeEach(() => {
 	globalThis.t = tMock
-	globalThis.OC = { Notification: { showTemporary: vi.fn() } }
 })
 
 describe('SetupConfirmation', () => {
