@@ -933,9 +933,9 @@ export default {
 	max-width: 100%;
 }
 
-.otp-admin__length :deep(.v-select),
-.otp-admin__length :deep(.vs__dropdown-menu) {
-	min-width: 28em;
+/* Server core CSS makes .v-select inline-block, which shrinks it to its content. */
+.otp-admin__length :deep(.nc-select) {
+	width: 100%;
 }
 
 .otp-admin__subhead {
