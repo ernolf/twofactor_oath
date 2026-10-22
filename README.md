@@ -2,15 +2,22 @@
   SPDX-FileCopyrightText: 2026 [ernolf] Raphael Gradenwitz <raphael.gradenwitz@googlemail.com>
   SPDX-License-Identifier: AGPL-3.0-or-later
 -->
-<picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/ernolf/twofactor_oath@main/img/app.svg"><img src="https://cdn.jsdelivr.net/gh/ernolf/twofactor_oath@main/img/app-dark.svg" alt="Two-Factor OATH" width="72"></picture>
 
-# Two-Factor OATH (TOTP / HOTP / OCRA)
-
-[![REUSE status](https://api.reuse.software/badge/github.com/ernolf/twofactor_oath)](https://api.reuse.software/info/github.com/ernolf/twofactor_oath)
-[![Nextcloud App Store](https://img.shields.io/badge/Nextcloud-App_Store-0082c9?logo=nextcloud&logoColor=white)](https://apps.nextcloud.com/apps/twofactor_oath)
-[![Latest release](https://img.shields.io/github/v/release/ernolf/twofactor_oath?sort=semver&color=0082c9)](https://github.com/ernolf/twofactor_oath/releases/latest)
-[![Localization on Transifex](https://img.shields.io/badge/l10n-Transifex-0082c9)](https://explore.transifex.com/nextcloud/nextcloud/)
-[![built with ncmake](https://cdn.jsdelivr.net/gh/ernolf/ncmake@main/img/ncmake-badge.svg)](https://github.com/ernolf/ncmake)
+<!-- Project header -->
+<p>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/gh/ernolf/twofactor_oath@main/img/app.svg"><img src="https://cdn.jsdelivr.net/gh/ernolf/twofactor_oath@main/img/app-dark.svg" alt="Two-Factor OATH logo" width="128" height="128" align="left"></picture>
+  <h3>Two-Factor OATH (TOTP / HOTP / OCRA)</h3>
+  <p>Advanced OATH two-factor provider: TOTP, HOTP and OCRA</p>
+  <p>
+    <a href="https://api.reuse.software/info/github.com/ernolf/twofactor_oath"><img alt="REUSE status" src="https://api.reuse.software/badge/github.com/ernolf/twofactor_oath"></a>
+    <a href="https://apps.nextcloud.com/apps/twofactor_oath"><img alt="Nextcloud App Store" src="https://img.shields.io/badge/Nextcloud-App_Store-0082c9?logo=nextcloud&logoColor=white"></a>
+    <a href="https://github.com/ernolf/twofactor_oath/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/ernolf/twofactor_oath?sort=semver&color=0082c9"></a>
+    <a href="https://explore.transifex.com/nextcloud/nextcloud/"><img alt="Localization on Transifex" src="https://img.shields.io/badge/l10n-Transifex-0082c9"></a>
+    <a href="https://github.com/ernolf/ncmake"><img alt="built with ncmake" src="https://cdn.jsdelivr.net/gh/ernolf/ncmake@main/img/ncmake-badge.svg"></a>
+  </p>
+</p>
+<hr>
+<br clear="left">
 
 > Advanced, fully open OATH one-time-password provider for Nextcloud: time-based (TOTP), counter-based (HOTP) and challenge-response (OCRA) tokens, configurable per token, with encrypted secrets, admin-managed bulk provisioning and a seamless import from the bundled `twofactor_totp` app.
 
