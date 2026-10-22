@@ -54,6 +54,9 @@
 		<p class="otp-admin__hint">
 			{{ t('twofactor_oath', 'Members of managed groups cannot set up or disable OTP themselves; an administrator provisions it for them. Managed and excluded groups are mutually exclusive: set one, or neither. With a managed group, only its members are managed. With an excluded group, everyone except its members is managed. With neither, every user may self-service.') }}
 		</p>
+		<p class="otp-admin__hint">
+			{{ t('twofactor_oath', 'Administrators are never managed, whatever groups they are in. They always set up their own token in their personal settings, a hardware token through "Custom secret" under "Advanced settings".') }}
+		</p>
 
 		<div class="otp-admin__field">
 			<NcSelect
