@@ -1,6 +1,7 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Edit label" : "Editează eticheta",
     "Apply" : "Aplică",
     "Reset to default" : "Resetează la valorile implicite",
     "Recommended" : "Recomandat",
