@@ -13,6 +13,7 @@ use InvalidArgumentException;
 use OCA\TwoFactorOath\AppInfo\Application;
 use OCA\TwoFactorOath\Constants;
 use OCA\TwoFactorOath\Db\IOtpSecretMapper;
+use OCA\TwoFactorOath\Service\IBackupCodesGuard;
 use OCA\TwoFactorOath\Service\IOtpService;
 use OCA\TwoFactorOath\Service\IPolicyService;
 use OCA\TwoFactorOath\Service\ITotpImporter;
@@ -49,6 +50,7 @@ class AdminController extends Controller {
 		private readonly Defaults $defaults,
 		private readonly ITotpImporter $totpImporter,
 		private readonly IAppManager $appManager,
+		private readonly IBackupCodesGuard $backupCodesGuard,
 	) {
 		parent::__construct($appName, $request);
 	}
@@ -135,6 +137,8 @@ class AdminController extends Controller {
 	public function setManagedGroups(array $groups): JSONResponse {
 		$gids = array_values(array_filter($groups, is_string(...)));
 		$this->appConfig->setValueArray(Application::APP_ID, Constants::CONFIG_MANAGED_GROUPS, $gids);
+		// Users who just became managed lose their backup codes now, not at their next login.
+		$this->backupCodesGuard->enforceAll();
 
 		return new JSONResponse(['groups' => $gids]);
 	}
@@ -142,8 +146,20 @@ class AdminController extends Controller {
 	public function setExcludedGroups(array $groups): JSONResponse {
 		$gids = array_values(array_filter($groups, is_string(...)));
 		$this->appConfig->setValueArray(Application::APP_ID, Constants::CONFIG_EXCLUDED_GROUPS, $gids);
+		$this->backupCodesGuard->enforceAll();
 
 		return new JSONResponse(['groups' => $gids]);
+	}
+
+	/**
+	 * Forbid or allow backup codes for managed users. Switching it on revokes the
+	 * codes they already have; switching it off restores nothing.
+	 */
+	public function setBlockBackupCodes(bool $enabled): JSONResponse {
+		$this->appConfig->setValueBool(Application::APP_ID, Constants::CONFIG_BLOCK_BACKUP_CODES, $enabled);
+		$this->backupCodesGuard->enforceAll();
+
+		return new JSONResponse(['enabled' => $enabled]);
 	}
 
 	/** All admin-managed users with their current status (for the inline table). */

@@ -18,11 +18,15 @@ use Override;
 final class PersonalSettings implements IPersonalProviderSettings {
 	public function __construct(
 		private readonly ITemplateManager $templateManager,
+		private readonly bool $hideBackupCodes,
 	) {
 	}
 
 	#[Override]
 	public function getBody(): ITemplate {
-		return $this->templateManager->getTemplate(Application::APP_ID, 'personal');
+		$template = $this->templateManager->getTemplate(Application::APP_ID, 'personal');
+		$template->assign('hideBackupCodes', $this->hideBackupCodes);
+
+		return $template;
 	}
 }

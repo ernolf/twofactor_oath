@@ -48,6 +48,7 @@ class AdminSettings implements ISettings {
 
 		$this->initialState->provideInitialState('managed_groups', $this->appConfig->getValueArray(Application::APP_ID, Constants::CONFIG_MANAGED_GROUPS));
 		$this->initialState->provideInitialState('excluded_groups', $this->appConfig->getValueArray(Application::APP_ID, Constants::CONFIG_EXCLUDED_GROUPS));
+		$this->initialState->provideInitialState('block_backup_codes', $this->appConfig->getValueBool(Application::APP_ID, Constants::CONFIG_BLOCK_BACKUP_CODES));
 
 		$groups = array_map(
 			static fn (IGroup $group): array => ['id' => $group->getGID(), 'label' => $group->getDisplayName()],
