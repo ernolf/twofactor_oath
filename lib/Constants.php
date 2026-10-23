@@ -81,6 +81,7 @@ final class Constants {
 	public const CONFIG_SECRET_LENGTH = 'secret_length';
 	public const CONFIG_MANAGED_GROUPS = 'managed_groups';
 	public const CONFIG_EXCLUDED_GROUPS = 'excluded_groups';
+	public const CONFIG_BLOCK_BACKUP_CODES = 'block_backup_codes';
 
 	// Verification tuning.
 	public const HOTP_WINDOW = 10;          // HOTP look-ahead window during normal verification (RFC 4226)
