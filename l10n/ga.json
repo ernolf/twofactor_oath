@@ -52,7 +52,6 @@
     "Settings for the advanced OATH second-factor provider." : "Socruithe don soláthraí dara fachtóir ardleibhéil OATH.",
     "As \"twofactor_totp\" is a standalone app, it is advisable to run the following commands:" : "Ós rud é gur aip neamhspleách í \"twofactor_totp\", moltar na horduithe seo a leanas a rith:",
     "Or let twofactor_oath remove them now" : "Nó lig do twofactor_oath iad a bhaint anois",
-    "twofactor_totp and twofactor_oath can run side by side, but OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended since your users have moved to OATH." : "Is féidir twofactor_totp agus twofactor_oath rith taobh le taobh, ach déanann OATH gach rud a dhéanann twofactor_totp agus níos mó, mar sin moltar twofactor_totp a dhíchumasú ó bhog d’úsáideoirí go OATH.",
     "To retire it cleanly, disable the app and remove its leftover associations:" : "Chun é a scor go glan, díchumasaigh an aip agus bain a chuid comhlachais atá fágtha:",
     "The second command belongs with the first: after disabling, the stale associations would otherwise cause a \"could not load\" error at login." : "Baineann an dara hordú leis an gcéad cheann: tar éis iad a dhíchumasú, chuirfeadh na comhlachais atá seanchaite earráid \"níorbh fhéidir luchtú\" faoi deara ag logáil isteach.",
     "Default length of generated secrets" : "Fad réamhshocraithe na rúin ghinte",

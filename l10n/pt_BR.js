@@ -54,7 +54,6 @@ OC.L10N.register(
     "Settings for the advanced OATH second-factor provider." : "Configurações para o provedor avançado de autenticação de segundo fator OATH.",
     "As \"twofactor_totp\" is a standalone app, it is advisable to run the following commands:" : "Como o “twofactor_totp” é um aplicativo independente, é recomendável executar os seguintes comandos:",
     "Or let twofactor_oath remove them now" : "Ou deixe o twofactor_oath removê-los agora",
-    "twofactor_totp and twofactor_oath can run side by side, but OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended since your users have moved to OATH." : "O twofactor_totp e o twofactor_oath podem ser executados simultaneamente, mas o OATH oferece todas as funcionalidades do twofactor_totp e muito mais; portanto, recomenda-se desativar o twofactor_totp, já que seus usuários migraram para o OATH.",
     "To retire it cleanly, disable the app and remove its leftover associations:" : "Para desinstalá-lo corretamente, desative o aplicativo e remova as associações remanescentes:",
     "The second command belongs with the first: after disabling, the stale associations would otherwise cause a \"could not load\" error at login." : "O segundo comando está relacionado ao primeiro: caso contrário, após a desativação, as associações desatualizadas causariam um erro do tipo “não foi possível carregar” no momento do login.",
     "Default length of generated secrets" : "Comprimento padrão dos segredos gerados",

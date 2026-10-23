@@ -54,7 +54,6 @@ OC.L10N.register(
     "Settings for the advanced OATH second-factor provider." : "Gelişmiş OATH ikinci adım hizmeti sağlayıcısı için ayarlar.",
     "As \"twofactor_totp\" is a standalone app, it is advisable to run the following commands:" : "\"twofactor_totp\" bağımsız bir uygulama olduğundan, şu komutların yürütülmesi önerilir:",
     "Or let twofactor_oath remove them now" : "Ya da twofactor_oath onları şimdi kaldırsın",
-    "twofactor_totp and twofactor_oath can run side by side, but OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended since your users have moved to OATH." : "Twofactor_totp ve twofactor_oath yan yana çalışabilir, ancak OATH twofactor_totp tarafından yapılan her şeyi ve daha fazlasını yapar. Bu nedenle kullanıcılarınız OATH kullanmaya geçtiğinde twofactor_totp kullanımını kaldırmanız önerilir.",
     "To retire it cleanly, disable the app and remove its leftover associations:" : "Temiz bir şekilde kaldırmak için uygulamayı kullanımdan kaldırın ve kalan ilişkilerini kaldırın:",
     "The second command belongs with the first: after disabling, the stale associations would otherwise cause a \"could not load\" error at login." : "İkinci komut birinciye bağlıdır: Kullanımdan kaldırdıktan sonra. Yoksa eski ilişkiler oturum açma sırasında \"yüklenemedi\" hatasına neden olur.",
     "Default length of generated secrets" : "Oluşturulan parolaların varsayılan uzunluğu",

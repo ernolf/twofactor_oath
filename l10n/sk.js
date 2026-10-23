@@ -54,7 +54,6 @@ OC.L10N.register(
     "Settings for the advanced OATH second-factor provider." : "Nastavenia pokročilého poskytovateľa dvojfaktorového overovania OATH.",
     "As \"twofactor_totp\" is a standalone app, it is advisable to run the following commands:" : "Keďže \"twofactor_totp\" je samostatná aplikácia, odporúča sa spustiť tieto príkazy:",
     "Or let twofactor_oath remove them now" : "Alebo ich nechajte teraz odstrániť aplikáciou twofactor_oath",
-    "twofactor_totp and twofactor_oath can run side by side, but OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended since your users have moved to OATH." : "twofactor_totp a twofactor_oath môžu fungovať súčasne, ale OATH poskytuje všetko, čo twofactor_totp, a ešte niečo navyše. Keďže používatelia prešli na OATH, odporúča sa twofactor_totp zakázať.",
     "To retire it cleanly, disable the app and remove its leftover associations:" : "Ak chcete aplikáciu vyradiť bez zvyškov, zakážte ju a odstráňte jej zostávajúce prepojenia:",
     "The second command belongs with the first: after disabling, the stale associations would otherwise cause a \"could not load\" error at login." : "Druhý príkaz patrí k prvému: po zakázaní by inak zastarané prepojenia spôsobovali pri prihlasovaní chybu \"nepodarilo sa načítať\".",
     "Default length of generated secrets" : "Predvolená dĺžka generovaných tajomstiev",

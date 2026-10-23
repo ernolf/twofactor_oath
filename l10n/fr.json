@@ -52,7 +52,6 @@
     "Settings for the advanced OATH second-factor provider." : "Paramètres du fournisseur avancé de second facteur OATH.",
     "As \"twofactor_totp\" is a standalone app, it is advisable to run the following commands:" : "Comme « twofactor_totp » est une application autonome, il est recommandé d’exécuter les commandes suivantes :",
     "Or let twofactor_oath remove them now" : "Ou laisser twofactor_oath les supprimer maintenant",
-    "twofactor_totp and twofactor_oath can run side by side, but OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended since your users have moved to OATH." : "twofactor_totp et twofactor_oath peuvent fonctionner côte à côte, mais OATH couvre toutes les fonctionnalités de twofactor_totp et davantage. Il est donc recommandé de désactiver twofactor_totp puisque vos utilisateurs ont migré vers OATH.",
     "To retire it cleanly, disable the app and remove its leftover associations:" : "Pour le retirer proprement, désactivez l’application et supprimez les associations restantes :",
     "The second command belongs with the first: after disabling, the stale associations would otherwise cause a \"could not load\" error at login." : "La seconde commande complète la première : après la désactivation, les associations obsolètes provoqueraient sinon une erreur « impossible de charger » lors de la connexion.",
     "Default length of generated secrets" : "Longueur par défaut des secrets générés",
