@@ -37,10 +37,10 @@ Built for hardware OATH tokens and elevated requirements, alongside the simple, 
 	<website>https://github.com/ernolf/twofactor_oath#readme</website>
 	<bugs>https://github.com/ernolf/twofactor_oath/issues</bugs>
 	<repository type="git">https://github.com/ernolf/twofactor_oath.git</repository>
-	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/main/doc/screenshots/2fa-chooser.png</screenshot>
-	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/main/doc/screenshots/personal-setup.png</screenshot>
-	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/main/doc/screenshots/personal-advanced.png</screenshot>
-	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/main/doc/screenshots/admin-provisioning.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/v0.4.3/doc/screenshots/2fa-chooser.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/v0.4.3/doc/screenshots/personal-setup.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/v0.4.3/doc/screenshots/personal-advanced.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/v0.4.3/doc/screenshots/admin-provisioning.png</screenshot>
 	<donation type="paypal" title="Donate via PayPal">https://PayPal.Me/ernolf</donation>
 	<donation>https://github.com/sponsors/ernolf</donation>
 	<dependencies>
