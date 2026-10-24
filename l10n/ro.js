@@ -4,6 +4,7 @@ OC.L10N.register(
     "Edit label" : "Editează eticheta",
     "Apply" : "Aplică",
     "Reset to default" : "Resetează la valorile implicite",
+    "Minimal" : "Minimă",
     "Recommended" : "Recomandat",
     "Pending" : "În așteptare",
     "Enabled" : "Activat",
