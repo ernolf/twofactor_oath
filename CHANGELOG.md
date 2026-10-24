@@ -10,6 +10,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [0.6.0] - 2026-10-25
+
+### Added translations (transifex)
+
+- Danish (da)
+- Russian (ru)
+- Indonesian (id)
+
+### Added
+
+- Target Nextcloud 34 to 36 and PHP 8.2 (#138)
+- Show the All-in-One occ invocation on AIO instances (#143)
+- Let administrators forbid backup codes for managed users (#151)
+
+### Fixed
+
+- Inject the PSR container instead of IServerContainer (#124)
+- Show toasts through @nextcloud/dialogs (#133)
+- Let the secret length select fill its field (#141)
+- Stop claiming users moved to OATH in the twofactor_totp banner (#142)
+- Never manage administrators (#144)
+- Show the app icon on the login challenge page (#146)
+- Pin the screenshot URLs to the release tag (#153)
+
+[0.6.0]: https://github.com/ernolf/twofactor_oath/releases/tag/v0.6.0
+
 ## [0.4.3] - 2026-09-22
 
 ### Fixed
