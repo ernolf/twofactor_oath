@@ -12,6 +12,7 @@ namespace OCA\TwoFactorOath\Tests\Unit\Controller;
 use OCA\TwoFactorOath\Constants;
 use OCA\TwoFactorOath\Controller\AdminController;
 use OCA\TwoFactorOath\Db\IOtpSecretMapper;
+use OCA\TwoFactorOath\Service\IBackupCodesGuard;
 use OCA\TwoFactorOath\Service\IOtpService;
 use OCA\TwoFactorOath\Service\IPolicyService;
 use OCA\TwoFactorOath\Service\ITotpImporter;
@@ -38,6 +39,7 @@ final class AdminControllerTest extends TestCase {
 	private IProvider&MockObject $provider;
 	private ITotpImporter&MockObject $totpImporter;
 	private IAppManager&MockObject $appManager;
+	private IBackupCodesGuard&MockObject $backupCodesGuard;
 	private AdminController $controller;
 
 	protected function setUp(): void {
@@ -49,6 +51,7 @@ final class AdminControllerTest extends TestCase {
 		$this->provider = $this->createMock(IProvider::class);
 		$this->totpImporter = $this->createMock(ITotpImporter::class);
 		$this->appManager = $this->createMock(IAppManager::class);
+		$this->backupCodesGuard = $this->createMock(IBackupCodesGuard::class);
 
 		$this->controller = new AdminController(
 			'twofactor_oath',
@@ -63,6 +66,7 @@ final class AdminControllerTest extends TestCase {
 			$this->createMock(Defaults::class),
 			$this->totpImporter,
 			$this->appManager,
+			$this->backupCodesGuard,
 		);
 	}
 
@@ -117,6 +121,42 @@ final class AdminControllerTest extends TestCase {
 		$response = $this->controller->setManagedGroups(['admins', 5, null]);
 
 		$this->assertSame(['groups' => ['admins']], $response->getData());
+	}
+
+	public function testSetManagedGroupsAppliesTheBackupCodeRule(): void {
+		$this->backupCodesGuard->expects($this->once())->method('enforceAll');
+
+		$this->controller->setManagedGroups(['staff']);
+	}
+
+	public function testSetExcludedGroupsAppliesTheBackupCodeRule(): void {
+		$this->appConfig->expects($this->once())
+			->method('setValueArray')
+			->with('twofactor_oath', Constants::CONFIG_EXCLUDED_GROUPS, ['teachers']);
+		$this->backupCodesGuard->expects($this->once())->method('enforceAll');
+
+		$this->controller->setExcludedGroups(['teachers']);
+	}
+
+	public function testSetBlockBackupCodesStoresTheRuleAndAppliesIt(): void {
+		$this->appConfig->expects($this->once())
+			->method('setValueBool')
+			->with('twofactor_oath', Constants::CONFIG_BLOCK_BACKUP_CODES, true);
+		$this->backupCodesGuard->expects($this->once())->method('enforceAll');
+
+		$response = $this->controller->setBlockBackupCodes(true);
+
+		$this->assertSame(['enabled' => true], $response->getData());
+	}
+
+	public function testSetBlockBackupCodesCanSwitchTheRuleOff(): void {
+		$this->appConfig->expects($this->once())
+			->method('setValueBool')
+			->with('twofactor_oath', Constants::CONFIG_BLOCK_BACKUP_CODES, false);
+
+		$response = $this->controller->setBlockBackupCodes(false);
+
+		$this->assertSame(['enabled' => false], $response->getData());
 	}
 
 	public function testDisableUsersReportsUnknownUser(): void {

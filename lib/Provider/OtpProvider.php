@@ -12,6 +12,7 @@ namespace OCA\TwoFactorOath\Provider;
 use OCA\TwoFactorOath\AppInfo\Application;
 use OCA\TwoFactorOath\Constants;
 use OCA\TwoFactorOath\Db\IOtpSecretMapper;
+use OCA\TwoFactorOath\Service\IBackupCodesGuard;
 use OCA\TwoFactorOath\Service\IOtpService;
 use OCA\TwoFactorOath\Service\IPolicyService;
 use OCA\TwoFactorOath\Settings\PersonalSettings;
@@ -44,6 +45,7 @@ final class OtpProvider implements IProvider, IProvidesIcons, IProvidesPersonalS
 		private readonly IRequest $request,
 		private readonly ISession $session,
 		private readonly IURLGenerator $urlGenerator,
+		private readonly IBackupCodesGuard $backupCodesGuard,
 	) {
 	}
 
@@ -168,7 +170,7 @@ final class OtpProvider implements IProvider, IProvidesIcons, IProvidesPersonalS
 		);
 		$this->initialState->provideInitialState('managed', $this->policyService->isManaged($user));
 
-		return new PersonalSettings($this->templateManager);
+		return new PersonalSettings($this->templateManager, $this->backupCodesGuard->appliesTo($user));
 	}
 
 	#[Override]

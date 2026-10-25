@@ -17,6 +17,7 @@ return [
 		['name' => 'admin#setSecretLength', 'url' => '/admin/secret-length', 'verb' => 'POST'],
 		['name' => 'admin#setManagedGroups', 'url' => '/admin/managed-groups', 'verb' => 'POST'],
 		['name' => 'admin#setExcludedGroups', 'url' => '/admin/excluded-groups', 'verb' => 'POST'],
+		['name' => 'admin#setBlockBackupCodes', 'url' => '/admin/block-backup-codes', 'verb' => 'POST'],
 		['name' => 'admin#exportUsers', 'url' => '/admin/export-users', 'verb' => 'GET'],
 		['name' => 'admin#managedUsers', 'url' => '/admin/managed-users', 'verb' => 'GET'],
 		['name' => 'admin#showToken', 'url' => '/admin/show-token', 'verb' => 'GET'],

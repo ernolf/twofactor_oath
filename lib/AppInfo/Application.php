@@ -11,8 +11,12 @@ namespace OCA\TwoFactorOath\AppInfo;
 
 use OCA\TwoFactorOath\Db\IOtpSecretMapper;
 use OCA\TwoFactorOath\Db\OtpSecretMapper;
+use OCA\TwoFactorOath\Listener\BackupCodesBlocker;
 use OCA\TwoFactorOath\Listener\UserDeleted;
+use OCA\TwoFactorOath\Middleware\BackupCodesMiddleware;
 use OCA\TwoFactorOath\Provider\OtpProvider;
+use OCA\TwoFactorOath\Service\BackupCodesGuard;
+use OCA\TwoFactorOath\Service\IBackupCodesGuard;
 use OCA\TwoFactorOath\Service\IOtpService;
 use OCA\TwoFactorOath\Service\IPolicyService;
 use OCA\TwoFactorOath\Service\ITotpImporter;
@@ -24,6 +28,8 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\Authentication\TwoFactorAuth\IProvider;
+use OCP\Authentication\TwoFactorAuth\TwoFactorProviderForUserRegistered;
+use OCP\User\Events\PostLoginEvent;
 use OCP\User\Events\UserDeletedEvent;
 use Override;
 
@@ -47,6 +53,7 @@ final class Application extends App implements IBootstrap {
 		$context->registerServiceAlias(IOtpService::class, OtpService::class);
 		$context->registerServiceAlias(IPolicyService::class, PolicyService::class);
 		$context->registerServiceAlias(ITotpImporter::class, TotpImporter::class);
+		$context->registerServiceAlias(IBackupCodesGuard::class, BackupCodesGuard::class);
 		$context->registerServiceAlias(IProvider::class, OtpProvider::class);
 
 		// The 2FA provider is registered declaratively via appinfo/info.xml
@@ -54,6 +61,11 @@ final class Application extends App implements IBootstrap {
 
 		// Deleting a user must not leave their secret behind.
 		$context->registerEventListener(UserDeletedEvent::class, UserDeleted::class);
+
+		// Managed users may be barred from backup codes (see BackupCodesGuard).
+		$context->registerEventListener(TwoFactorProviderForUserRegistered::class, BackupCodesBlocker::class, BackupCodesBlocker::PRIORITY);
+		$context->registerEventListener(PostLoginEvent::class, BackupCodesBlocker::class, BackupCodesBlocker::PRIORITY);
+		$context->registerMiddleware(BackupCodesMiddleware::class, true);
 	}
 
 	#[Override]

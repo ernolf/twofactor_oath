@@ -13,6 +13,7 @@ use OCA\TwoFactorOath\Constants;
 use OCA\TwoFactorOath\Db\IOtpSecretMapper;
 use OCA\TwoFactorOath\Db\OtpSecret;
 use OCA\TwoFactorOath\Provider\OtpProvider;
+use OCA\TwoFactorOath\Service\IBackupCodesGuard;
 use OCA\TwoFactorOath\Service\IOtpService;
 use OCA\TwoFactorOath\Service\IPolicyService;
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -22,6 +23,7 @@ use OCP\IRequest;
 use OCP\ISession;
 use OCP\IURLGenerator;
 use OCP\IUser;
+use OCP\Template\ITemplate;
 use OCP\Template\ITemplateManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -29,12 +31,16 @@ use PHPUnit\Framework\TestCase;
 final class OtpProviderTest extends TestCase {
 	private IOtpSecretMapper&MockObject $mapper;
 	private IOtpService&MockObject $otpService;
+	private ITemplateManager&MockObject $templateManager;
+	private IBackupCodesGuard&MockObject $backupCodesGuard;
 	private IUser&MockObject $user;
 	private OtpProvider $provider;
 
 	protected function setUp(): void {
 		$this->mapper = $this->createMock(IOtpSecretMapper::class);
 		$this->otpService = $this->createMock(IOtpService::class);
+		$this->templateManager = $this->createMock(ITemplateManager::class);
+		$this->backupCodesGuard = $this->createMock(IBackupCodesGuard::class);
 		$this->user = $this->createMock(IUser::class);
 		$this->user->method('getUID')->willReturn('alice');
 
@@ -42,12 +48,13 @@ final class OtpProviderTest extends TestCase {
 			$this->mapper,
 			$this->otpService,
 			$this->createMock(IPolicyService::class),
-			$this->createMock(ITemplateManager::class),
+			$this->templateManager,
 			$this->createMock(IInitialState::class),
 			$this->createMock(IL10N::class),
 			$this->createMock(IRequest::class),
 			$this->createMock(ISession::class),
 			$this->createMock(IURLGenerator::class),
+			$this->backupCodesGuard,
 		);
 	}
 
@@ -83,6 +90,24 @@ final class OtpProviderTest extends TestCase {
 		$this->otpService->expects($this->once())->method('disable')->with('alice');
 
 		$this->provider->disableFor($this->user);
+	}
+
+	public function testPersonalSettingsHideBackupCodesWhenTheRuleApplies(): void {
+		$this->backupCodesGuard->method('appliesTo')->with($this->user)->willReturn(true);
+		$template = $this->createMock(ITemplate::class);
+		$template->expects($this->once())->method('assign')->with('hideBackupCodes', true);
+		$this->templateManager->method('getTemplate')->willReturn($template);
+
+		$this->provider->getPersonalSettings($this->user)->getBody();
+	}
+
+	public function testPersonalSettingsShowBackupCodesOtherwise(): void {
+		$this->backupCodesGuard->method('appliesTo')->with($this->user)->willReturn(false);
+		$template = $this->createMock(ITemplate::class);
+		$template->expects($this->once())->method('assign')->with('hideBackupCodes', false);
+		$this->templateManager->method('getTemplate')->willReturn($template);
+
+		$this->provider->getPersonalSettings($this->user)->getBody();
 	}
 
 	public function testVerifyChallengeFailsWithoutSecret(): void {
