@@ -84,6 +84,16 @@
 				@update:modelValue="onExcludedChange" />
 		</div>
 
+		<p class="otp-admin__hint">
+			{{ t('twofactor_oath', 'Nextcloud backup codes are a second factor of their own: a user who generated them can sign in without the token. Forbid them when tokens are handed out and taken back, so a returned token also ends access. Switching this on deletes the backup codes managed users already have, hides the backup code section from their personal settings, refuses to generate new codes and stops the reminders to generate them.') }}
+		</p>
+		<NcCheckboxRadioSwitch
+			:modelValue="blockBackupCodes"
+			type="switch"
+			@update:modelValue="onBlockBackupCodesChange">
+			{{ t('twofactor_oath', 'Managed users may not use backup codes') }}
+		</NcCheckboxRadioSwitch>
+
 		<h3 class="otp-admin__subhead">
 			{{ t('twofactor_oath', 'Bulk provisioning') }}
 		</h3>
@@ -387,6 +397,7 @@ export default {
 			allGroups: loadState('twofactor_oath', 'all_groups'),
 			managedGroups: loadState('twofactor_oath', 'managed_groups'),
 			excludedGroups: loadState('twofactor_oath', 'excluded_groups'),
+			blockBackupCodes: loadState('twofactor_oath', 'block_backup_codes', false),
 			strict: true,
 			loading: false,
 			loaded: false,
@@ -745,6 +756,21 @@ export default {
 		onExcludedChange(value) {
 			this.excludedGroups = value
 			this.post('/apps/twofactor_oath/admin/excluded-groups', { groups: value }, t('twofactor_oath', 'Could not save excluded groups'))
+		},
+
+		async onBlockBackupCodesChange(value) {
+			if (value) {
+				const confirmed = await this.confirm({
+					title: t('twofactor_oath', 'Delete all backup codes?'),
+					message: t('twofactor_oath', 'All backup codes of managed users will be deleted. Switching this off later does not restore them; users have to generate new ones.'),
+					destructive: true,
+				})
+				if (!confirmed) {
+					return
+				}
+			}
+			this.blockBackupCodes = value
+			this.post('/apps/twofactor_oath/admin/block-backup-codes', { enabled: value }, t('twofactor_oath', 'Could not save the backup code setting'))
 		},
 
 		async loadUsers() {
