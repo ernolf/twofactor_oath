@@ -52,7 +52,6 @@
     "Settings for the advanced OATH second-factor provider." : "Settings for the advanced OATH second-factor provider.",
     "As \"twofactor_totp\" is a standalone app, it is advisable to run the following commands:" : "As \"twofactor_totp\" is a standalone app, it is advisable to run the following commands:",
     "Or let twofactor_oath remove them now" : "Or let twofactor_oath remove them now",
-    "twofactor_totp and twofactor_oath can run side by side, but OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended since your users have moved to OATH." : "twofactor_totp and twofactor_oath can run side by side, but OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended since your users have moved to OATH.",
     "To retire it cleanly, disable the app and remove its leftover associations:" : "To retire it cleanly, disable the app and remove its leftover associations:",
     "The second command belongs with the first: after disabling, the stale associations would otherwise cause a \"could not load\" error at login." : "The second command belongs with the first: after disabling, the stale associations would otherwise cause a \"could not load\" error at login.",
     "Default length of generated secrets" : "Default length of generated secrets",

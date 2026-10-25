@@ -54,7 +54,6 @@ OC.L10N.register(
     "Settings for the advanced OATH second-factor provider." : "Pengaturan untuk penyedia faktor kedua OATH lanjutan.",
     "As \"twofactor_totp\" is a standalone app, it is advisable to run the following commands:" : "Karena \"twofactor_totp\" merupakan aplikasi mandiri, disarankan untuk menjalankan perintah berikut:",
     "Or let twofactor_oath remove them now" : "Atau biarkan twofactor_oath menghapusnya sekarang",
-    "twofactor_totp and twofactor_oath can run side by side, but OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended since your users have moved to OATH." : "twofactor_totp dan twofactor_oath dapat berjalan berdampingan, tetapi OATH menyediakan semua yang dilakukan twofactor_totp dan lebih banyak lagi. Karena pengguna Anda telah berpindah ke OATH, disarankan untuk menonaktifkan twofactor_totp.",
     "To retire it cleanly, disable the app and remove its leftover associations:" : "Untuk menonaktifkannya secara bersih, nonaktifkan aplikasi dan hapus asosiasi yang tersisa:",
     "The second command belongs with the first: after disabling, the stale associations would otherwise cause a \"could not load\" error at login." : "Perintah kedua harus dijalankan bersama perintah pertama: setelah dinonaktifkan, asosiasi lama yang tersisa dapat menyebabkan kesalahan \"tidak dapat memuat\" saat login.",
     "Default length of generated secrets" : "Panjang bawaan secret yang dihasilkan",

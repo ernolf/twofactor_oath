@@ -54,7 +54,6 @@ OC.L10N.register(
     "Settings for the advanced OATH second-factor provider." : "Ρυθμίσεις για τον προηγμένο πάροχο OATH δεύτερου παράγοντα.",
     "As \"twofactor_totp\" is a standalone app, it is advisable to run the following commands:" : "Καθώς η εφαρμογή \"twofactor_totp\" είναι αυτόνομη, συνιστάται να εκτελέσετε τις ακόλουθες εντολές:",
     "Or let twofactor_oath remove them now" : "Ή επιτρέψτε στο twofactor_oath να τις αφαιρέσει τώρα",
-    "twofactor_totp and twofactor_oath can run side by side, but OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended since your users have moved to OATH." : "Οι εφαρμογές twofactor_totp και twofactor_oath μπορούν να εκτελούνται παράλληλα, αλλά το OATH κάνει ό,τι και το twofactor_totp και ακόμα περισσότερα, επομένως συνιστάται η απενεργοποίηση του twofactor_totp εφόσον οι χρήστες σας έχουν μεταβεί στο OATH.",
     "To retire it cleanly, disable the app and remove its leftover associations:" : "Για να την καταργήσετε πλήρως, απενεργοποιήστε την εφαρμογή και αφαιρέστε τις εναπομείνασες συσχετίσεις της:",
     "The second command belongs with the first: after disabling, the stale associations would otherwise cause a \"could not load\" error at login." : "Η δεύτερη εντολή συνδέεται με την πρώτη: μετά την απενεργοποίηση, οι παρωχημένες συσχετίσεις θα προκαλούσαν διαφορετικά σφάλμα «αδυναμίας φόρτωσης» κατά τη σύνδεση.",
     "Default length of generated secrets" : "Προεπιλεγμένο μήκος των παραγόμενων μυστικών κλειδιών",
