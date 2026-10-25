@@ -21,7 +21,7 @@ Configurable OATH two-factor authentication for Nextcloud, covering all three OA
 
 Built for hardware OATH tokens and elevated requirements, alongside the simple, bundled twofactor_totp app. OATH (one-time passwords) is not the same as FIDO2/WebAuthn. See documentation for when to use which.
 	]]></description>
-	<version>0.6.0</version>
+	<version>0.6.1</version>
 	<licence>agpl</licence>
 	<author mail="raphael.gradenwitz@googlemail.com">[ernolf] Raphael Gradenwitz</author>
 	<namespace>TwoFactorOath</namespace>
@@ -37,10 +37,10 @@ Built for hardware OATH tokens and elevated requirements, alongside the simple, 
 	<website>https://github.com/ernolf/twofactor_oath#readme</website>
 	<bugs>https://github.com/ernolf/twofactor_oath/issues</bugs>
 	<repository type="git">https://github.com/ernolf/twofactor_oath.git</repository>
-	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/v0.6.0/doc/screenshots/2fa-chooser.png</screenshot>
-	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/v0.6.0/doc/screenshots/personal-setup.png</screenshot>
-	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/v0.6.0/doc/screenshots/personal-advanced.png</screenshot>
-	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/v0.6.0/doc/screenshots/admin-provisioning.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/v0.6.1/doc/screenshots/2fa-chooser.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/v0.6.1/doc/screenshots/personal-setup.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/v0.6.1/doc/screenshots/personal-advanced.png</screenshot>
+	<screenshot>https://raw.githubusercontent.com/ernolf/twofactor_oath/v0.6.1/doc/screenshots/admin-provisioning.png</screenshot>
 	<donation type="paypal" title="Donate via PayPal">https://PayPal.Me/ernolf</donation>
 	<donation>https://github.com/sponsors/ernolf</donation>
 	<dependencies>
