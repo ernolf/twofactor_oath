@@ -16,6 +16,7 @@ use OCP\App\IAppManager;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\IAppConfig;
+use OCP\IConfig;
 use OCP\IGroup;
 use OCP\IGroupManager;
 use OCP\Settings\ISettings;
@@ -30,6 +31,7 @@ class AdminSettings implements ISettings {
 		private readonly IGroupManager $groupManager,
 		private readonly ITotpImporter $totpImporter,
 		private readonly IAppManager $appManager,
+		private readonly IConfig $config,
 	) {
 	}
 
@@ -62,6 +64,10 @@ class AdminSettings implements ISettings {
 		$this->initialState->provideInitialState('totp_enabled', $totpEnabled);
 		$this->initialState->provideInitialState('totp_import_count', $totpEnabled ? $this->totpImporter->available() : 0);
 		$this->initialState->provideInitialState('totp_duplicate_users', $totpEnabled ? $this->totpImporter->duplicateUserIds() : []);
+
+		// Nextcloud All-in-One sets this in its container config; the UI then shows
+		// how to invoke occ there, since occ is not on the host.
+		$this->initialState->provideInitialState('aio', $this->config->getSystemValueBool('one-click-instance', false));
 
 		return new TemplateResponse(Application::APP_ID, 'admin');
 	}

@@ -18,6 +18,10 @@
 			<p>{{ n('twofactor_oath', '%n user is registered with both twofactor_totp and OATH. OATH already covers everything twofactor_totp does, so their twofactor_totp registration should be removed — otherwise it breaks their login once twofactor_totp is disabled.', '%n users are registered with both twofactor_totp and OATH. OATH already covers everything twofactor_totp does, so their twofactor_totp registration should be removed — otherwise it breaks their login once twofactor_totp is disabled.', totpDuplicateUsers.length) }}</p>
 			<p>{{ t('twofactor_oath', 'As "twofactor_totp" is a standalone app, it is advisable to run the following commands:') }}</p>
 			<pre class="otp-admin__occ">{{ totpDisableCommands }}</pre>
+			<template v-if="aio">
+				<p>{{ t('twofactor_oath', 'On Nextcloud All-in-One, run occ as:') }}</p>
+				<pre class="otp-admin__occ">{{ aioOcc }}</pre>
+			</template>
 			<NcButton :disabled="cleaningTotp" @click="cleanupTotp">
 				{{ t('twofactor_oath', 'Or let twofactor_oath remove them now') }}
 			</NcButton>
@@ -26,6 +30,10 @@
 			<p>{{ t('twofactor_oath', 'twofactor_totp is still enabled, but no user has a twofactor_totp token that is not already in OATH. OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended.') }}</p>
 			<p>{{ t('twofactor_oath', 'To retire it cleanly, disable the app and remove its leftover associations:') }}</p>
 			<pre class="otp-admin__occ">{{ retireCommands }}</pre>
+			<template v-if="aio">
+				<p>{{ t('twofactor_oath', 'On Nextcloud All-in-One, run occ as:') }}</p>
+				<pre class="otp-admin__occ">{{ aioOcc }}</pre>
+			</template>
 			<p>{{ t('twofactor_oath', 'The second command belongs with the first: after disabling, the stale associations would otherwise cause a "could not load" error at login.') }}</p>
 		</NcNoteCard>
 
@@ -391,6 +399,8 @@ export default {
 			totpImportCount: loadState('twofactor_oath', 'totp_import_count', 0),
 			totpEnabled: loadState('twofactor_oath', 'totp_enabled', false),
 			totpDuplicateUsers: loadState('twofactor_oath', 'totp_duplicate_users', []),
+			aio: loadState('twofactor_oath', 'aio', false),
+			aioOcc: 'sudo docker exec --user www-data -it nextcloud-aio-nextcloud php occ',
 			importingTotp: false,
 			cleaningTotp: false,
 		}
