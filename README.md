@@ -25,4 +25,4 @@
 
 The documentation lives in the **[wiki](https://github.com/ernolf/twofactor_oath/wiki)**.
 
-* The [previous single-page README](https://github.com/ernolf/twofactor_oath/blob/e542908ef05670e6834fc2c34f9ac799a730bed0/README.md) stays available as it was before the move to the wiki.
+* The [previous single-page README](https://github.com/ernolf/twofactor_oath/blob/v0.5.0/README.md) stays available as it was before the move to the wiki.
