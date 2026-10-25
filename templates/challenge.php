@@ -9,6 +9,8 @@
 /** @var array $_ */
 ?>
 
+<img class="two-factor-icon" src="<?php p(image_path('twofactor_oath', 'app.svg')); ?>" style="filter: var(--background-invert-if-bright);" alt="">
+
 <?php if (!empty($_['method'])): ?>
 	<p class="otp-method"><strong><?php p('OATH (' . $_['method'] . ')') ?></strong></p>
 <?php endif; ?>
