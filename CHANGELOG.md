@@ -10,6 +10,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [0.5.0] - 2026-10-25
+
+### Added
+
+- Show the All-in-One occ invocation on AIO instances [stable0.5] (#167)
+- Let administrators forbid backup codes for managed users [stable0.5] (#172)
+
+### Fixed
+
+- Let the secret length select fill its field [stable0.5] (#165)
+- Stop claiming users moved to OATH in the twofactor_totp banner [stable0.5] (#166)
+- Never manage administrators [stable0.5] (#168)
+- Show the app icon on the login challenge page [stable0.5] (#169)
+
+[0.5.0]: https://github.com/ernolf/twofactor_oath/releases/tag/v0.5.0
+
 ## [0.4.3] - 2026-09-22
 
 ### Fixed
