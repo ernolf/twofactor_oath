@@ -48,7 +48,9 @@ final class PolicyServiceTest extends TestCase {
 
 	private function userInGroups(array $gids): IUser&MockObject {
 		$user = $this->createMock(IUser::class);
+		$user->method('getUID')->willReturn('user');
 		$this->groupManager->method('getUserGroupIds')->with($user)->willReturn($gids);
+		$this->groupManager->method('isAdmin')->with('user')->willReturn(in_array('admin', $gids, true));
 
 		return $user;
 	}
@@ -76,6 +78,32 @@ final class PolicyServiceTest extends TestCase {
 	public function testMemberOfExcludedGroupIsNotManaged(): void {
 		$this->policy([], ['service-accounts']);
 		$this->assertFalse($this->service->isManaged($this->userInGroups(['service-accounts'])));
+	}
+
+	public function testAdminInManagedGroupIsNotManaged(): void {
+		$this->policy(['staff'], []);
+		$this->assertFalse($this->service->isManaged($this->userInGroups(['admin', 'staff'])));
+	}
+
+	public function testAdminOutsideExcludedGroupIsNotManaged(): void {
+		$this->policy([], ['service-accounts']);
+		$this->assertFalse($this->service->isManaged($this->userInGroups(['admin'])));
+	}
+
+	public function testListManagedUsersSkipsAdmins(): void {
+		$this->policy(['staff'], []);
+		$alice = $this->createMock(IUser::class);
+		$alice->method('getUID')->willReturn('alice');
+		$root = $this->createMock(IUser::class);
+		$root->method('getUID')->willReturn('root');
+		$group = $this->createMock(IGroup::class);
+		$group->method('getUsers')->willReturn([$alice, $root]);
+		$this->groupManager->method('get')->with('staff')->willReturn($group);
+		$this->groupManager->method('isAdmin')->willReturnCallback(static fn (string $uid): bool => $uid === 'root');
+
+		$users = $this->service->listManagedUsers();
+
+		$this->assertSame(['alice'], array_map(static fn (IUser $u): string => $u->getUID(), $users));
 	}
 
 	public function testListManagedUsersCollectsManagedGroupMembers(): void {

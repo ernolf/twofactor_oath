@@ -22,6 +22,8 @@ use Override;
  *  - if "managed groups" are set, members of those groups are managed;
  *  - else if "excluded groups" are set, everyone EXCEPT their members is managed;
  *  - if neither is set, nobody is managed (everyone may self-service).
+ * Administrators are never managed: an administrator without a token could not
+ * complete the login setup under enforced 2FA, and may change the policy anyway.
  */
 final class PolicyService implements IPolicyService {
 	public function __construct(
@@ -33,6 +35,10 @@ final class PolicyService implements IPolicyService {
 
 	#[Override]
 	public function isManaged(IUser $user): bool {
+		if ($this->groupManager->isAdmin($user->getUID())) {
+			return false;
+		}
+
 		$managed = $this->getManagedGroups();
 		$excluded = $this->getExcludedGroups();
 		$userGroups = $this->groupManager->getUserGroupIds($user);
@@ -65,6 +71,9 @@ final class PolicyService implements IPolicyService {
 					continue;
 				}
 				foreach ($group->getUsers() as $user) {
+					if ($this->groupManager->isAdmin($user->getUID())) {
+						continue;
+					}
 					$users[$user->getUID()] = $user;
 				}
 			}
