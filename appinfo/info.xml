@@ -45,7 +45,7 @@ Built for hardware OATH tokens and elevated requirements, alongside the simple, 
 	<donation>https://github.com/sponsors/ernolf</donation>
 	<dependencies>
 		<php min-version="8.1" max-version="8.5"/>
-		<nextcloud min-version="32" max-version="35"/>
+		<nextcloud min-version="32" max-version="33"/>
 	</dependencies>
 	<two-factor-providers>
 		<provider>OCA\TwoFactorOath\Provider\OtpProvider</provider>
