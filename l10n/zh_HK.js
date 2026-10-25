@@ -54,7 +54,6 @@ OC.L10N.register(
     "Settings for the advanced OATH second-factor provider." : "進階 OATH 第二驗證因素提供者設定。",
     "As \"twofactor_totp\" is a standalone app, it is advisable to run the following commands:" : "由於 \"twofactor_totp\" 為獨立應用程式，建議執行以下指令：",
     "Or let twofactor_oath remove them now" : "或讓 twofactor_oath 現在移除它們",
-    "twofactor_totp and twofactor_oath can run side by side, but OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended since your users have moved to OATH." : "twofactor_totp 與 twofactor_oath 可以同時運作，但 OATH 已涵蓋 twofactor_totp 的所有功能並提供更多功能。因此，當使用者已遷移至 OATH 後，建議停用 twofactor_totp。",
     "To retire it cleanly, disable the app and remove its leftover associations:" : "如要乾淨地淘汰此應用程式，請停用該應用並移除其遺留關聯：",
     "The second command belongs with the first: after disabling, the stale associations would otherwise cause a \"could not load\" error at login." : "第二個指令必須與第一個指令一併執行：停用後，如不移除過時關聯，登入時可能出現「無法載入」錯誤。",
     "Default length of generated secrets" : "產生密鑰的預設長度",

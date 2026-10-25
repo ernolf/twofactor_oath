@@ -54,7 +54,6 @@ OC.L10N.register(
     "Settings for the advanced OATH second-factor provider." : "Inställningar för den avancerade OATH-leverantören som andra faktor.",
     "As \"twofactor_totp\" is a standalone app, it is advisable to run the following commands:" : "Eftersom ”twofactor_totp” är en fristående app rekommenderas att du kör följande kommandon:",
     "Or let twofactor_oath remove them now" : "Eller låt twofactor_oath ta bort dem nu",
-    "twofactor_totp and twofactor_oath can run side by side, but OATH does everything twofactor_totp does and more, so disabling twofactor_totp is recommended since your users have moved to OATH." : "twofactor_totp och twofactor_oath kan köras sida vid sida, men OATH gör allt som twofactor_totp gör och mer. Därför rekommenderas att twofactor_totp inaktiveras när användarna har flyttats till OATH.",
     "To retire it cleanly, disable the app and remove its leftover associations:" : "Inaktivera appen och ta bort kvarvarande kopplingar för att avveckla den på ett korrekt sätt:",
     "The second command belongs with the first: after disabling, the stale associations would otherwise cause a \"could not load\" error at login." : "Det andra kommandot hör ihop med det första: efter inaktiveringen skulle gamla kopplingar annars orsaka felet ”det gick inte att läsa in” vid inloggning.",
     "Default length of generated secrets" : "Standardlängd för genererade hemligheter",
