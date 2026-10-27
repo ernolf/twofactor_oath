@@ -1,5 +1,7 @@
 { "translations": {
+    "Apply" : "Qo'llash",
     "Pending" : "Kutilmoqda",
+    "Enabled" : "Yoqilgan",
     "Error" : "Xatolik",
     "Sort by" : "Saralash turi",
     "User" : "Foydalanuvchi",

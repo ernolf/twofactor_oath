@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Apply" : "Anvend",
     "Pending" : "Ventar",
+    "Enabled" : "Aktivert",
     "Disabled" : "Deaktivert",
     "Error" : "Feil",
     "Sort by" : "Sorter på",
