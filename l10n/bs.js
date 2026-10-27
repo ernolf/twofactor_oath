@@ -1,6 +1,7 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Primijeni",
     "Recommended" : "Preporučljivo",
     "Pending" : "Na čekanju",
     "Enabled" : "Aktivirano",

@@ -1,7 +1,9 @@
 OC.L10N.register(
     "twofactor_oath",
     {
+    "Apply" : "Qo'llash",
     "Pending" : "Kutilmoqda",
+    "Enabled" : "Yoqilgan",
     "Error" : "Xatolik",
     "Sort by" : "Saralash turi",
     "User" : "Foydalanuvchi",
