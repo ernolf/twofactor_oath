@@ -1,7 +1,7 @@
 {
   "backport.yml": {
-    "hash": "62498173c2dc735d0765ce6e3b9032f5079fe9645d59be217c05c7607e27e7dc",
-    "sha": "16f132090aae1cf73227d17afb852303864619b2",
+    "hash": "f864d1d947a88253ce33d373e1a175071f19bfbc044a4a89b057325ef82e759a",
+    "sha": "42f90a689b2e8257d429b1bbaa963ba1bcad6a8b",
     "source": "ncmake"
   },
   "block-unconventional-commits.yml": {
@@ -85,8 +85,8 @@
     "source": "nextcloud"
   },
   "release.yml": {
-    "hash": "8c4de5bd59955ce652be722125192e975c6084b97534389f7ac604688d3dc2eb",
-    "sha": "d88a3f0ea9ce8a670fbc5b8ce47f6c2236eba911",
+    "hash": "108ae3aac0e87f2150c84a895959150d89978c211c7ab3f78ff5db0ca61518a1",
+    "sha": "d6f7d4cbf2979ab8e1a41cf4c537b8ded3bfd1a1",
     "source": "ncmake"
   },
   "reuse.yml": {
@@ -95,8 +95,8 @@
     "source": "nextcloud"
   },
   "workflow-updater.yml": {
-    "hash": "2c0a58585fdb09fc8bd5b4ab6b8a4647ffbc6620823383b430515a1c8d10e0e1",
-    "sha": "9f8b81d87ae4c77b5d68846642004ef4252da308",
+    "hash": "48a7857aa06325d538b7fe62932e26b49fd0e6d9ba649a6951899b1072129363",
+    "sha": "e419581452bca16e3b0004e563f2817406f80984",
     "source": "ncmake"
   }
 }

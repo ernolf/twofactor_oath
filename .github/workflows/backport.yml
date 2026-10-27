@@ -31,14 +31,14 @@ on:
   # "/backport to <branch>" in a pull request comment. issue_comment fires for
   # every comment in the repository, plain issues included; the collect job
   # filters down to pull request comments that carry the command.
-  issue_comment:
+  issue_comment: # zizmor: ignore[dangerous-triggers] commands only from OWNER/MEMBER/COLLABORATOR, no comment text in run:
     types: [created]
   # The merge of a pull request that has commands waiting. pull_request_target
   # and not pull_request: on a pull request from a fork, pull_request runs
   # without the secrets, so the app token could not be minted. No code of the
   # pull request runs here. Its commits are only fetched and cherry-picked onto
   # the target branch, and the backport pull request runs CI like any other.
-  pull_request_target:
+  pull_request_target: # zizmor: ignore[dangerous-triggers] no code of the pull request runs, its commits are only cherry-picked
     types: [closed]
 
 permissions:
@@ -175,6 +175,11 @@ jobs:
         with:
           client-id: ${{ secrets.NCMAKE_UPDATER_CLIENT_ID }}
           private-key: ${{ secrets.NCMAKE_UPDATER_PRIVATE_KEY }}
+          # Without these the token carries every permission of the app.
+          permission-contents: write # push the backport branch
+          permission-pull-requests: write # open the pull request
+          permission-workflows: write # the change may touch .github/workflows/
+          permission-metadata: read
 
       - name: Check the target branch
         env:
