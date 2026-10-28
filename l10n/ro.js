@@ -8,6 +8,7 @@ OC.L10N.register(
     "Recommended" : "Recomandat",
     "Pending" : "În așteptare",
     "Enabled" : "Activat",
+    "Renew" : "Reînnoiește",
     "Disabled" : "Dezactivați",
     "Error" : "Eroare",
     "Excluded groups" : "Grupuri excluse",
