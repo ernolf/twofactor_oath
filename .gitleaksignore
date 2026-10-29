@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: 2026 [ernolf] Raphael Gradenwitz <raphael.gradenwitz@googlemail.com>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# generic-api-key in tests/unit/OtpSecretMapperTest.php:36, e3b1bb125be1 (2026-06-27): RFC 6238 test secret
+e3b1bb125be1906aaacd7c09305d0bbdae3ef80c:tests/unit/OtpSecretMapperTest.php:generic-api-key:36
+# generic-api-key in tests/unit/OtpServiceTest.php:34, 072899102f2e (2026-06-26): RFC 6238 test secret
+072899102f2ebc9f22b3e92ab8bd9071b001b9fb:tests/unit/OtpServiceTest.php:generic-api-key:34
