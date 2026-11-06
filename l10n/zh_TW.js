@@ -21,6 +21,7 @@ OC.L10N.register(
     "Algorithm" : "演算法",
     "Digits" : "數字",
     "Period" : "時段",
+    "Counter" : "計數器",
     "Hide" : "隱藏",
     "Show" : "顯示",
     "Cancel" : "取消",
