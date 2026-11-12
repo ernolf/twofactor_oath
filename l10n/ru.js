@@ -123,7 +123,7 @@ OC.L10N.register(
     "Could not verify code. Please try again." : "Не удалось проверить код. Повторите попытку.",
     "Could not enable OTP" : "Не удалось включить OTP",
     "Your OTP token is managed by your administrator. Please contact them to set it up." : "Токен OTP управляется администратором. Чтобы настроить его, обратитесь к нему.",
-    "Advanced settings" : "Расширенные параметры",
+    "Advanced settings" : "Дополнительные параметры",
     "Recreate challenge with these settings" : "Пересоздать запрос с этими параметрами",
     "Recreate QR code with these settings" : "Пересоздать QR-код с этими параметрами",
     "Wrong password." : "Неправильный пароль.",
